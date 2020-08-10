@@ -12,6 +12,7 @@ struct UserProfileView: View {
     var cellWidth = UIScreen.main.bounds.width - 8
     var body: some View {
         ZStack {
+            
             Image("LoginBG")
                 .resizable()
                 .edgesIgnoringSafeArea(.all)

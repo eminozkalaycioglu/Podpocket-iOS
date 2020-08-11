@@ -29,6 +29,8 @@
 		23D3D2F124E1948000BE8D4C /* ExploreTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F024E1947F00BE8D4C /* ExploreTabView.swift */; };
 		23D3D2F324E194F300BE8D4C /* SearchTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F224E194F300BE8D4C /* SearchTabView.swift */; };
 		23D3D2F524E1963300BE8D4C /* FeedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F424E1963300BE8D4C /* FeedTabView.swift */; };
+		23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */; };
+		23F5BD4524E32618008001D9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F5BD4424E32618008001D9 /* UserModel.swift */; };
 		55B9BD836CB3B6EAC0967E6F /* Pods_Podpocket_PodpocketUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD69F4E3B4415F7DFD1FBD7A /* Pods_Podpocket_PodpocketUITests.framework */; };
 		B5165FE415FF614335401F44 /* Pods_Podpocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5C0D0AD9AAD43BDC4BB44D /* Pods_Podpocket.framework */; };
 		F3FC6EBB8285F7915BEF7E25 /* Pods_PodpocketTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52D5F2EA02A5524EC64268F2 /* Pods_PodpocketTests.framework */; };
@@ -81,6 +83,8 @@
 		23D3D2F024E1947F00BE8D4C /* ExploreTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabView.swift; sourceTree = "<group>"; };
 		23D3D2F224E194F300BE8D4C /* SearchTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabView.swift; sourceTree = "<group>"; };
 		23D3D2F424E1963300BE8D4C /* FeedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabView.swift; sourceTree = "<group>"; };
+		23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
+		23F5BD4424E32618008001D9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		26DA07B25EA21E564DEED81B /* Pods-PodpocketTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodpocketTests.debug.xcconfig"; path = "Target Support Files/Pods-PodpocketTests/Pods-PodpocketTests.debug.xcconfig"; sourceTree = "<group>"; };
 		52D5F2EA02A5524EC64268F2 /* Pods_PodpocketTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PodpocketTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9EBF5BC8E88C7DD4B3D8FF07 /* Pods-PodpocketTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodpocketTests.release.xcconfig"; path = "Target Support Files/Pods-PodpocketTests/Pods-PodpocketTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 		231FE8F124D0373C006B175C /* Podpocket */ = {
 			isa = PBXGroup;
 			children = (
+				23F5BD4324E3260B008001D9 /* Models */,
 				23CCCE7624DACEE800FD6D55 /* ViewModels */,
 				23CCCE7324DACE6C00FD6D55 /* Views */,
 				23CCCE7024DACB7300FD6D55 /* Firebase */,
@@ -247,8 +252,17 @@
 				23CCCE7724DACEFE00FD6D55 /* SignUpViewModel.swift */,
 				23CCCE7924DADE5B00FD6D55 /* LoginViewModel.swift */,
 				23CCCE7B24DB0FE000FD6D55 /* ContentViewModel.swift */,
+				23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		23F5BD4324E3260B008001D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				23F5BD4424E32618008001D9 /* UserModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		79CEA660E0ECB6F99D64206F /* Pods */ = {
@@ -529,6 +543,8 @@
 				23D3D2F324E194F300BE8D4C /* SearchTabView.swift in Sources */,
 				231FE92824D0780A006B175C /* ColorExtension.swift in Sources */,
 				231FE8F724D0373C006B175C /* ContentView.swift in Sources */,
+				23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */,
+				23F5BD4524E32618008001D9 /* UserModel.swift in Sources */,
 				231FE92624D074B5006B175C /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

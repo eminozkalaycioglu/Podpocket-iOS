@@ -66,7 +66,22 @@ class FirebaseConnection {
         
     }
     
-    
+    func fetchUserInfo(uid: String, completion: ((User?) -> ())? = nil) {
+        
+        self.ref.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+            
+            let value = snapshot.value as? NSDictionary
+            let username = value?["username"] as? String ?? ""
+            let mail = value?["email"] as? String ?? ""
+            
+            var user = User()
+            user.mail = mail
+            user.username = username
+            completion?(user)
+            
+        }
+        
+    }
     
     func signIn(withEmail email: String, password: String, _ completion: ((String?) -> ())? = nil){
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
@@ -88,6 +103,7 @@ class FirebaseConnection {
     func signOut() -> Bool{
         do{
             try Auth.auth().signOut()
+            
             return true
         }catch{
             return false

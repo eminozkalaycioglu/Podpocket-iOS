@@ -73,15 +73,140 @@ class FirebaseConnection {
             let value = snapshot.value as? NSDictionary
             let username = value?["username"] as? String ?? ""
             let mail = value?["email"] as? String ?? ""
+            let fullName = value?["fullname"] as? String ?? ""
+            let birthday = value?["birthday"] as? String ?? ""
             
             var user = User()
             user.mail = mail
             user.username = username
+            user.birthday = birthday
+            user.fullName = fullName
             completion?(user)
             
         }
         
     }
+    
+    func updateUserInfo(oldUserInfo: User, newUsername: String, newEmail:String, newFullName: String, newBirthday: String, completion: ((String?, Bool) -> ())? = nil) {
+        
+        if oldUserInfo.birthday == newBirthday && oldUserInfo.fullName == newFullName && oldUserInfo.mail == newEmail && oldUserInfo.username == newUsername {
+            completion?("Everything is same.", false)
+            return
+        }
+        if oldUserInfo.mail == newEmail && oldUserInfo.username != newUsername {
+            self.ref.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.childrenCount == 0 {
+                    var dictionary: [String:Any] = [:]
+                    dictionary["fullname"] = newFullName
+                    dictionary["email"] = newEmail
+                    dictionary["birthday"] = newBirthday
+                    dictionary["username"] = newUsername
+                    
+                    let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                    userInfos.setValue(dictionary) { (error, _) in
+                        if error == nil {
+                            completion?(nil, false)
+                            return
+                        }
+                        else {
+                            completion?(error?.localizedDescription, false)
+                        }
+                    }
+                }
+                else {
+                    completion?("Username already exists", false)
+                }
+                
+            }
+            
+        }
+        
+        else if oldUserInfo.mail != newEmail && oldUserInfo.username == newUsername {
+            
+            self.updateEmail(newMail: newEmail) { (error) in
+                if error == nil {
+                    var dictionary: [String:Any] = [:]
+                    dictionary["fullname"] = newFullName
+                    dictionary["email"] = newEmail
+                    dictionary["birthday"] = newBirthday
+                    dictionary["username"] = newUsername
+                    let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                    userInfos.setValue(dictionary) { (error, _) in
+                        if error == nil {
+                            completion?(nil, true)
+                            return
+                        }
+                        else {
+                            completion?(error?.localizedDescription, true)
+                        }
+                    }
+                }
+                else {
+                    completion?(error, false)
+                }
+            }
+            
+        }
+        else if oldUserInfo.mail != newEmail && oldUserInfo.username != newUsername {
+            self.ref.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
+                if snapshot.childrenCount == 0 {
+                    self.updateEmail(newMail: newEmail) { (error) in
+                        if error == nil {
+                            var dictionary: [String:Any] = [:]
+                            dictionary["fullname"] = newFullName
+                            dictionary["email"] = newEmail
+                            dictionary["birthday"] = newBirthday
+                            dictionary["username"] = newUsername
+                            
+                            let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                            userInfos.setValue(dictionary) { (error, _) in
+                                if error == nil {
+                                    completion?(nil, true)
+                                    return
+                                }
+                                else {
+                                    completion?(error?.localizedDescription, true)
+                                }
+                            }
+                        }
+                        else {
+                            completion?(error, false)
+                        }
+                    }
+                }
+                else {
+                    completion?("Username already exists", false)
+                }
+                
+                
+            }
+            
+        }
+        
+        else {
+            var dictionary: [String:Any] = [:]
+            dictionary["fullname"] = newFullName
+            dictionary["email"] = newEmail
+            dictionary["birthday"] = newBirthday
+            dictionary["username"] = newUsername
+            
+            let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+            userInfos.setValue(dictionary) { (error, _) in
+                if error == nil {
+                    completion?(nil, false)
+                    return
+                }
+                else {
+                    completion?(error?.localizedDescription, false)
+                }
+            }
+        }
+        
+        
+        
+        
+    }
+    
     
     func signIn(withEmail email: String, password: String, _ completion: ((String?) -> ())? = nil){
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
@@ -96,7 +221,21 @@ class FirebaseConnection {
         }
     }
     
+    func updateEmail(newMail: String, completion: ((String?) -> ())? = nil) {
+        if self.signed() {
+            Auth.auth().currentUser?.updateEmail(to: newMail, completion: { (error) in
+                if error != nil{
+                    completion?(error?.localizedDescription)
+                    return
+                }
+                completion?(nil)
+            })
+            
+        }
+    }
+    
     func getCurrentID() -> String? {
+        
         return Auth.auth().currentUser?.uid
     }
     

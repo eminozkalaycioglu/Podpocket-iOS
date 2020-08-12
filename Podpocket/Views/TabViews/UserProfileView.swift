@@ -7,13 +7,16 @@
 //
 
 import SwiftUI
-
+import MessageUI
 struct UserProfileView: View {
     @ObservedObject var viewModel = UserProfileViewModel()
     
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
+    @State var presentEditProfile: Bool = false
     var cellWidth = UIScreen.main.bounds.width - 8
+    
+    var editProfileView = EditProfileView()
     
     var body: some View {
         
@@ -43,8 +46,8 @@ struct UserProfileView: View {
                                 Text(self.viewModel.userInfo.mail ?? "")
                                     .foregroundColor(.white).opacity(0.5)
                                     .font(.subheadline)
-                                    
-
+                                
+                                
                             }.padding()
                             .padding(.leading, 10)
                             Spacer()
@@ -57,12 +60,18 @@ struct UserProfileView: View {
                             self.showAlert = true
                         }
                     
+                    self.drawCells(image: "Logo", text: "Profile Settings")
+                        .onTapGesture {
+                            self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
+                            self.presentEditProfile = true
+                        }
+                   
                     Spacer()
                 }
             }
             
             NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
-            
+
             if self.viewModel.loading {
                 ZStack {
                     Color.init(.gray).opacity(0.2).edgesIgnoringSafeArea(.all)
@@ -81,9 +90,17 @@ struct UserProfileView: View {
                     self.presentContent = true
                 }
             })
-        )
+            )
             
         }
+        .sheet(isPresented: self.$presentEditProfile, onDismiss: {
+            self.viewModel.getUserInfo()
+        }, content: {
+            self.editProfileView
+        })
+        
+        
+        
         
         
     }
@@ -108,4 +125,5 @@ struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()
     }
+    
 }

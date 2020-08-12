@@ -17,16 +17,18 @@ class UserProfileViewModel: ObservableObject {
     
     init() {
         self.getUserInfo()
+        
     }
     
    
     
     func getUserInfo() {
         FirebaseConnection.shared.fetchUserInfo(uid: self.uid) { (user) in
-            if user != nil {
-                self.userInfo = user!
+            if let user = user {
+                self.userInfo = user
                 self.loading = false
             }
+            
         }
     }
     

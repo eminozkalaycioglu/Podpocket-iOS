@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2315F58D24E432640002576C /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2315F58C24E432640002576C /* EditProfileView.swift */; };
+		2315F58F24E434C30002576C /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2315F58E24E434C30002576C /* EditProfileViewModel.swift */; };
 		231FE8F324D0373C006B175C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231FE8F224D0373C006B175C /* AppDelegate.swift */; };
 		231FE8F524D0373C006B175C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231FE8F424D0373C006B175C /* SceneDelegate.swift */; };
 		231FE8F724D0373C006B175C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 231FE8F624D0373C006B175C /* ContentView.swift */; };
@@ -55,6 +57,8 @@
 
 /* Begin PBXFileReference section */
 		1F2EB7B9C8BC918DEDFFFDA8 /* Pods-Podpocket-PodpocketUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podpocket-PodpocketUITests.debug.xcconfig"; path = "Target Support Files/Pods-Podpocket-PodpocketUITests/Pods-Podpocket-PodpocketUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		2315F58C24E432640002576C /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		2315F58E24E434C30002576C /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		231FE8EF24D0373C006B175C /* Podpocket.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Podpocket.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		231FE8F224D0373C006B175C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		231FE8F424D0373C006B175C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				231FE92224D065E2006B175C /* LogIn-SignUp-Views */,
 				239598A224DD609B00D0FEE5 /* TabViews */,
 				23CCCE7424DACE8500FD6D55 /* HomepageView.swift */,
+				2315F58C24E432640002576C /* EditProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				23CCCE7924DADE5B00FD6D55 /* LoginViewModel.swift */,
 				23CCCE7B24DB0FE000FD6D55 /* ContentViewModel.swift */,
 				23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */,
+				2315F58E24E434C30002576C /* EditProfileViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -540,7 +546,9 @@
 				2348EE5024D081C400253375 /* SignUpView.swift in Sources */,
 				23CCCE7224DACB8A00FD6D55 /* FirebaseConnection.swift in Sources */,
 				23CCCE7C24DB0FE000FD6D55 /* ContentViewModel.swift in Sources */,
+				2315F58F24E434C30002576C /* EditProfileViewModel.swift in Sources */,
 				23D3D2F324E194F300BE8D4C /* SearchTabView.swift in Sources */,
+				2315F58D24E432640002576C /* EditProfileView.swift in Sources */,
 				231FE92824D0780A006B175C /* ColorExtension.swift in Sources */,
 				231FE8F724D0373C006B175C /* ContentView.swift in Sources */,
 				23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */,

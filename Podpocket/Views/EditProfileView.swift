@@ -11,16 +11,16 @@ import SwiftUI
 //email değişince bazen alert veriyor bazen vermiyor. logout olunması gerekli!!!
 struct EditProfileView: View {
     @Environment(\.presentationMode) private var presentationMode
-
+    
     @ObservedObject var viewModel = EditProfileViewModel()
     
     @State var birthday: Date = Date()
     @State var errorMessage: String = ""
     @State var showErrorAlert: Bool = false
-    @State var presentContent: Bool = false
     let rangeDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
     
     var body: some View {
+        
         ZStack {
             Image("LoginBG")
                 .resizable()
@@ -32,7 +32,7 @@ struct EditProfileView: View {
                 self.drawCustomTextField(placeholder: "E-mail: ", text: self.$viewModel.user.mail, padding: .horizontal)
                 
                 self.drawCustomTextField(placeholder: "Full name:", text: self.$viewModel.user.fullName, padding: .leading)
-
+                
                 DatePicker(selection: self.$birthday, in: ...(self.rangeDate ?? Date()), displayedComponents: .date) {
                     Text("Birthday:").foregroundColor(.gray)
                 }
@@ -43,46 +43,47 @@ struct EditProfileView: View {
                 .padding(.horizontal)
                 .padding(.bottom, 10)
                 
-               
+                
                 
                 Button(action: {
                     let df = DateFormatter()
                     df.dateFormat = "dd/MM/yyyy"
                     let dateString = df.string(from: self.birthday)
-                   
+                    
                     self.viewModel.user.birthday = dateString
                     
                     self.viewModel.edit { error, emailChanged in
                         
-                        if emailChanged {
-                            if self.viewModel.signOut() {
-                                self.presentContent = true
-                            }
-                        }
+                        
                         if let error = error {
                             self.errorMessage = error
                             self.showErrorAlert = true
                         }
                         else {
+                            if emailChanged {
+                                _ = self.viewModel.signOut()
+                            }
                             self.presentationMode.wrappedValue.dismiss()
-
+                            
                         }
                     }
                     
-                    
-                    
                 }) {
                     
-                    ZStack {
-                        Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
-                        
-                        Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(Color.init(hex: "#50E3C2"))
-                    }
+                    SaveButtonView(text: "Update")
+//                    VStack(alignment: .center) {
+//                        ZStack {
+//                            Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
+//
+//                            Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(Color.init(hex: "#50E3C2"))
+//                        }
+//                        Text("Update").foregroundColor(Color.init(hex: "50E3C2")).font(.system(size: 10))
+//
+//                    }
                     
                 }.padding(.vertical, 30)
                 
             }
-            NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
             
         }
         .onAppear {

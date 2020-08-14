@@ -14,6 +14,7 @@ struct UserProfileView: View {
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
+    
     var cellWidth = UIScreen.main.bounds.width - 8
     
     var editProfileView = EditProfileView()
@@ -60,7 +61,7 @@ struct UserProfileView: View {
                             self.showAlert = true
                         }
                     
-                    self.drawCells(image: "Logo", text: "Profile Settings")
+                    self.drawCells(image: "ProfileSettings", text: "Profile Settings")
                         .onTapGesture {
                             self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
                             self.presentEditProfile = true
@@ -94,7 +95,13 @@ struct UserProfileView: View {
             
         }
         .sheet(isPresented: self.$presentEditProfile, onDismiss: {
-            self.viewModel.getUserInfo()
+            if !self.viewModel.signed() {
+                self.presentContent = true
+            }
+            else {
+                self.viewModel.getUserInfo()
+
+            }
         }, content: {
             self.editProfileView
         })

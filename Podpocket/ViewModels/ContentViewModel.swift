@@ -11,6 +11,6 @@ import Foundation
 class ContentViewModel {
     
     func signed() -> Bool {
-        return FirebaseConnection.shared.signed() ? true : false
+        return FirebaseConnection.shared.signed()
     }
 }

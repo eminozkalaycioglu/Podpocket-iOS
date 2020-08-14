@@ -20,8 +20,6 @@ class UserProfileViewModel: ObservableObject {
         
     }
     
-   
-    
     func getUserInfo() {
         FirebaseConnection.shared.fetchUserInfo(uid: self.uid) { (user) in
             if let user = user {
@@ -30,6 +28,10 @@ class UserProfileViewModel: ObservableObject {
             }
             
         }
+    }
+    
+    func signed() -> Bool {
+        return FirebaseConnection.shared.signed()
     }
     
     func signOut() -> Bool {

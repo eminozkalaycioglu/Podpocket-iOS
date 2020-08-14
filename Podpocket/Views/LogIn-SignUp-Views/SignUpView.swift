@@ -104,11 +104,7 @@ struct SignUpView: View {
                         
                     }) {
                         
-                        ZStack {
-                            Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
-                            
-                            Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(Color.init(hex: "#50E3C2"))
-                        }
+                        SaveButtonView()
                         
                     }.padding(.vertical, 30)
                     

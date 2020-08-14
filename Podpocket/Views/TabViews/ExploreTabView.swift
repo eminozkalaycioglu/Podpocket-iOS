@@ -14,7 +14,11 @@ struct ExploreTabView: View {
             Image("LoginBG")
                 .resizable()
                 .edgesIgnoringSafeArea(.all)
+            Image("dm").offset(x: 130, y: -100)
+
             VStack {
+                ZStack {
+                }
                 Text("explore, World!").foregroundColor(.white)
             }
         }    }

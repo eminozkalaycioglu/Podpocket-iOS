@@ -23,18 +23,13 @@ class FirebaseConnection {
             if snapshot.childrenCount == 0 {
                 Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
                     if error != nil {
-                        
                         completion?(error?.localizedDescription)
                         return
                     }
-                    
-                    
                     guard let uid = user?.user.uid else {
                         completion?("uid not found")
                         return
                     }
-                    
-                    
                     
                     self.saveWithInfos(email: email, fullName: fullName, uid: uid, username: username, birthday: birthday)
                     
@@ -45,11 +40,7 @@ class FirebaseConnection {
                 completion?("Username already exists")
             }
             
-            
         }
-        
-        
-        
     }
     
     private func saveWithInfos(email: String, fullName: String, uid: String, username: String, birthday: String) {

@@ -72,6 +72,11 @@ PODS:
   - GoogleUtilities/UserDefaults (6.7.2):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.4.0)
+  - Kingfisher (5.15.0):
+    - Kingfisher/Core (= 5.15.0)
+  - Kingfisher/Core (5.15.0)
+  - Kingfisher/SwiftUI (5.15.0):
+    - Kingfisher/Core
   - leveldb-library (1.22)
   - Moya (14.0.0):
     - Moya/Core (= 14.0.0)
@@ -89,6 +94,8 @@ DEPENDENCIES:
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
+  - Kingfisher
+  - Kingfisher/SwiftUI
   - Moya
 
 SPEC REPOS:
@@ -105,6 +112,7 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
+    - Kingfisher
     - leveldb-library
     - Moya
     - nanopb
@@ -123,11 +131,12 @@ SPEC CHECKSUMS:
   GoogleDataTransport: 672fb0ce96fe7f7f31d43672fca62ad2c9c86f7b
   GoogleUtilities: 7f2f5a07f888cdb145101d6042bc4422f57e70b3
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
+  Kingfisher: 1acb67597a520c2d0310677e66d6e0af455ef757
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   Moya: 5b45dacb75adb009f97fde91c204c1e565d31916
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
   PromisesObjC: b14b1c6b68e306650688599de8a45e49fae81151
 
-PODFILE CHECKSUM: c1cfebc070fb6a2de0a91686c3d8b33b65fab4e9
+PODFILE CHECKSUM: 25d45b5ebdc52d42e751cf85eef888a6f2750ffc
 
 COCOAPODS: 1.9.3

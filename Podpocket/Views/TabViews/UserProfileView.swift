@@ -66,21 +66,16 @@ struct UserProfileView: View {
                             self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
                             self.presentEditProfile = true
                         }
-                   
+                    
                     Spacer()
                 }
             }
             
             NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
-
+            
             if self.viewModel.loading {
-                ZStack {
-                    Color.init(.gray).opacity(0.2).edgesIgnoringSafeArea(.all)
-                    Color.init(.white).foregroundColor(.white).cornerRadius(20).frame(width: 150, height: 100, alignment: .center)
-                    if #available(iOS 14.0, *) {
-                        ProgressView("Loading").foregroundColor(.black)
-                    }
-                }
+                CustomProgressView()
+                    
             }
             
             
@@ -100,7 +95,7 @@ struct UserProfileView: View {
             }
             else {
                 self.viewModel.getUserInfo()
-
+                
             }
         }, content: {
             self.editProfileView

@@ -8,7 +8,6 @@
 
 import SwiftUI
 
-//email değişince bazen alert veriyor bazen vermiyor. logout olunması gerekli!!!
 struct EditProfileView: View {
     @Environment(\.presentationMode) private var presentationMode
     
@@ -71,15 +70,7 @@ struct EditProfileView: View {
                 }) {
                     
                     SaveButtonView(text: "Update")
-//                    VStack(alignment: .center) {
-//                        ZStack {
-//                            Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
-//
-//                            Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(Color.init(hex: "#50E3C2"))
-//                        }
-//                        Text("Update").foregroundColor(Color.init(hex: "50E3C2")).font(.system(size: 10))
-//
-//                    }
+
                     
                 }.padding(.vertical, 30)
                 

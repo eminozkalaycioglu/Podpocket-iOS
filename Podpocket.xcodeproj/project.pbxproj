@@ -23,6 +23,15 @@
 		2348EE5024D081C400253375 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2348EE4F24D081C400253375 /* SignUpView.swift */; };
 		234A9AD424E6AC5E003637D4 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */; };
 		239598A124DD608C00D0FEE5 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239598A024DD608C00D0FEE5 /* UserProfileView.swift */; };
+		23A40B1024EBF8870091F36A /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B0E24EBF8870091F36A /* ServiceManager.swift */; };
+		23A40B1124EBF8870091F36A /* ListenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B0F24EBF8870091F36A /* ListenAPI.swift */; };
+		23A40B1724EBFA650091F36A /* Podcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1324EBFA650091F36A /* Podcast.swift */; };
+		23A40B1824EBFA650091F36A /* PodcastModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1424EBFA650091F36A /* PodcastModel.swift */; };
+		23A40B1924EBFA650091F36A /* Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1524EBFA650091F36A /* Extra.swift */; };
+		23A40B1A24EBFA650091F36A /* LookingFor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1624EBFA650091F36A /* LookingFor.swift */; };
+		23A40B1C24EC03040091F36A /* ExploreTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1B24EC03040091F36A /* ExploreTabViewModel.swift */; };
+		23A40B1E24EC24340091F36A /* BestPodcastsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1D24EC24340091F36A /* BestPodcastsCell.swift */; };
+		23A40B2024EC35AA0091F36A /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */; };
 		23CCCE6F24DAC99E00FD6D55 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 23CCCE6E24DAC99E00FD6D55 /* GoogleService-Info.plist */; };
 		23CCCE7224DACB8A00FD6D55 /* FirebaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CCCE7124DACB8A00FD6D55 /* FirebaseConnection.swift */; };
 		23CCCE7524DACE8500FD6D55 /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23CCCE7424DACE8500FD6D55 /* HomepageView.swift */; };
@@ -80,6 +89,15 @@
 		2348EE4F24D081C400253375 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
 		239598A024DD608C00D0FEE5 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		23A40B0E24EBF8870091F36A /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
+		23A40B0F24EBF8870091F36A /* ListenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenAPI.swift; sourceTree = "<group>"; };
+		23A40B1324EBFA650091F36A /* Podcast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Podcast.swift; sourceTree = "<group>"; };
+		23A40B1424EBFA650091F36A /* PodcastModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PodcastModel.swift; sourceTree = "<group>"; };
+		23A40B1524EBFA650091F36A /* Extra.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extra.swift; sourceTree = "<group>"; };
+		23A40B1624EBFA650091F36A /* LookingFor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LookingFor.swift; sourceTree = "<group>"; };
+		23A40B1B24EC03040091F36A /* ExploreTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabViewModel.swift; sourceTree = "<group>"; };
+		23A40B1D24EC24340091F36A /* BestPodcastsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BestPodcastsCell.swift; sourceTree = "<group>"; };
+		23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 		23CCCE6E24DAC99E00FD6D55 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		23CCCE7124DACB8A00FD6D55 /* FirebaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConnection.swift; sourceTree = "<group>"; };
 		23CCCE7424DACE8500FD6D55 /* HomepageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
@@ -154,6 +172,7 @@
 		231FE8F124D0373C006B175C /* Podpocket */ = {
 			isa = PBXGroup;
 			children = (
+				23A40B2324EC469C0091F36A /* Network */,
 				23F5BD4324E3260B008001D9 /* Models */,
 				23CCCE7624DACEE800FD6D55 /* ViewModels */,
 				23CCCE7324DACE6C00FD6D55 /* Views */,
@@ -227,6 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */,
+				23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -240,6 +260,26 @@
 				23D3D2F424E1963300BE8D4C /* FeedTabView.swift */,
 			);
 			path = TabViews;
+			sourceTree = "<group>";
+		};
+		23A40B1224EBFA520091F36A /* Podcast */ = {
+			isa = PBXGroup;
+			children = (
+				23A40B1524EBFA650091F36A /* Extra.swift */,
+				23A40B1624EBFA650091F36A /* LookingFor.swift */,
+				23A40B1324EBFA650091F36A /* Podcast.swift */,
+				23A40B1424EBFA650091F36A /* PodcastModel.swift */,
+			);
+			path = Podcast;
+			sourceTree = "<group>";
+		};
+		23A40B2324EC469C0091F36A /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				23A40B0E24EBF8870091F36A /* ServiceManager.swift */,
+				23A40B0F24EBF8870091F36A /* ListenAPI.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 		23CCCE7024DACB7300FD6D55 /* Firebase */ = {
@@ -258,6 +298,7 @@
 				239598A224DD609B00D0FEE5 /* TabViews */,
 				23CCCE7424DACE8500FD6D55 /* HomepageView.swift */,
 				2315F58C24E432640002576C /* EditProfileView.swift */,
+				23A40B1D24EC24340091F36A /* BestPodcastsCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -270,6 +311,7 @@
 				23CCCE7B24DB0FE000FD6D55 /* ContentViewModel.swift */,
 				23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */,
 				2315F58E24E434C30002576C /* EditProfileViewModel.swift */,
+				23A40B1B24EC03040091F36A /* ExploreTabViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -277,6 +319,7 @@
 		23F5BD4324E3260B008001D9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				23A40B1224EBFA520091F36A /* Podcast */,
 				23F5BD4424E32618008001D9 /* UserModel.swift */,
 			);
 			path = Models;
@@ -549,22 +592,31 @@
 				231FE8F324D0373C006B175C /* AppDelegate.swift in Sources */,
 				23D3D2F524E1963300BE8D4C /* FeedTabView.swift in Sources */,
 				23D3D2F124E1948000BE8D4C /* ExploreTabView.swift in Sources */,
+				23A40B1924EBFA650091F36A /* Extra.swift in Sources */,
+				23A40B1824EBFA650091F36A /* PodcastModel.swift in Sources */,
 				23CCCE7A24DADE5B00FD6D55 /* LoginViewModel.swift in Sources */,
 				23CCCE7824DACEFE00FD6D55 /* SignUpViewModel.swift in Sources */,
+				23A40B2024EC35AA0091F36A /* CustomProgressView.swift in Sources */,
+				23A40B1A24EBFA650091F36A /* LookingFor.swift in Sources */,
 				231FE8F524D0373C006B175C /* SceneDelegate.swift in Sources */,
 				239598A124DD608C00D0FEE5 /* UserProfileView.swift in Sources */,
 				231FE92424D06605006B175C /* LoginView.swift in Sources */,
 				2348EE5024D081C400253375 /* SignUpView.swift in Sources */,
 				23CCCE7224DACB8A00FD6D55 /* FirebaseConnection.swift in Sources */,
+				23A40B1024EBF8870091F36A /* ServiceManager.swift in Sources */,
 				23CCCE7C24DB0FE000FD6D55 /* ContentViewModel.swift in Sources */,
 				2315F58F24E434C30002576C /* EditProfileViewModel.swift in Sources */,
+				23A40B1724EBFA650091F36A /* Podcast.swift in Sources */,
 				23D3D2F324E194F300BE8D4C /* SearchTabView.swift in Sources */,
 				2315F58D24E432640002576C /* EditProfileView.swift in Sources */,
 				231FE92824D0780A006B175C /* ColorExtension.swift in Sources */,
 				231FE8F724D0373C006B175C /* ContentView.swift in Sources */,
+				23A40B1C24EC03040091F36A /* ExploreTabViewModel.swift in Sources */,
 				23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */,
+				23A40B1124EBF8870091F36A /* ListenAPI.swift in Sources */,
 				23F5BD4524E32618008001D9 /* UserModel.swift in Sources */,
 				234A9AD424E6AC5E003637D4 /* SaveButtonView.swift in Sources */,
+				23A40B1E24EC24340091F36A /* BestPodcastsCell.swift in Sources */,
 				231FE92624D074B5006B175C /* CustomTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

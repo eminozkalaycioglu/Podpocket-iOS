@@ -12,11 +12,12 @@ import SwiftUI
 struct ExploreTabView: View {
     
     @ObservedObject var viewModel = ExploreTabViewModel()
-    @State var appeared = false
+    @State var presentDetail = false
+    @State var selectedId = ""
+    
     let rows = [
         GridItem(.fixed(180)),
         GridItem(.fixed(180)),
-        
         
     ]
     var body: some View {
@@ -92,7 +93,11 @@ struct ExploreTabView: View {
                                 LazyHGrid(rows: rows, spacing: 20) {
                                     if let data = self.viewModel.bestPodcasts?.podcasts {
                                         ForEach(data, id: \.self) { item in
-                                            BestPodcastsCell(podcast: item)
+                                            PodcastCell(podcast: item)
+                                                .onTapGesture {
+                                                    self.selectedId = item.id ?? ""
+                                                    self.presentDetail = true
+                                                }
                                             
                                         }
                                     }
@@ -109,12 +114,11 @@ struct ExploreTabView: View {
                 
                 if self.viewModel.loading {
                     CustomProgressView()
-                        
-
+                    
                 }
 
                 
-
+                NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
                 
             }.navigationBarTitle("").navigationBarHidden(true)
             

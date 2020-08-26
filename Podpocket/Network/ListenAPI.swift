@@ -5,7 +5,8 @@ import Moya
 enum ListenAPI {
     
     case fetchBestPodcastsInSpecificRegion(region: String)
-    
+    case fetchPodcastDetail(id: String, nextEpisodePudDate: String?)
+    case fetchSimilarPodcasts(id: String)
 }
 
 
@@ -35,6 +36,12 @@ extension ListenAPI: TargetType {
         case .fetchBestPodcastsInSpecificRegion( _):
             return "/best_podcasts"
         
+        case .fetchPodcastDetail(let id, _):
+            return "/podcasts/\(id)"
+            
+        case .fetchSimilarPodcasts(let id):
+            return "/podcasts/\(id)/recommendations"
+
         }
     }
 
@@ -57,6 +64,31 @@ extension ListenAPI: TargetType {
                 
                 parameters: [
                     "region": region
+                    ] ,
+                encoding: URLEncoding.default)
+        case .fetchPodcastDetail(_ , let pubDate):
+            if let pubDate = pubDate {
+                return .requestParameters(
+                    
+                    parameters: [
+                        "next_episode_pub_date": pubDate
+                        ] ,
+                    encoding: URLEncoding.default)
+            }
+            else {
+                return .requestParameters(
+                    
+                    parameters: [
+                        "sort": "recent_first"
+                        ] ,
+                    encoding: URLEncoding.default)
+            }
+            
+        case .fetchSimilarPodcasts(_):
+            return .requestParameters(
+                
+                parameters: [
+                    "safe_mode": "0"
                     ] ,
                 encoding: URLEncoding.default)
             

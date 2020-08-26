@@ -51,6 +51,14 @@ public final class ServiceManager {
         fetch(target: .fetchBestPodcastsInSpecificRegion(region: region), completion: completion)
     }
     
+    func fetchBestPodcastsInSpecificRegion(id: String, pubDate: String?, completion: @escaping (_ result: APIResult<Podcast>) -> Void) {
+        fetch(target: .fetchPodcastDetail(id: id, nextEpisodePudDate: pubDate), completion: completion)
+    }
+    
+    func fetchSimilarPodcasts(id: String, completion: @escaping (_ result: APIResult<SimilarPodcasts>) -> Void) {
+        fetch(target: .fetchSimilarPodcasts(id: id), completion: completion)
+    }
+    
 
 }
 

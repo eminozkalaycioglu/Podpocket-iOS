@@ -10,6 +10,7 @@ import SwiftUI
 
 struct HomepageView: View {
     @State var selectedTab: Int = 0
+    
     init() {
         UITabBar.appearance().backgroundImage = UIImage(named: "LoginBG")
         UITabBar.appearance().barTintColor = .clear
@@ -23,10 +24,12 @@ struct HomepageView: View {
             TabView(selection: self.$selectedTab) {
                 
                 if #available(iOS 14.0, *) {
-                    ExploreTabView().tabItem {
-                        Image("ExploreTab").renderingMode(.template)
-                        self.selectedTab == 0 ? Text("Explore") : Text("")
-                    }.tag(0)
+                    ExploreTabView()
+                        .tabItem {
+                            Image("ExploreTab")
+                                .renderingMode(.template)
+                            self.selectedTab == 0 ? Text("Explore") : Text("")
+                        }.tag(0)
                 } else {
                 }
                 
@@ -51,6 +54,7 @@ struct HomepageView: View {
                 
                 
             }.accentColor(Color.init(hex: "#50E3C2"))
+            
             
             
         }

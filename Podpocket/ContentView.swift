@@ -14,6 +14,7 @@ struct ContentView: View {
     var body: some View {
         
         NavigationView {
+//            PodcastDetailView(id: "adfsg")
             if self.viewModel.signed() {
                 HomepageView()
             }
@@ -21,6 +22,7 @@ struct ContentView: View {
                 LoginView()
             }
         }.navigationBarTitle("").navigationBarHidden(true)
+
         
         
         

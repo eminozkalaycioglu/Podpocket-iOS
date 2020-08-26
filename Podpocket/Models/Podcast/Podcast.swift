@@ -30,6 +30,11 @@ struct Podcast: Decodable, Hashable {
     var totalEpisodes : Int?
     var type : String?
     var website : String?
+
+    var episodes : [Episode]?
+    var nextEpisodePubDate : Int?
+
+    
     
     enum CodingKeys : String, CodingKey {
         case country = "country"
@@ -54,6 +59,9 @@ struct Podcast: Decodable, Hashable {
         case totalEpisodes = "total_episodes"
         case type = "type"
         case website = "website"
+        case episodes = "episodes"
+        case nextEpisodePubDate = "next_episode_pub_date"
+
         
         
     }

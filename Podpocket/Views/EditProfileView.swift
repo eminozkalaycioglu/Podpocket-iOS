@@ -68,10 +68,8 @@ struct EditProfileView: View {
                     }
                     
                 }) {
-                    
                     SaveButtonView(text: "Update")
 
-                    
                 }.padding(.vertical, 30)
                 
             }

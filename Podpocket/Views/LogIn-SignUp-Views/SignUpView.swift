@@ -29,13 +29,8 @@ struct SignUpView: View {
             
             VStack {
                 
-                HStack {
-                    Image("Logo")
-                    Text("POD\nCASTR")
-                        .font(.system(size: 30))
-                        .foregroundColor(.white)
-                        .padding()
-                }.padding(.bottom, 50)
+                PodpocketLogo()
+                    .padding(.bottom, 50)
                 
                 
                 VStack {

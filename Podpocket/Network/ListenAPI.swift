@@ -7,6 +7,12 @@ enum ListenAPI {
     case fetchBestPodcastsInSpecificRegion(region: String)
     case fetchPodcastDetail(id: String, nextEpisodePudDate: String?)
     case fetchSimilarPodcasts(id: String)
+    case search(query: String, type: SearchType, offset: Int, genres: [String]? = nil)
+}
+
+enum SearchType {
+    case Episode
+    case Podcast
 }
 
 
@@ -42,6 +48,8 @@ extension ListenAPI: TargetType {
         case .fetchSimilarPodcasts(let id):
             return "/podcasts/\(id)/recommendations"
 
+        case .search(_, _, _, _):
+            return "/search"
         }
     }
 
@@ -91,6 +99,37 @@ extension ListenAPI: TargetType {
                     "safe_mode": "0"
                     ] ,
                 encoding: URLEncoding.default)
+            
+        case .search(query: let query, type: let type, offset: let offset, genres: let genres):
+            
+            var dictionary: [String: Any] = [:]
+            
+            switch type {
+            case .Episode:
+                dictionary["type"] = "episode"
+            case .Podcast:
+                dictionary["type"] = "podcast"
+            }
+            
+            if let genres = genres {
+                var genresForURL = ""
+                for genre in genres {
+                    if genre == genres.last {
+                        genresForURL += genre
+                    } else {
+                        genresForURL += genre + ","
+                    }
+                    
+                }
+                dictionary["genre_ids"] = genresForURL
+            }
+            
+            dictionary["q"] = query
+            dictionary["offset"] = offset
+            
+            return .requestParameters(parameters: dictionary, encoding: URLEncoding.default)
+            
+            
             
         }
     }

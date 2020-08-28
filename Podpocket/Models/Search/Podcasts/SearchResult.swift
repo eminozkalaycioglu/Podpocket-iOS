@@ -6,7 +6,7 @@
 import Foundation
 
 //MARK: - SearchPodcastResult
-struct SearchResult: Decodable {
+struct SearchResult: Decodable, Hashable {
 
     var id : String?
     var image : String?

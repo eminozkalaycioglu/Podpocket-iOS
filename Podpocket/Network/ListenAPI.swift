@@ -8,6 +8,7 @@ enum ListenAPI {
     case fetchPodcastDetail(id: String, nextEpisodePudDate: String?)
     case fetchSimilarPodcasts(id: String)
     case search(query: String, type: SearchType, offset: Int, genres: [String]? = nil)
+    case fetchGenres
 }
 
 enum SearchType {
@@ -50,6 +51,8 @@ extension ListenAPI: TargetType {
 
         case .search(_, _, _, _):
             return "/search"
+        case .fetchGenres:
+            return "/genres"
         }
     }
 
@@ -131,6 +134,8 @@ extension ListenAPI: TargetType {
             
             
             
+        case .fetchGenres:
+            return .requestParameters(parameters: [String : Any](), encoding: URLEncoding.default)
         }
     }
 }

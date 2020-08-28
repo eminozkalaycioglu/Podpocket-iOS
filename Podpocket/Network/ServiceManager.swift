@@ -67,8 +67,14 @@ public final class ServiceManager {
         
     }
     
+    func fetchGenres(completion: @escaping (_ result: APIResult<Genres>) -> Void) {
+        fetch(target: .fetchGenres, completion: completion)
+    }
+    
 
 }
+
+
 
 
 

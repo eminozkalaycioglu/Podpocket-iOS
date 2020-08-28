@@ -32,6 +32,11 @@
 		233C263A24EECC610043532E /* AboutPodcastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 233C263924EECC610043532E /* AboutPodcastView.swift */; };
 		2348EE5024D081C400253375 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2348EE4F24D081C400253375 /* SignUpView.swift */; };
 		234A9AD424E6AC5E003637D4 /* SaveButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */; };
+		2354191124F94F790059E957 /* SearchTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2354191024F94F790059E957 /* SearchTabViewModel.swift */; };
+		2354191524F950B60059E957 /* Genres.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2354191324F950B60059E957 /* Genres.swift */; };
+		2354191624F950B60059E957 /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2354191424F950B60059E957 /* Genre.swift */; };
+		2354191824F9512D0059E957 /* GenreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2354191724F9512D0059E957 /* GenreCell.swift */; };
+		2354191A24F969FD0059E957 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2354191924F969FD0059E957 /* TestView.swift */; };
 		239598A124DD608C00D0FEE5 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239598A024DD608C00D0FEE5 /* UserProfileView.swift */; };
 		23A40B1024EBF8870091F36A /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B0E24EBF8870091F36A /* ServiceManager.swift */; };
 		23A40B1124EBF8870091F36A /* ListenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A40B0F24EBF8870091F36A /* ListenAPI.swift */; };
@@ -110,6 +115,11 @@
 		233C263924EECC610043532E /* AboutPodcastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutPodcastView.swift; sourceTree = "<group>"; };
 		2348EE4F24D081C400253375 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveButtonView.swift; sourceTree = "<group>"; };
+		2354191024F94F790059E957 /* SearchTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabViewModel.swift; sourceTree = "<group>"; };
+		2354191324F950B60059E957 /* Genres.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genres.swift; sourceTree = "<group>"; };
+		2354191424F950B60059E957 /* Genre.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		2354191724F9512D0059E957 /* GenreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreCell.swift; sourceTree = "<group>"; };
+		2354191924F969FD0059E957 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		239598A024DD608C00D0FEE5 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
 		23A40B0E24EBF8870091F36A /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		23A40B0F24EBF8870091F36A /* ListenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListenAPI.swift; sourceTree = "<group>"; };
@@ -270,6 +280,8 @@
 		231FE92B24D07FE1006B175C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				23000B0A24F6625400E9A492 /* CustomBackButton.swift */,
+				23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */,
 				231FE92524D074B5006B175C /* CustomTextField.swift */,
 			);
 			path = CustomViews;
@@ -279,12 +291,21 @@
 			isa = PBXGroup;
 			children = (
 				234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */,
-				23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */,
 				233C263924EECC610043532E /* AboutPodcastView.swift */,
-				23000B0A24F6625400E9A492 /* CustomBackButton.swift */,
 				23000B0C24F666C900E9A492 /* PodpocketLogo.swift */,
+				2354191724F9512D0059E957 /* GenreCell.swift */,
+				2354191924F969FD0059E957 /* TestView.swift */,
 			);
 			path = SubViews;
+			sourceTree = "<group>";
+		};
+		2354191224F9508A0059E957 /* Genres */ = {
+			isa = PBXGroup;
+			children = (
+				2354191424F950B60059E957 /* Genre.swift */,
+				2354191324F950B60059E957 /* Genres.swift */,
+			);
+			path = Genres;
 			sourceTree = "<group>";
 		};
 		239598A224DD609B00D0FEE5 /* TabViews */ = {
@@ -370,6 +391,7 @@
 				23A40B1B24EC03040091F36A /* ExploreTabViewModel.swift */,
 				233C263724EEC7210043532E /* PodcastDetailViewModel.swift */,
 				23000B1F24F6956400E9A492 /* AboutPodcastViewModel.swift */,
+				2354191024F94F790059E957 /* SearchTabViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -377,6 +399,7 @@
 		23F5BD4324E3260B008001D9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2354191224F9508A0059E957 /* Genres */,
 				23B2A6BB24F7FEB200DD851B /* Search */,
 				23000B1024F66C3800E9A492 /* SimilarPodcasts */,
 				23A40B1224EBFA520091F36A /* Podcast */,
@@ -657,12 +680,15 @@
 				23A40B1924EBFA650091F36A /* Extra.swift in Sources */,
 				23A40B1824EBFA650091F36A /* PodcastModel.swift in Sources */,
 				23CCCE7A24DADE5B00FD6D55 /* LoginViewModel.swift in Sources */,
+				2354191624F950B60059E957 /* Genre.swift in Sources */,
 				23B2A6C724F7FEDB00DD851B /* SearchModel.swift in Sources */,
 				23CCCE7824DACEFE00FD6D55 /* SignUpViewModel.swift in Sources */,
 				23000B1B24F66CA700E9A492 /* Recommendation.swift in Sources */,
 				23A40B2024EC35AA0091F36A /* CustomProgressView.swift in Sources */,
 				23000B2024F6956400E9A492 /* AboutPodcastViewModel.swift in Sources */,
+				2354191824F9512D0059E957 /* GenreCell.swift in Sources */,
 				23A40B1A24EBFA650091F36A /* LookingFor.swift in Sources */,
+				2354191524F950B60059E957 /* Genres.swift in Sources */,
 				23000B0B24F6625500E9A492 /* CustomBackButton.swift in Sources */,
 				23000B0D24F666C900E9A492 /* PodpocketLogo.swift in Sources */,
 				231FE8F524D0373C006B175C /* SceneDelegate.swift in Sources */,
@@ -673,6 +699,7 @@
 				23CCCE7224DACB8A00FD6D55 /* FirebaseConnection.swift in Sources */,
 				23A40B1024EBF8870091F36A /* ServiceManager.swift in Sources */,
 				233C263624EEC3B70043532E /* Episode.swift in Sources */,
+				2354191124F94F790059E957 /* SearchTabViewModel.swift in Sources */,
 				23CCCE7C24DB0FE000FD6D55 /* ContentViewModel.swift in Sources */,
 				2315F58F24E434C30002576C /* EditProfileViewModel.swift in Sources */,
 				23A40B1724EBFA650091F36A /* Podcast.swift in Sources */,
@@ -682,6 +709,7 @@
 				231FE92824D0780A006B175C /* ColorExtension.swift in Sources */,
 				231FE8F724D0373C006B175C /* ContentView.swift in Sources */,
 				23A40B1C24EC03040091F36A /* ExploreTabViewModel.swift in Sources */,
+				2354191A24F969FD0059E957 /* TestView.swift in Sources */,
 				23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */,
 				23A40B1124EBF8870091F36A /* ListenAPI.swift in Sources */,
 				23F5BD4524E32618008001D9 /* UserModel.swift in Sources */,

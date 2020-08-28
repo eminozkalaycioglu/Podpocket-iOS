@@ -50,7 +50,7 @@ struct ExploreTabView: View {
                         HStack {
                             Image("Logo")
                                 .resizable()
-                                .frame(width: 50, height: 50)
+                                .frame(width: geometry.size.height / 15, height: geometry.size.height / 15)
                             Text("Podpocket")
                                 .foregroundColor(.white)
                         }.padding()

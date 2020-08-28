@@ -6,7 +6,7 @@
 import Foundation
 
 //MARK: - SearchPodcastModel
-struct SearchModel: Decodable {
+struct SearchModel: Decodable, Hashable {
 
     var count : Int?
     var nextOffset : Int?

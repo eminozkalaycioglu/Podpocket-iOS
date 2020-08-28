@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HomepageView: View {
-    @State var selectedTab: Int = 0
+    @State var selectedTab: Int = 1
     
     init() {
         UITabBar.appearance().backgroundImage = UIImage(named: "LoginBG")
@@ -33,11 +33,15 @@ struct HomepageView: View {
                 } else {
                 }
                 
-                SearchTabView().tabItem {
-                    Image("search").renderingMode(.template)
-                    self.selectedTab == 1 ? Text("Search") : Text("")
-
-                }.tag(1)
+                if #available(iOS 14.0, *) {
+                    SearchTabView().tabItem {
+                        Image("search").renderingMode(.template)
+                        self.selectedTab == 1 ? Text("Search") : Text("")
+                        
+                    }.tag(1)
+                } else {
+                    // Fallback on earlier versions
+                }
                 
                 FeedTabView().tabItem {
                     Image("LogoTab").renderingMode(.template)

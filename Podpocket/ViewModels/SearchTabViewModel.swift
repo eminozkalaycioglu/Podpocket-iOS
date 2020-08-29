@@ -11,11 +11,15 @@ import Combine
 
 class SearchTabViewModel: ObservableObject {
     @Published var selections: [String] = []
-
+    
     @Published var genres: Genres = Genres()
-    @Published var results = [SearchResult]()
+    @Published var podcastResults = [SearchResult]()
+    @Published var episodeResult = [SearchResult]()
+    
     @Published var loading = false
-    var lastResults = SearchModel()
+    var lastPodcastResults = SearchModel()
+    var lastEpisodeResults = SearchModel()
+    
     
     init() {
         self.fetchGenres()
@@ -34,14 +38,29 @@ class SearchTabViewModel: ObservableObject {
         }
     }
     
-    func search(query: String, offset: Int) {
+    func searchNextOffset(query: String, type: SearchType) {
         self.loading = true
         
-        ServiceManager.shared.search(query: query, type: .Podcast, offset: offset, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
+        var offset: Int = 0
+        switch type {
+        case .Episode:
+            offset = self.lastEpisodeResults.nextOffset ?? 0
+        case .Podcast:
+            offset = self.lastPodcastResults.nextOffset ?? 0
+            
+        }
+        ServiceManager.shared.search(query: query, type: type, offset: offset, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
             switch result {
             case .success(let response):
-                self.lastResults = response
-                self.results += response.results ?? [SearchResult]()
+                switch type {
+                case .Episode:
+                    self.lastEpisodeResults = response
+                    self.episodeResult += response.results ?? [SearchResult]()
+                case.Podcast:
+                    self.lastPodcastResults = response
+                    self.podcastResults += response.results ?? [SearchResult]()
+                }
+                
                 self.loading = false
             case .failure(_):
                 print("error!")
@@ -50,7 +69,37 @@ class SearchTabViewModel: ObservableObject {
         }
     }
     
-    func searchNextOffset(query: String) {
-        self.search(query: query, offset: self.lastResults.nextOffset ?? 0)
+    func search(query: String, type: SearchType) {
+        
+        self.loading = true
+        
+        
+        ServiceManager.shared.search(query: query, type: type, offset: 0, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
+            switch result {
+            case .success(let response):
+                switch type {
+                case .Episode:
+                    self.lastEpisodeResults = response
+                    self.episodeResult = response.results ?? [SearchResult]()
+                case.Podcast:
+                    self.lastPodcastResults = response
+                    self.podcastResults = response.results ?? [SearchResult]()
+                }
+                
+                self.loading = false
+            case .failure(_):
+                print("error!")
+                self.loading = false
+            }
+        }
+        
+        
+        
+        
     }
+
+    
+    
 }
+
+

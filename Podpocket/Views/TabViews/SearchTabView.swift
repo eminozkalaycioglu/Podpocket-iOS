@@ -12,7 +12,7 @@ struct SearchTabView: View {
     @State var query = ""
     @State var boole = false
     @ObservedObject var viewModel = SearchTabViewModel()
-
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -33,9 +33,9 @@ struct SearchTabView: View {
                             .overlay(
                                 
                                 Image("dmm")
-                                        .resizable()
-                                        .frame(width: geometry.size.height / 2.5, height: geometry.size.height / 2.5)
-                            
+                                    .resizable()
+                                    .frame(width: geometry.size.height / 2.5, height: geometry.size.height / 2.5)
+                                
                             )
                             .padding(.trailing, 30)
                             .padding(.top, 30)
@@ -49,7 +49,9 @@ struct SearchTabView: View {
                         CustomTextField(placeholder: Text("Search an episode, podcast or category").foregroundColor(.gray), text: self.$query)
                             .foregroundColor(.white)
                         Button(action: {
-                            self.viewModel.search(query: self.query, offset: 0)
+                            
+                            self.viewModel.search(query: self.query, type: .Podcast)
+                            self.viewModel.search(query: self.query, type: .Episode)
                         }, label: {
                             Image("SearchLogo")
                                 .resizable()
@@ -66,7 +68,7 @@ struct SearchTabView: View {
                     .padding(.trailing, 27)
                     .padding(.top, 30)
                     
-                
+                    
                     
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10) {
@@ -76,62 +78,106 @@ struct SearchTabView: View {
                                     GenreCell(genre: genre, isSelected: self.viewModel.selections.contains(genre.id?.description ?? "")) {
                                         if self.viewModel.selections.contains(genre.id?.description ?? "") {
                                             self.viewModel.selections.removeAll(where: { $0 == genre.id?.description })
-
+                                            
                                         }
                                         else {
                                             self.viewModel.selections.append(genre.id?.description ?? "")
                                         }
                                     }
                                 }
-
+                                
                             }
                         }.padding()
                     }.frame(height: 60, alignment: .center)
                     
                     
+                    HStack {
+                        Text("PODCASTS")
+                            .foregroundColor(.white)
+                            .font(.title)
+                        Spacer()
+                    }.padding()
+                    
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        LazyHGrid(rows: [GridItem(.flexible())], spacing: 20) {
+                            
+                            
+                            ForEach(self.viewModel.podcastResults, id: \.self) { result in
+                                
+                                SearchResultPodcastCell(podcast: result)
+                                    .foregroundColor(.white)
+                                    .onAppear {
+                                        if result == self.viewModel.podcastResults.last {
+                                            
+                                            self.viewModel.searchNextOffset(query: self.query, type: .Podcast)
+                                        }
+                                    }
+                                    .onTapGesture {
+                                        print(result.id)
+                                    }
+                                
+                                
+                                
+                                
+                                
+                            }
+                            
+                            
+                        }.padding()
+                        .frame(height: self.viewModel.podcastResults.count != 0 ? 180 : 0)
+                    }
+                    
+                    
+                    HStack {
+                        Text("EPISODES")
+                            .foregroundColor(.white)
+                            .font(.title)
+                        Spacer()
+                    }.padding()
+                    
                     ScrollView(.vertical, showsIndicators: false) {
                         LazyVGrid(columns: [GridItem(.flexible())], spacing: 50) {
                             
-                           
-                            ForEach(self.viewModel.results, id: \.self) { result in
+                            
+                            ForEach(self.viewModel.episodeResult, id: \.self) { result in
                                 
-                                Text(result.titleOriginal!).onAppear {
-                                    if result == self.viewModel.results.last {
-                                        
-                                        self.viewModel.searchNextOffset(query: self.query)
+                                Text(result.titleOriginal!)
+                                    .foregroundColor(.white)
+                                    
+                                    .onAppear {
+                                        if result == self.viewModel.episodeResult.last {
+                                            
+                                            self.viewModel.searchNextOffset(query: self.query, type: .Episode)
+                                        }
                                     }
-                                }
-                                .onTapGesture {
-                                    print(result.id)
-                                }
+                                    .onTapGesture {
+                                        print(result.id)
+                                    }
                                 
                             }
-
+                            
                             
                         }.padding()
                     }
                     
                     
-                    
-//                    Button(action: {
-//                        self.viewModel.search(query: "music")
-//                    }, label: {
-//                        Text("Button")
-//                    })
-                    
-                    
-                    Spacer()
                 }
                 
-                if self.viewModel.loading {
-                    CustomProgressView()
-                }
-            }.navigationBarTitle("").navigationBarHidden(true)
+                
+                
+                
+                Spacer()
+            }
             
-        }
+            if self.viewModel.loading {
+                CustomProgressView()
+            }
+        }.navigationBarTitle("").navigationBarHidden(true)
         
     }
+    
 }
+
 
 struct SearchTabView_Previews: PreviewProvider {
     static var previews: some View {

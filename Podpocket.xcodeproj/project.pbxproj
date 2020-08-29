@@ -58,6 +58,7 @@
 		23D3D2F124E1948000BE8D4C /* ExploreTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F024E1947F00BE8D4C /* ExploreTabView.swift */; };
 		23D3D2F324E194F300BE8D4C /* SearchTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F224E194F300BE8D4C /* SearchTabView.swift */; };
 		23D3D2F524E1963300BE8D4C /* FeedTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23D3D2F424E1963300BE8D4C /* FeedTabView.swift */; };
+		23EB3B9024FAE4A1006DA24A /* SearchResultPodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23EB3B8F24FAE4A1006DA24A /* SearchResultPodcastCell.swift */; };
 		23F5BD4224E32209008001D9 /* UserProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */; };
 		23F5BD4524E32618008001D9 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F5BD4424E32618008001D9 /* UserModel.swift */; };
 		55B9BD836CB3B6EAC0967E6F /* Pods_Podpocket_PodpocketUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD69F4E3B4415F7DFD1FBD7A /* Pods_Podpocket_PodpocketUITests.framework */; };
@@ -141,6 +142,7 @@
 		23D3D2F024E1947F00BE8D4C /* ExploreTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreTabView.swift; sourceTree = "<group>"; };
 		23D3D2F224E194F300BE8D4C /* SearchTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTabView.swift; sourceTree = "<group>"; };
 		23D3D2F424E1963300BE8D4C /* FeedTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTabView.swift; sourceTree = "<group>"; };
+		23EB3B8F24FAE4A1006DA24A /* SearchResultPodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultPodcastCell.swift; sourceTree = "<group>"; };
 		23F5BD4124E32209008001D9 /* UserProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewModel.swift; sourceTree = "<group>"; };
 		23F5BD4424E32618008001D9 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		26DA07B25EA21E564DEED81B /* Pods-PodpocketTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PodpocketTests.debug.xcconfig"; path = "Target Support Files/Pods-PodpocketTests/Pods-PodpocketTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -290,10 +292,10 @@
 		234A9AD224E6AC2F003637D4 /* SubViews */ = {
 			isa = PBXGroup;
 			children = (
+				23EB3B8E24FAE483006DA24A /* Cells */,
 				234A9AD324E6AC5E003637D4 /* SaveButtonView.swift */,
 				233C263924EECC610043532E /* AboutPodcastView.swift */,
 				23000B0C24F666C900E9A492 /* PodpocketLogo.swift */,
-				2354191724F9512D0059E957 /* GenreCell.swift */,
 				2354191924F969FD0059E957 /* TestView.swift */,
 			);
 			path = SubViews;
@@ -343,18 +345,10 @@
 		23B2A6BB24F7FEB200DD851B /* Search */ = {
 			isa = PBXGroup;
 			children = (
-				23B2A6C324F7FEC700DD851B /* Podcasts */,
-			);
-			path = Search;
-			sourceTree = "<group>";
-		};
-		23B2A6C324F7FEC700DD851B /* Podcasts */ = {
-			isa = PBXGroup;
-			children = (
 				23B2A6C524F7FEDB00DD851B /* SearchModel.swift */,
 				23B2A6C424F7FEDB00DD851B /* SearchResult.swift */,
 			);
-			path = Podcasts;
+			path = Search;
 			sourceTree = "<group>";
 		};
 		23CCCE7024DACB7300FD6D55 /* Firebase */ = {
@@ -373,8 +367,6 @@
 				239598A224DD609B00D0FEE5 /* TabViews */,
 				23CCCE7424DACE8500FD6D55 /* HomepageView.swift */,
 				2315F58C24E432640002576C /* EditProfileView.swift */,
-				23A40B1D24EC24340091F36A /* PodcastsCell.swift */,
-				23000B1D24F68C7C00E9A492 /* RecommendationPodcastCell.swift */,
 				233C263324EE9F0B0043532E /* PodcastDetailView.swift */,
 			);
 			path = Views;
@@ -394,6 +386,17 @@
 				2354191024F94F790059E957 /* SearchTabViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		23EB3B8E24FAE483006DA24A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2354191724F9512D0059E957 /* GenreCell.swift */,
+				23000B1D24F68C7C00E9A492 /* RecommendationPodcastCell.swift */,
+				23A40B1D24EC24340091F36A /* PodcastsCell.swift */,
+				23EB3B8F24FAE4A1006DA24A /* SearchResultPodcastCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		23F5BD4324E3260B008001D9 /* Models */ = {
@@ -714,6 +717,7 @@
 				23A40B1124EBF8870091F36A /* ListenAPI.swift in Sources */,
 				23F5BD4524E32618008001D9 /* UserModel.swift in Sources */,
 				234A9AD424E6AC5E003637D4 /* SaveButtonView.swift in Sources */,
+				23EB3B9024FAE4A1006DA24A /* SearchResultPodcastCell.swift in Sources */,
 				23A40B1E24EC24340091F36A /* PodcastsCell.swift in Sources */,
 				231FE92624D074B5006B175C /* CustomTextField.swift in Sources */,
 				233C263A24EECC610043532E /* AboutPodcastView.swift in Sources */,

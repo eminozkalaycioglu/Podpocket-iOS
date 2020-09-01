@@ -87,13 +87,6 @@ struct SignUpView: View {
                                 self.errorMessage = errorString as String
                                 self.showErrorAlert = true
                             }
-//                            if errorStr != nil {
-//
-//
-//                                self.errorMessage = errorStr! as String
-//                                self.showErrorAlert = true
-//
-//                            }
                         }
                         
                         

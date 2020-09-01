@@ -35,6 +35,7 @@ struct CustomProgressView: View {
             }
             
         }.edgesIgnoringSafeArea(.all)
+        
     }
     
     func foreverAnimation(duration: Double) -> Animation {

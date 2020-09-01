@@ -9,9 +9,11 @@ target 'Podpocket' do
   pod 'Firebase/Auth'
   pod ‘Firebase/Core’
   pod ‘Firebase/Database’
+  pod 'Firebase/Storage'
   pod 'Moya'
   pod 'Kingfisher'
   pod 'Kingfisher/SwiftUI'
+  
 
   # Pods for Podpocket
 

@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct HomepageView: View {
-    @State var selectedTab: Int = 1
+    @State var selectedTab: Int = 3
     
     init() {
         UITabBar.appearance().backgroundImage = UIImage(named: "LoginBG")

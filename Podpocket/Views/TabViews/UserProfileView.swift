@@ -8,13 +8,14 @@
 
 import SwiftUI
 import MessageUI
+
 struct UserProfileView: View {
     @ObservedObject var viewModel = UserProfileViewModel()
     
+    @State var show: Bool = false
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
-    
     var cellWidth = UIScreen.main.bounds.width - 8
     
     var editProfileView = EditProfileView()
@@ -31,12 +32,22 @@ struct UserProfileView: View {
                 VStack {
                     
                     ZStack {
-                        Color.init(hex: "1E1B26").frame(width: self.cellWidth, height: 220, alignment: .center)
+                        
+                        if !self.show {
+                            Color.init(hex: "1E1B26").frame(width: self.cellWidth, height: 220, alignment: .center)
+                        }
+                        
                         HStack {
                             VStack(alignment: .leading) {
-                                Image("demoprofile").resizable().frame(width: 100, height: 100)
-                                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-                                    .overlay(Circle().stroke(Color.init(hex: "50E3C2"), lineWidth: 4.0))
+                                
+                                if #available(iOS 14.0, *) {
+                                    UserProfilePhotoView(showCaptureImageView: self.$show)
+                                } else {
+                                    // Fallback on earlier versions
+                                }
+//                                Image("demoprofile").resizable().frame(width: 100, height: 100)
+//                                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
+//                                    .overlay(Circle().stroke(Color.init(hex: "50E3C2"), lineWidth: 4.0))
                                 
                                 Text(self.viewModel.userInfo.username ?? "")
                                     .foregroundColor(.white)

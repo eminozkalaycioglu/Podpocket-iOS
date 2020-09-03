@@ -10,11 +10,8 @@ import SwiftUI
 
 struct ContentView: View {
     var viewModel = ContentViewModel()
-    @State var isim = "Celil"
     var body: some View {
         
-        
-
         NavigationView {
             if self.viewModel.signed() {
                 HomepageView()
@@ -24,10 +21,6 @@ struct ContentView: View {
             }
         }.navigationBarTitle("").navigationBarHidden(true)
 
-        
-        
-        
-        
     }
 }
 

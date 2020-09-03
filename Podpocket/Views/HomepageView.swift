@@ -24,7 +24,7 @@ struct HomepageView: View {
             TabView(selection: self.$selectedTab) {
                 
                 if #available(iOS 14.0, *) {
-                    ExploreTabView()
+                    ExploreTabView(tabSelection: self.$selectedTab)
                         .tabItem {
                             Image("ExploreTab")
                                 .renderingMode(.template)
@@ -49,11 +49,15 @@ struct HomepageView: View {
 
                 }.tag(2)
                 
-                UserProfileView().tabItem {
-                    Image("UserTab").renderingMode(.template)
-                    self.selectedTab == 3 ? Text("Profile") : Text("")
-
-                }.tag(3)
+                if #available(iOS 14.0, *) {
+                    UserProfileView().tabItem {
+                        Image("UserTab").renderingMode(.template)
+                        self.selectedTab == 3 ? Text("Profile") : Text("")
+                        
+                    }.tag(3)
+                } else {
+                    // Fallback on earlier versions
+                }
                 
                 
                 

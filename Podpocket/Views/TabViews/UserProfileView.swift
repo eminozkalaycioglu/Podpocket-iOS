@@ -9,108 +9,124 @@
 import SwiftUI
 import MessageUI
 
+@available(iOS 14.0, *)
 struct UserProfileView: View {
     @ObservedObject var viewModel = UserProfileViewModel()
     
     @State var show: Bool = false
+    @State var selectedImage: UIImage? = nil
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
+    @State var loading = false
     var cellWidth = UIScreen.main.bounds.width - 8
     
     var editProfileView = EditProfileView()
     
     var body: some View {
-        
         ZStack {
             
-            Image("LoginBG")
-                .resizable()
-                .edgesIgnoringSafeArea(.all)
-            
-            ScrollView {
-                VStack {
-                    
-                    ZStack {
+            ZStack {
+                Image("LoginBG")
+                    .resizable()
+                    .edgesIgnoringSafeArea(.all)
+                
+                ScrollView {
+                    VStack {
                         
-                        if !self.show {
-                            Color.init(hex: "1E1B26").frame(width: self.cellWidth, height: 220, alignment: .center)
-                        }
+                        ZStack {
+                            
+                            if !self.show {
+                                Color.init(hex: "1E1B26").frame(width: self.cellWidth, height: 220, alignment: .center)
+                            }
+                            
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    
+                                    if #available(iOS 14.0, *) {
+                                        UserProfilePhotoView(showCaptureImageView: self.$show, image: self.$selectedImage)
+                                    } else {
+                                        // Fallback on earlier versions
+                                    }
+    //
+                                    
+                                    Text(self.viewModel.userInfo.username ?? "")
+                                        .foregroundColor(.white)
+                                        .font(.title)
+                                        .fontWeight(.bold)
+                                        .padding(.bottom, 5)
+                                    
+                                    Text(self.viewModel.userInfo.mail ?? "")
+                                        .foregroundColor(.white).opacity(0.5)
+                                        .font(.subheadline)
+                                    
+                                    
+                                }.padding()
+                                .padding(.leading, 10)
+                                Spacer()
+                            }
+                            
+                        }.cornerRadius(20)
                         
-                        HStack {
-                            VStack(alignment: .leading) {
-                                
-                                if #available(iOS 14.0, *) {
-                                    UserProfilePhotoView(showCaptureImageView: self.$show)
-                                } else {
-                                    // Fallback on earlier versions
-                                }
-//                                Image("demoprofile").resizable().frame(width: 100, height: 100)
-//                                    .clipShape(/*@START_MENU_TOKEN@*/Circle()/*@END_MENU_TOKEN@*/)
-//                                    .overlay(Circle().stroke(Color.init(hex: "50E3C2"), lineWidth: 4.0))
-                                
-                                Text(self.viewModel.userInfo.username ?? "")
-                                    .foregroundColor(.white)
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .padding(.bottom, 5)
-                                
-                                Text(self.viewModel.userInfo.mail ?? "")
-                                    .foregroundColor(.white).opacity(0.5)
-                                    .font(.subheadline)
-                                
-                                
-                            }.padding()
-                            .padding(.leading, 10)
-                            Spacer()
-                        }
+                        self.drawCells(image: "Exit", text: "Exit")
+                            .onTapGesture {
+                                self.showAlert = true
+                            }
                         
-                    }.cornerRadius(20)
-                    
-                    self.drawCells(image: "Exit", text: "Exit")
-                        .onTapGesture {
-                            self.showAlert = true
-                        }
-                    
-                    self.drawCells(image: "ProfileSettings", text: "Profile Settings")
-                        .onTapGesture {
-                            self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
-                            self.presentEditProfile = true
-                        }
-                    
-                    Spacer()
+                        self.drawCells(image: "ProfileSettings", text: "Profile Settings")
+                            .onTapGesture {
+                                self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
+                                self.presentEditProfile = true
+                            }
+                            
+                        
+                        Spacer()
+                    }
                 }
-            }
-            
-            NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
-            
-            if self.viewModel.loading {
-                CustomProgressView()
-                    
-            }
-            
-            
-        }.navigationBarTitle("").navigationBarHidden(true)
-        .alert(isPresented: self.$showAlert) {
-            Alert(title: Text("Exit"), message: Text("Are you sure?"), primaryButton: .default(Text("No")), secondaryButton: .default(Text("Yes"), action: {
-                if self.viewModel.signOut() {
-                    self.presentContent = true
+                
+                
+                NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
+                
+                
+                if self.viewModel.loading || self.selectedImage == nil  {
+                    CustomProgressView()
+
                 }
-            })
-            )
-            
-        }
-        .sheet(isPresented: self.$presentEditProfile, onDismiss: {
-            if !self.viewModel.signed() {
-                self.presentContent = true
-            }
-            else {
-                self.viewModel.getUserInfo()
+
+                
+                
+            }.navigationBarTitle("").navigationBarHidden(true)
+            .alert(isPresented: self.$showAlert) {
+                Alert(title: Text("Exit"), message: Text("Are you sure?"), primaryButton: .default(Text("No")), secondaryButton: .default(Text("Yes"), action: {
+                    if self.viewModel.signOut() {
+                        self.presentContent = true
+                    }
+                })
+                )
                 
             }
-        }, content: {
-            self.editProfileView
-        })
+            
+            ZStack {
+//                for multiple sheet
+            }.sheet(isPresented: self.$show, content: {
+                CaptureImageView(isShown: self.$show, image: self.$selectedImage)
+            })
+            ZStack {
+//                for multiple sheet
+            }.sheet(isPresented: self.$presentEditProfile, onDismiss: {
+                if !self.viewModel.signed() {
+                    self.presentContent = true
+                }
+                else {
+                    self.viewModel.getUserInfo()
+                    
+                }
+            }, content: {
+                self.editProfileView
+            })
+            
+            
+        }
         
         
         
@@ -134,6 +150,7 @@ struct UserProfileView: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct UserProfileView_Previews: PreviewProvider {
     static var previews: some View {
         UserProfileView()

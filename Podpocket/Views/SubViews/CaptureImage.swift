@@ -23,15 +23,17 @@ extension CaptureImageView: UIViewControllerRepresentable {
         let picker = UIImagePickerController()
         
         picker.delegate = context.coordinator
-        
         return picker
     }
     
     func updateUIViewController(_ uiViewController: UIImagePickerController,
                                 context: UIViewControllerRepresentableContext<CaptureImageView>) {
         
+        
     }
 }
+
+
 
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @Binding var isCoordinatorShown: Bool
@@ -40,6 +42,8 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
         _isCoordinatorShown = isShown
         _imageInCoordinator = image
     }
+    
+    
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         guard let unwrapImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else {
@@ -57,4 +61,8 @@ class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerContro
 
         }
     }
+    
+    
+    
+
 }

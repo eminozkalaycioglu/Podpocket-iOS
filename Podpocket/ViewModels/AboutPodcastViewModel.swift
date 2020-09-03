@@ -16,7 +16,6 @@ class AboutPodcastViewModel: ObservableObject {
     var rootPodcast: Podcast = Podcast() {
         didSet {
             if self.rootPodcast.id != nil {
-                print("fetchingsimilar")
                 self.fetchSimilarPodcasts()
 
             }

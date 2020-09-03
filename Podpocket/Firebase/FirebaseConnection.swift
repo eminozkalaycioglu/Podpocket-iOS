@@ -19,44 +19,30 @@ class FirebaseConnection {
     private var ref: DatabaseReference! = Database.database().reference()
     private let storageRef = Storage.storage().reference()
 
+    
+    
     func saveImage(image: UIImage) {
         if let uid = self.getCurrentID() {
             let imageRef = self.storageRef.child("UserProfilePhotos").child(uid)
             
-            let uploadTask = imageRef.putData(image.pngData() ?? Data(), metadata: nil) { (metadata, error) in
-              guard let metadata = metadata else {
-                // Uh-oh, an error occurred!
+            _ = imageRef.putData(image.jpegData(compressionQuality: 0.1) ?? Data(), metadata: nil) { (metadata, error) in
+                guard metadata != nil else {
                 
                 return
               }
                 
-              // You can also access to download URL after upload.
               imageRef.downloadURL { (url, error) in
                 guard let downloadURL = url else {
                     return
                 }
-                var dictionary: [String: Any] = [:]
                 
                 print(downloadURL.absoluteString)
                 self.ref.child("userInfos").child(uid).updateChildValues(["imageDataURL" : downloadURL.absoluteString]) { (error, _) in
-                    print("child error !!!!!! \(error) ")
-                }
-                
-//                self.fetchUserInfo(uid: uid) { (user) in
-//                    if let user = user {
-//                        dictionary["fullname"] = user.fullName
-//                        dictionary["email"] = user.mail
-//                        dictionary["birthday"] = user.birthday
-//                        dictionary["username"] = user.username
-//                        dictionary["imageDataURL"] = downloadURL.absoluteString
-//                        self.ref.child("userInfos").child(uid).setValue(dictionary)
-//
-//                    }
-//                }
-                
+                    if let error = error {
+                        print("child error !!!!!! \(error) ")
 
-                
-                
+                    }
+                }
                 
               }
             }
@@ -105,7 +91,7 @@ class FirebaseConnection {
     
     
     
-    func fetchProfilePhoto(completion: ((UIImage?)->())? = nil  ) {
+    func fetchProfilePhoto(completion: ((UIImage?)->())? = nil) {
         
         
         guard let uid = self.getCurrentID() else {
@@ -114,20 +100,21 @@ class FirebaseConnection {
         
         self.ref.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
             
-            
             let dataURL = snapshot.value as? String
             
             let imgRef = Storage.storage().reference(forURL: dataURL ?? "https://firebasestorage.googleapis.com/v0/b/podpocket-ios.appspot.com/o/UserProfilePhotos%2FGXyCLcbTvNSPoXl0ghRoHIuP6sg1?alt=media&token=bed9e1ca-968d-4dc1-a10f-cd0b97b5ec74")
+
             imgRef.getData(maxSize: 100 * 1024 * 1024) { (data, error) -> Void in
+
                 if error == nil, let data = data {
+
                     let profileImage = UIImage(data: data)
-                    
                     completion?(profileImage)
                     
                 }
                 
                 else {
-                    print(error)
+                    print(error.debugDescription)
                 }
                 
                 

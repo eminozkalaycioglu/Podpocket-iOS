@@ -11,12 +11,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct UserProfilePhotoView: View {
     @Binding var showCaptureImageView: Bool
-    @State var image: UIImage? = nil
-
+    @Binding var image: UIImage?
     
     var viewModel = UserProfilePhotoViewModel()
     
-    
+   
     var body: some View {
         
         ZStack {
@@ -35,7 +34,7 @@ struct UserProfilePhotoView: View {
                 
                 
                 else {
-                    Image(uiImage: UIImage())
+                    Image("profile")
                         .resizable().frame(width: 100, height: 100)
                         
                 }
@@ -56,30 +55,18 @@ struct UserProfilePhotoView: View {
                 }).padding(.bottom, 2)
                 
                 
-                
-                
-                
-                
-                
-                //            Button(action: {
-                //
-                //            }, label: {
-                //                Image(systemName: "plus").renderingMode(.template).foregroundColor(Color.init(hex: Color.podpocketGreenColor))
-                //
-                //            })
+               
                 
                 
             }.clipShape(Circle())
             .overlay(Circle().stroke(Color.init(hex: "50E3C2"), lineWidth: 3.0))
             .shadow(radius: 6)
+        
             
-            if self.showCaptureImageView {
-            
-                CaptureImageView(isShown: self.$showCaptureImageView, image: self.$image)
-            }
-            
-            
-        }.onAppear {
+        }
+        
+        
+        .onAppear {
             self.viewModel.fetchImage { (originalImage) in
                 
                 self.image = originalImage ?? UIImage()
@@ -87,10 +74,12 @@ struct UserProfilePhotoView: View {
         }
         
         
+        
         //
     }
 }
-//
+
+//@available(iOS 14.0, *)
 //struct UserProfilePhotoView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        UserProfilePhotoView()

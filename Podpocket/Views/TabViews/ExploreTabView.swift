@@ -14,6 +14,7 @@ struct ExploreTabView: View {
     @ObservedObject var viewModel = ExploreTabViewModel()
     @State var presentDetail = false
     @State var selectedId = ""
+    @Binding var tabSelection: Int
     
     let rows = [
         GridItem(.fixed(180)),
@@ -60,6 +61,7 @@ struct ExploreTabView: View {
                             .padding(.trailing, 30)
                             .padding(.top, 30)
                             .onTapGesture {
+                                self.tabSelection = 1
                                 print("clicked")
                             }
                     }
@@ -131,7 +133,11 @@ struct ExploreTabView: View {
 struct ExploreTabView_Previews: PreviewProvider {
     static var previews: some View {
         if #available(iOS 14.0, *) {
-            ExploreTabView()
+            ExploreTabView(tabSelection: Binding(get: {
+                return 1
+            }, set: { (_) in
+                
+            }))
         } else {
             // Fallback on earlier versions
         }

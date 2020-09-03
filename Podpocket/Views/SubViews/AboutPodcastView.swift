@@ -17,7 +17,6 @@ struct AboutPodcastView: View {
         self.viewModel.setRootPodcast(podcast: rootPodcast)
 
     }
-    var evenNumbers = [1, 2, 3,4,5,6,7,8]
     
     let rows = [
         GridItem(.fixed(180))

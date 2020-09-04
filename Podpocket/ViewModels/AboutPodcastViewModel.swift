@@ -12,11 +12,13 @@ import Combine
 class AboutPodcastViewModel: ObservableObject {
     @Published var similarPodcasts: SimilarPodcasts = SimilarPodcasts()
     @Published var loading: Bool = false
+  
     
-    var rootPodcast: Podcast = Podcast() {
+    var rootPodcast: Podcast? {
         didSet {
-            if self.rootPodcast.id != nil {
+            if self.rootPodcast?.id != nil {
                 self.fetchSimilarPodcasts()
+
 
             }
         }
@@ -28,17 +30,19 @@ class AboutPodcastViewModel: ObservableObject {
     
     func fetchSimilarPodcasts() {
         self.loading = true
-        ServiceManager.shared.fetchSimilarPodcasts(id: self.rootPodcast.id ?? "") { (result) in
+        ServiceManager.shared.fetchSimilarPodcasts(id: self.rootPodcast?.id ?? "") { (result) in
             switch result {
             case .success(let response):
                 self.similarPodcasts = response
-
                 self.loading = false
             case .failure(let error):
                 print(error.errorDescription ?? "")
             }
         }
     }
+    
+    
 
 
 }
+

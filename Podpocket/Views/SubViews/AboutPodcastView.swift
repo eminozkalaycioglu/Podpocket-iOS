@@ -10,14 +10,18 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct AboutPodcastView: View {
-    @ObservedObject var viewModel = AboutPodcastViewModel()
+    @ObservedObject var viewModel: AboutPodcastViewModel = AboutPodcastViewModel()
     @State var presentDetail = false
     @State var selectedId = ""
+    
     init(rootPodcast: Podcast) {
+        
         self.viewModel.setRootPodcast(podcast: rootPodcast)
 
+
+
     }
-    
+
     let rows = [
         GridItem(.fixed(180))
         
@@ -33,24 +37,24 @@ struct AboutPodcastView: View {
                         .font(.title)
                         .foregroundColor(.white)
                     
-                    Text(self.viewModel.rootPodcast.descriptionField ?? "")
+                    Text(self.viewModel.rootPodcast?.descriptionField ?? "")
                         .foregroundColor(.white)
                     
                     Text("About")
                         .font(.title)
                         .foregroundColor(.white)
                     
-                    Text("Country: \(self.viewModel.rootPodcast.country ?? "")")
+                    Text("Country: \(self.viewModel.rootPodcast?.country ?? "")")
                         .foregroundColor(.white)
                     
-                    Text("Language: \(self.viewModel.rootPodcast.language ?? "")")
+                    Text("Language: \(self.viewModel.rootPodcast?.language ?? "")")
                         .foregroundColor(.white)
                     
                     
-                    Text("Publisher: \(self.viewModel.rootPodcast.publisher ?? "")")
+                    Text("Publisher: \(self.viewModel.rootPodcast?.publisher ?? "")")
                         .foregroundColor(.white)
                     
-                    Text("First Release Time: \(self.msToDate(ms: self.viewModel.rootPodcast.earliestPubDateMs ?? 0))")
+                    Text("First Release Time: \((self.viewModel.rootPodcast?.earliestPubDateMs ?? 0).msToDate())")
                         .foregroundColor(.white)
                     
                     Text("Similar Podcasts")
@@ -90,15 +94,15 @@ struct AboutPodcastView: View {
             NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
             
         }
+        
+        
+        
+        
     }
     
-    func msToDate(ms: Int) -> String {
-        let date = Date(timeIntervalSince1970: (Double(ms) / 1000.0))
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        return dateFormatter.string(from: date)
-    }
+    
 }
+
 
 //struct AboutPodcastView_Previews: PreviewProvider {
 //    static var previews: some View {

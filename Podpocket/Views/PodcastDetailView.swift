@@ -9,13 +9,16 @@
 import SwiftUI
 import struct Kingfisher.KFImage
 
+@available(iOS 14.0, *)
 struct PodcastDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel = PodcastDetailViewModel()
     @State private var selectedSegment = 0
+    @State var loading = false
     
     var data = 0...10
     init(id: String) {
+        
         self.viewModel.setId(id: id)
         UINavigationBar.appearance().barTintColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
         UITableView.appearance().backgroundColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
@@ -56,13 +59,23 @@ struct PodcastDetailView: View {
                                         Text("DETAILS")
                                             .tag(1)
                                         
-                                    }
+                                    }.shadow(radius: 10)
                                     
                                     
                                     .frame(height: 60)
                                     .pickerStyle(SegmentedPickerStyle())
                                     
                                     .background(Color.init(hex: "2C2838"))
+                                    
+                                    if self.selectedSegment == 0 {
+                                        HStack {
+                                            Spacer()
+                                            Text("\(self.viewModel.podcast?.totalEpisodes ?? 0) episodes")
+                                                .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                            Spacer()
+
+                                        }.frame(height: 50).background(Color.init(hex: Color.podpocketPurpleColor))
+                                    }
                                     
                                 }
                                 .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -71,7 +84,21 @@ struct PodcastDetailView: View {
                         
                         switch self.selectedSegment {
                         case 0:
-                            Text("Episodes")
+                            
+                            if let podcast = self.viewModel.podcast {
+                                
+                                EpisodesListView(podcast: podcast)
+                                    .listRowInsets(EdgeInsets())
+                            }
+                            else {
+                                
+                            }
+                            
+//                            ForEach(1..<20) { val in
+//                                Text("Episodes").frame(height: 80)
+//
+//                            }
+
                         case 1:
                             if let podcast = self.viewModel.podcast {
                                 AboutPodcastView(rootPodcast: podcast)
@@ -101,10 +128,12 @@ struct PodcastDetailView: View {
             .navigationBarItems(leading: CustomBackButton())
         }
     }
+    
+    
 }
 
-struct PodcastDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        PodcastDetailView(id: "9392aab5fe0c4998ac9dcf35316ee760")
-    }
-}
+//struct PodcastDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PodcastDetailView(id: "9392aab5fe0c4998ac9dcf35316ee760")
+//    }
+//}

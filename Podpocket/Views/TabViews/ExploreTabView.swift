@@ -121,7 +121,7 @@ struct ExploreTabView: View {
                 }
 
                 
-                NavigationLink("", destination: PodcastDetailView(id: self.selectedId).environmentObject(self.aboutVm), isActive: self.$presentDetail)
+                NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
                 
             }.navigationBarTitle("").navigationBarHidden(true)
             

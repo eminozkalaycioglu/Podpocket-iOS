@@ -16,6 +16,7 @@ struct ExploreTabView: View {
     @State var selectedId = ""
     @Binding var tabSelection: Int
     
+    var aboutVm = AboutPodcastViewModel()
     let rows = [
         GridItem(.fixed(180)),
         GridItem(.fixed(180)),
@@ -120,7 +121,7 @@ struct ExploreTabView: View {
                 }
 
                 
-                NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
+                NavigationLink("", destination: PodcastDetailView(id: self.selectedId).environmentObject(self.aboutVm), isActive: self.$presentDetail)
                 
             }.navigationBarTitle("").navigationBarHidden(true)
             

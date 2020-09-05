@@ -13,6 +13,8 @@ import struct Kingfisher.KFImage
 struct PodcastDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @ObservedObject var viewModel = PodcastDetailViewModel()
+    @EnvironmentObject var aboutViewModel: AboutPodcastViewModel
+
     @State private var selectedSegment = 0
     @State var loading = false
     
@@ -101,7 +103,9 @@ struct PodcastDetailView: View {
 
                         case 1:
                             if let podcast = self.viewModel.podcast {
-                                AboutPodcastView(rootPodcast: podcast)
+                                
+                                
+                                AboutPodcastView(rootPodcast: podcast).environmentObject(self.aboutViewModel)
                                     .listRowInsets(EdgeInsets())
                             }
                             else {
@@ -117,11 +121,11 @@ struct PodcastDetailView: View {
                 }
                 
                 
-                if self.viewModel.loading {
+                if self.viewModel.loading || self.aboutViewModel.loading{
                     CustomProgressView()
-                    
+
                 }
-                
+     
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)

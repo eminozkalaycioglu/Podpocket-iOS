@@ -10,14 +10,14 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct AboutPodcastView: View {
-    @ObservedObject var viewModel: AboutPodcastViewModel = AboutPodcastViewModel()
+    @EnvironmentObject var viewModel: AboutPodcastViewModel
     @State var presentDetail = false
     @State var selectedId = ""
-    
+    var rootPodcast = Podcast()
     init(rootPodcast: Podcast) {
         
-        self.viewModel.setRootPodcast(podcast: rootPodcast)
-
+//        self.viewModel.setRootPodcast(podcast: rootPodcast)
+        self.rootPodcast = rootPodcast
 
 
     }
@@ -86,13 +86,10 @@ struct AboutPodcastView: View {
                 Spacer()
             }
             
-            
-            if self.viewModel.loading {
-                CustomProgressView()
-            }
-            
             NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
             
+        }.onAppear {
+            self.setRootPodcast()
         }
         
         
@@ -100,6 +97,9 @@ struct AboutPodcastView: View {
         
     }
     
+    func setRootPodcast() {
+        self.viewModel.setRootPodcast(podcast: self.rootPodcast)
+    }
     
 }
 

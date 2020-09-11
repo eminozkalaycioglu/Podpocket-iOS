@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct HomepageView: View {
     @State var selectedTab: Int = 3
     
@@ -19,57 +20,60 @@ struct HomepageView: View {
         UITabBar.appearance().clipsToBounds = true
      }
     var body: some View {
+        
         ZStack {
-            
+
             TabView(selection: self.$selectedTab) {
+
+                ExploreTabView(tabSelection: self.$selectedTab)
+                    .tabItem {
+                        Image("ExploreTab")
+                            .renderingMode(.template)
+                        self.selectedTab == 0 ? Text("Explore") : Text("")
+                    }.tag(0)
                 
-                if #available(iOS 14.0, *) {
-                    ExploreTabView(tabSelection: self.$selectedTab)
-                        .tabItem {
-                            Image("ExploreTab")
-                                .renderingMode(.template)
-                            self.selectedTab == 0 ? Text("Explore") : Text("")
-                        }.tag(0)
-                } else {
-                }
-                
-                if #available(iOS 14.0, *) {
-                    SearchTabView().tabItem {
-                        Image("search").renderingMode(.template)
+                SearchTabView()
+                    .tabItem {
+                        Image("search")
+                            .renderingMode(.template)
                         self.selectedTab == 1 ? Text("Search") : Text("")
                         
                     }.tag(1)
-                } else {
-                    // Fallback on earlier versions
-                }
                 
-                FeedTabView().tabItem {
-                    Image("LogoTab").renderingMode(.template)
-                    self.selectedTab == 2 ? Text("Feed") : Text("")
+                FeedTabView()
+                    .tabItem {
+                        Image("LogoTab")
+                            .renderingMode(.template)
+                        self.selectedTab == 2 ? Text("Feed") : Text("")
+                        
+                    }.tag(2)
 
-                }.tag(2)
-                
-                if #available(iOS 14.0, *) {
-                    UserProfileView().tabItem {
-                        Image("UserTab").renderingMode(.template)
+                UserProfileView()
+                    .tabItem {
+                        Image("UserTab")
+                            .renderingMode(.template)
                         self.selectedTab == 3 ? Text("Profile") : Text("")
                         
                     }.tag(3)
-                } else {
-                    // Fallback on earlier versions
-                }
-                
-                
-                
+
+
             }.accentColor(Color.init(hex: "#50E3C2"))
-            
-            
-            
+
+// TESTING
+//            NavigationLink(
+//                destination: PodcastDetailView(id: "9392aab5fe0c4998ac9dcf35316ee760"),
+//                isActive: .constant(true),
+//                label: {
+//                    Text("")
+//                })
+
         }
+        .navigationBarTitle("").navigationBarHidden(true)
         
     }
 }
 
+@available(iOS 14.0, *)
 struct HomepageView_Previews: PreviewProvider {
     static var previews: some View {
         HomepageView()

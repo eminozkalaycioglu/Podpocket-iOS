@@ -36,7 +36,6 @@ class FirebaseConnection {
                     return
                 }
                 
-                print(downloadURL.absoluteString)
                 self.ref.child("userInfos").child(uid).updateChildValues(["imageDataURL" : downloadURL.absoluteString]) { (error, _) in
                     if let error = error {
                         print("child error !!!!!! \(error) ")
@@ -278,9 +277,7 @@ class FirebaseConnection {
                 completion?(error?.localizedDescription)
                 return
             }
-            if let uid = user?.user.uid {
-                print("uid: ", uid)
-            }
+            
             completion?(nil)
         }
     }

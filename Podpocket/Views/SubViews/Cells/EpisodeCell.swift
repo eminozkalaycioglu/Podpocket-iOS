@@ -32,6 +32,7 @@ struct EpisodeCell: View {
             Spacer()
 
         }.background(Color.init(hex: Color.podpocketPurpleColor))
+        
     }
 }
 

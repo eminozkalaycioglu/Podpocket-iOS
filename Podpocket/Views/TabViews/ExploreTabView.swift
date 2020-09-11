@@ -11,7 +11,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct ExploreTabView: View {
     
-    @ObservedObject var viewModel = ExploreTabViewModel()
+    @StateObject var viewModel = ExploreTabViewModel()
     @State var presentDetail = false
     @State var selectedId = ""
     @Binding var tabSelection: Int
@@ -63,7 +63,6 @@ struct ExploreTabView: View {
                             .padding(.top, 30)
                             .onTapGesture {
                                 self.tabSelection = 1
-                                print("clicked")
                             }
                     }
                     
@@ -96,7 +95,10 @@ struct ExploreTabView: View {
                                 LazyHGrid(rows: rows, spacing: 20) {
                                     if let data = self.viewModel.bestPodcasts?.podcasts {
                                         ForEach(data, id: \.self) { item in
+                                            
                                             PodcastCell(podcast: item)
+                                                .id(UUID())
+
                                                 .onTapGesture {
                                                     self.selectedId = item.id ?? ""
                                                     self.presentDetail = true

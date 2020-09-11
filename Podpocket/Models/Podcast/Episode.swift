@@ -6,7 +6,7 @@
 import Foundation
 
 //MARK: - Episode
-struct Episode: Decodable, Hashable {
+struct Episode: Decodable, Hashable, Identifiable {
     
     var audio : String?
     var audioLengthSec : Int?

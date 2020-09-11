@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+@available(iOS 14.0, *)
 struct SignUpView: View {
     @ObservedObject var viewModel = SignUpViewModel()
     @State var fullName: String = ""
@@ -141,6 +142,7 @@ struct SignUpView: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()

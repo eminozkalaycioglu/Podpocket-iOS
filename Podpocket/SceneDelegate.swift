@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 
+@available(iOS 14.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -25,7 +26,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            var aboutViewModel = AboutPodcastViewModel()
+            let aboutViewModel = AboutPodcastViewModel()
             window.rootViewController = UIHostingController(rootView: contentView.environmentObject(aboutViewModel))
             self.window = window
             window.makeKeyAndVisible()

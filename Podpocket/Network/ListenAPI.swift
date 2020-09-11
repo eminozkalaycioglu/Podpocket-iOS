@@ -5,7 +5,7 @@ import Moya
 enum ListenAPI {
     
     case fetchBestPodcastsInSpecificRegion(region: String)
-    case fetchPodcastDetail(id: String, nextEpisodePudDate: String?)
+    case fetchPodcastDetail(id: String, nextEpisodePudDate: Int?)
     case fetchSimilarPodcasts(id: String)
     case search(query: String, type: SearchType, offset: Int, genres: [String]? = nil)
     case fetchGenres
@@ -18,10 +18,14 @@ enum SearchType {
 
 
 extension ListenAPI: TargetType {
-    
+    var withoutParameters: Task {
+        return .requestParameters(parameters: [String : Any](), encoding: URLEncoding.default)
+    }
+
     var apiKey: String {
-//        return "ca536f2026d140c0bd8b322a58f63d5b"
-        return "82e6628b74404fb9a26a934b7d1adfa0"
+//        return "ca536f2026d140c0bd8b322a58f63d5b" //e
+//        return "82e6628b74404fb9a26a934b7d1adfa0" //f
+        return "5ea579388b68424986c218c9b1e10872" //gh
 
     }
     
@@ -69,40 +73,30 @@ extension ListenAPI: TargetType {
     }
 
     public var task: Task {
+        
         switch self {
-
+        
         case .fetchBestPodcastsInSpecificRegion(let region):
             return .requestParameters(
-                
                 parameters: [
                     "region": region
                     ] ,
                 encoding: URLEncoding.default)
+            
         case .fetchPodcastDetail(_ , let pubDate):
             if let pubDate = pubDate {
                 return .requestParameters(
-                    
                     parameters: [
                         "next_episode_pub_date": pubDate
                         ] ,
                     encoding: URLEncoding.default)
             }
             else {
-                return .requestParameters(
-                    
-                    parameters: [
-                        "sort": "recent_first"
-                        ] ,
-                    encoding: URLEncoding.default)
+                return self.withoutParameters
             }
             
         case .fetchSimilarPodcasts(_):
-            return .requestParameters(
-                
-                parameters: [
-                    "safe_mode": "0"
-                    ] ,
-                encoding: URLEncoding.default)
+            return self.withoutParameters
             
         case .search(query: let query, type: let type, offset: let offset, genres: let genres):
             
@@ -136,7 +130,7 @@ extension ListenAPI: TargetType {
             
             
         case .fetchGenres:
-            return .requestParameters(parameters: [String : Any](), encoding: URLEncoding.default)
+            return self.withoutParameters
         }
     }
 }

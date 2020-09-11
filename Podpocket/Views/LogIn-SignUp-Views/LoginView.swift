@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct LoginView: View {
     
     @ObservedObject var viewModel = LoginViewModel()
@@ -94,6 +95,7 @@ struct LoginView: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()

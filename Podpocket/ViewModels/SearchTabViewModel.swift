@@ -17,8 +17,8 @@ class SearchTabViewModel: ObservableObject {
     @Published var episodeResult = [SearchResult]()
     
     @Published var loading = false
-    var lastPodcastResults = SearchModel()
-    var lastEpisodeResults = SearchModel()
+    var lastPodcastResult = SearchModel()
+    var lastEpisodeResult = SearchModel()
     
     
     init() {
@@ -44,9 +44,9 @@ class SearchTabViewModel: ObservableObject {
         var offset: Int = 0
         switch type {
         case .Episode:
-            offset = self.lastEpisodeResults.nextOffset ?? 0
+            offset = self.lastEpisodeResult.nextOffset ?? 0
         case .Podcast:
-            offset = self.lastPodcastResults.nextOffset ?? 0
+            offset = self.lastPodcastResult.nextOffset ?? 0
             
         }
         ServiceManager.shared.search(query: query, type: type, offset: offset, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
@@ -54,16 +54,16 @@ class SearchTabViewModel: ObservableObject {
             case .success(let response):
                 switch type {
                 case .Episode:
-                    self.lastEpisodeResults = response
+                    self.lastEpisodeResult = response
                     self.episodeResult += response.results ?? [SearchResult]()
                 case.Podcast:
-                    self.lastPodcastResults = response
+                    self.lastPodcastResult = response
                     self.podcastResults += response.results ?? [SearchResult]()
                 }
                 
                 self.loading = false
             case .failure(_):
-                print("error!")
+
                 self.loading = false
             }
         }
@@ -79,16 +79,15 @@ class SearchTabViewModel: ObservableObject {
             case .success(let response):
                 switch type {
                 case .Episode:
-                    self.lastEpisodeResults = response
+                    self.lastEpisodeResult = response
                     self.episodeResult = response.results ?? [SearchResult]()
                 case.Podcast:
-                    self.lastPodcastResults = response
+                    self.lastPodcastResult = response
                     self.podcastResults = response.results ?? [SearchResult]()
                 }
                 
                 self.loading = false
             case .failure(_):
-                print("error!")
                 self.loading = false
             }
         }

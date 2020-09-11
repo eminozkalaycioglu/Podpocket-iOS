@@ -15,13 +15,14 @@ class PodcastDetailViewModel: ObservableObject {
     
     private var id: String! {
         didSet {
+
             self.fetch()
         }
     }
     
     func fetch() {
         self.loading = true
-        ServiceManager.shared.fetchBestPodcastsInSpecificRegion(id: self.id, pubDate: nil) { (result) in
+        ServiceManager.shared.fetchPodcastDetail(id: self.id, pubDate: nil) { (result) in
             switch result {
             case .success(let response):
                 self.podcast = response

@@ -20,7 +20,6 @@ class UserProfilePhotoViewModel {
     func fetchImage(completion: ((UIImage?)->())? = nil) {
         FirebaseConnection.shared.fetchProfilePhoto { (image) in
             if let image = image {
-
                 completion?(image)
 
 

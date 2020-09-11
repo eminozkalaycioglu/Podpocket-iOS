@@ -10,14 +10,38 @@ import Foundation
 import Combine
 
 class EpisodesListViewModel: ObservableObject {
-    @Published var podcast: Podcast = Podcast()
+    var lastPodcastResult: Podcast = Podcast()
+    @Published var episodesResult = [Episode]()
+    @Published var loading = false
+
     
     func setPodcast(podcast: Podcast) {
-        self.podcast = podcast
+        
+        self.lastPodcastResult = podcast
+        self.episodesResult += podcast.episodes ?? [Episode]()
     }
     
     func getEpisodes() -> [Episode] {
-        return self.podcast.episodes ?? [Episode]()
+        return self.episodesResult
+       
+    
+    }
+    
+    func fetchNextEpisodes() {
+        self.loading = true
+        guard let id = self.lastPodcastResult.id, let nextEpisodePubDate = self.lastPodcastResult.nextEpisodePubDate else {
+            return
+        }
+        ServiceManager.shared.fetchPodcastDetail(id: id, pubDate: nextEpisodePubDate) { (result) in
+            switch result {
+            case .success(let response):
+                self.lastPodcastResult = response
+                self.episodesResult += response.episodes ?? [Episode]()
+                
+            case.failure(let error):
+                print(error.errorDescription)
+            }
+        }
     }
     
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct SearchTabView: View {
     @State var query = ""
     @State var boole = false
-    @ObservedObject var viewModel = SearchTabViewModel()
+    @StateObject var viewModel = SearchTabViewModel()
     
     var body: some View {
         
@@ -150,21 +150,13 @@ struct SearchTabView: View {
                                             self.viewModel.searchNextOffset(query: self.query, type: .Episode)
                                         }
                                     }
-                                    .onTapGesture {
-                                        print(result.id)
-                                    }
-                                
+                                    
                             }
                             
                             
                         }.padding()
                     }
-                    
-                    
                 }
-                
-                
-                
                 
                 Spacer()
             }

@@ -27,6 +27,9 @@ public final class ServiceManager {
                                                                   atKeyPath: nil,
                                                                   using: self.jsonDecoder,
                                                                   failsOnEmptyData: false)
+                    let urlResponse = response.response as! HTTPURLResponse
+                    let usage = urlResponse.allHeaderFields["x-listenapi-usage"]
+                    print("WWWW \(usage)")
                     completion(.success(mappedResponse))
                 } catch MoyaError.statusCode(let response) {
                     if response.statusCode == 401 {
@@ -51,7 +54,7 @@ public final class ServiceManager {
         fetch(target: .fetchBestPodcastsInSpecificRegion(region: region), completion: completion)
     }
     
-    func fetchBestPodcastsInSpecificRegion(id: String, pubDate: String?, completion: @escaping (_ result: APIResult<Podcast>) -> Void) {
+    func fetchPodcastDetail(id: String, pubDate: Int?, completion: @escaping (_ result: APIResult<Podcast>) -> Void) {
         fetch(target: .fetchPodcastDetail(id: id, nextEpisodePudDate: pubDate), completion: completion)
     }
     

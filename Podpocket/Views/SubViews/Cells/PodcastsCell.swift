@@ -14,7 +14,7 @@ struct PodcastCell: View {
     var body: some View {
         VStack {
             
-            if let encoded = (self.podcast?.image ?? "https://raw.githubusercontent.com/onevcat/Kingfisher/master/images/kingfisher-1.jpg")?.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed), let url = URL(string: encoded) {
+            if let url = String.toEncodedURL(link: podcast?.image) {
                 KFImage(url)
                     .resizable()
                     .frame(width: 120, height: 120)

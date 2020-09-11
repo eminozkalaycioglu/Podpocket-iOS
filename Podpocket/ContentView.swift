@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 14.0, *)
 struct ContentView: View {
     var viewModel = ContentViewModel()
     var body: some View {
@@ -24,6 +25,7 @@ struct ContentView: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()

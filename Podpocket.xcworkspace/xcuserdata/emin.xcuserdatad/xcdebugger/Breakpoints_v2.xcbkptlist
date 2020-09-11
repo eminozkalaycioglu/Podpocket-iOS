@@ -30,8 +30,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "createUser(fullName:email:pass:username:birthday:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,13 +46,13 @@
             filePath = "Podpocket/Views/LogIn-SignUp-Views/SignUpView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
                <Location
-                  uuid = "32F2BD88-41F1-4F13-82EA-BE45BCB8738C - 24fc9d3400b24fad"
+                  uuid = "32F2BD88-41F1-4F13-82EA-BE45BCB8738C - 24fc9d3400b24f8a"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -62,12 +62,12 @@
                   urlString = "file:///Users/emin/Desktop/Podpocket/Podpocket/Views/LogIn-SignUp-Views/SignUpView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "83"
-                  endingLineNumber = "83"
+                  startingLineNumber = "84"
+                  endingLineNumber = "84"
                   offsetFromSymbolStart = "619">
                </Location>
                <Location
-                  uuid = "32F2BD88-41F1-4F13-82EA-BE45BCB8738C - a0d314d1a6b9adec"
+                  uuid = "32F2BD88-41F1-4F13-82EA-BE45BCB8738C - a0d314d1a6b9ac0d"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
@@ -77,8 +77,8 @@
                   urlString = "file:///Users/emin/Desktop/Podpocket/Podpocket/Views/LogIn-SignUp-Views/SignUpView.swift"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "86"
-                  endingLineNumber = "86"
+                  startingLineNumber = "87"
+                  endingLineNumber = "87"
                   offsetFromSymbolStart = "105">
                </Location>
             </Locations>
@@ -110,8 +110,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "288"
+            endingLineNumber = "288"
             landmarkName = "updateEmail(newMail:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "updateEmail(newMail:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -167,38 +167,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F5F0DE89-6C34-4CD6-8F99-C24C42B50F36"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Podpocket/Views/PodcastDetailView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "E9DB2F8B-86BD-4D04-BA5C-2EDA71D2DA77"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Podpocket/Views/PodcastDetailView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "112"
-            endingLineNumber = "112"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "985179FF-9CB5-4212-9297-8E16D823C589"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -206,8 +174,8 @@
             filePath = "Podpocket/Network/ListenAPI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "128"
-            endingLineNumber = "128"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
             landmarkName = "task"
             landmarkType = "24">
          </BreakpointContent>
@@ -222,8 +190,8 @@
             filePath = "Podpocket/Network/ListenAPI.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "task"
             landmarkType = "24">
          </BreakpointContent>
@@ -254,6 +222,22 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
+            landmarkName = "fetchProfilePhoto(completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CB2988C3-26FE-417D-A1D3-22565FC0D138"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Podpocket/Firebase/FirebaseConnection.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "103"
             endingLineNumber = "103"
             landmarkName = "fetchProfilePhoto(completion:)"
@@ -263,7 +247,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CB2988C3-26FE-417D-A1D3-22565FC0D138"
+            uuid = "7457E269-FFA0-4644-BB6B-DEE615C33F3B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -279,22 +263,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "7457E269-FFA0-4644-BB6B-DEE615C33F3B"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Podpocket/Firebase/FirebaseConnection.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "fetchProfilePhoto(completion:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "C4400978-A9F0-42D3-89D4-375115273B53"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -302,8 +270,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "116"
+            endingLineNumber = "116"
             landmarkName = "fetchProfilePhoto(completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -327,22 +295,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "672E832B-35B7-4491-A074-08A1837ADC10"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Podpocket/Views/SubViews/AboutPodcastView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "init(rootPodcast:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "5D41ABD9-E494-489B-BBE6-FB6E4B2FE5BA"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -359,16 +311,80 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E5C833CD-CE46-4D62-A016-E907590B106B"
+            uuid = "ABA61970-57F9-4285-B433-92FCD33E7756"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Podpocket/Network/ServiceManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "fetch(target:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3A852882-C03F-4E50-A9FD-FA154FDB2114"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Podpocket/Views/SubViews/AboutPodcastView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "20"
-            endingLineNumber = "20"
-            landmarkName = "init(rootPodcast:)"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "body"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8A34D1FA-E648-44B0-AD37-D3210C81BBCD"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Podpocket/Network/ServiceManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "fetchPodcastDetail(id:pubDate:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "320B54E8-9D3A-4B64-83C5-8D5F50BD5BCF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Podpocket/ViewModels/PodcastDetailViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "id"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2ED232C3-8008-4DFC-BF0D-3CF60DCC764E"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Podpocket/Views/PodcastDetailView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "init(id:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

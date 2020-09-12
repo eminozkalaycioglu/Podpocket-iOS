@@ -16,10 +16,37 @@ class FirebaseConnection {
     }
     
     static let shared = FirebaseConnection()
-    private var ref: DatabaseReference! = Database.database().reference()
+    private var dbRef: DatabaseReference! = Database.database().reference()
     private let storageRef = Storage.storage().reference()
 
     
+    
+    func shareMessage(message: String, completion: ((Bool)->())? = nil) {
+        let newMessage = self.dbRef.child("sharedMessages").childByAutoId()
+        var dictionary: [String: Any] = [:]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let dateString = dateFormatter.string(from: Date())
+        
+        dictionary["message"] = message
+        dictionary["uid"] = self.getCurrentID()!
+        dictionary["date"] = dateString
+        
+        newMessage.setValue(dictionary) { (error, _) in
+            if error == nil {
+                completion?(true)
+                return
+            }
+            completion?(false)
+            return
+            
+        }
+        
+        
+        
+        
+    }
     
     func saveImage(image: UIImage) {
         if let uid = self.getCurrentID() {
@@ -36,7 +63,7 @@ class FirebaseConnection {
                     return
                 }
                 
-                self.ref.child("userInfos").child(uid).updateChildValues(["imageDataURL" : downloadURL.absoluteString]) { (error, _) in
+                self.dbRef.child("userInfos").child(uid).updateChildValues(["imageDataURL" : downloadURL.absoluteString]) { (error, _) in
                     if let error = error {
                         print("child error !!!!!! \(error) ")
 
@@ -50,7 +77,7 @@ class FirebaseConnection {
         }
     }
     func createUser(fullName: String, email: String, pass: String, username: String, birthday: String, completion: ((String?) -> ())? = nil) {
-        self.ref.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: username).observeSingleEvent(of: .value) { (snapshot) in
+        self.dbRef.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: username).observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.childrenCount == 0 {
                 Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
                     if error != nil {
@@ -83,7 +110,7 @@ class FirebaseConnection {
         dictionary["birthday"] = birthday
         dictionary["username"] = username
         
-        let userInfos = self.ref.child("userInfos").child(uid)
+        let userInfos = self.dbRef.child("userInfos").child(uid)
         userInfos.setValue(dictionary)
         
     }
@@ -97,7 +124,7 @@ class FirebaseConnection {
             return
         }
         
-        self.ref.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
+        self.dbRef.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
             
             let dataURL = snapshot.value as? String
             
@@ -129,7 +156,7 @@ class FirebaseConnection {
             return
         }
         
-        self.ref.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
+        self.dbRef.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
             
             let value = snapshot.value as? NSDictionary
             let username = value?["username"] as? String ?? ""
@@ -157,7 +184,7 @@ class FirebaseConnection {
             return
         }
         if oldUserInfo.mail == newEmail && oldUserInfo.username != newUsername {
-            self.ref.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
+            self.dbRef.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
                 if snapshot.childrenCount == 0 {
                     var dictionary: [String:Any] = [:]
                     dictionary["fullname"] = newFullName
@@ -165,7 +192,7 @@ class FirebaseConnection {
                     dictionary["birthday"] = newBirthday
                     dictionary["username"] = newUsername
                     
-                    let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                    let userInfos = self.dbRef.child("userInfos").child(self.getCurrentID() ?? "")
                     userInfos.setValue(dictionary) { (error, _) in
                         if error == nil {
                             completion?(nil, false)
@@ -193,7 +220,7 @@ class FirebaseConnection {
                     dictionary["email"] = newEmail
                     dictionary["birthday"] = newBirthday
                     dictionary["username"] = newUsername
-                    let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                    let userInfos = self.dbRef.child("userInfos").child(self.getCurrentID() ?? "")
                     userInfos.setValue(dictionary) { (error, _) in
                         if error == nil {
                             completion?(nil, true)
@@ -211,7 +238,7 @@ class FirebaseConnection {
             
         }
         else if oldUserInfo.mail != newEmail && oldUserInfo.username != newUsername {
-            self.ref.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
+            self.dbRef.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: newUsername).observeSingleEvent(of: .value) { (snapshot) in
                 if snapshot.childrenCount == 0 {
                     self.updateEmail(newMail: newEmail) { (error) in
                         if error == nil {
@@ -221,7 +248,7 @@ class FirebaseConnection {
                             dictionary["birthday"] = newBirthday
                             dictionary["username"] = newUsername
                             
-                            let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+                            let userInfos = self.dbRef.child("userInfos").child(self.getCurrentID() ?? "")
                             userInfos.setValue(dictionary) { (error, _) in
                                 if error == nil {
                                     completion?(nil, true)
@@ -253,7 +280,7 @@ class FirebaseConnection {
             dictionary["birthday"] = newBirthday
             dictionary["username"] = newUsername
             
-            let userInfos = self.ref.child("userInfos").child(self.getCurrentID() ?? "")
+            let userInfos = self.dbRef.child("userInfos").child(self.getCurrentID() ?? "")
             userInfos.setValue(dictionary) { (error, _) in
                 if error == nil {
                     completion?(nil, false)

@@ -12,7 +12,7 @@ import SwiftUI
 struct ContentView: View {
     var viewModel = ContentViewModel()
     var body: some View {
-        
+
         NavigationView {
             if self.viewModel.signed() {
                 HomepageView()

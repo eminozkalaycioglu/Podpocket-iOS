@@ -21,6 +21,7 @@ struct ContentView: View {
                 LoginView()
             }
         }.navigationBarTitle("").navigationBarHidden(true)
+       
 
     }
 }

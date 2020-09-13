@@ -11,17 +11,26 @@ import Combine
 
 class FeedTabViewModel: ObservableObject {
     
-    @Published var success = false
-    func share(message: String) {
-        self.success = false
+    @Published var messages = [MessageModel]()
+    
+    func share(message: String, completion: ((Bool)->())? = nil) {
+        
         FirebaseConnection.shared.shareMessage(message: message) { (success) in
-            
-            if success {
-                self.success = true
+            completion?(success)
+        }
+    }
+    
+    func observe() {
+        FirebaseConnection.shared.observeMessages { (added) in
+            if added {
+                self.fetchMessages()
             }
-            else {
-                self.success = false
-            }
+        }
+    }
+    
+    func fetchMessages() {
+        FirebaseConnection.shared.fetchAllMessages { (messages) in
+            self.messages = messages
         }
     }
 }

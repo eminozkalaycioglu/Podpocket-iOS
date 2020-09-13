@@ -11,19 +11,18 @@ import SwiftUI
 import Combine
 
 class UserProfilePhotoViewModel {
+    var uid: String = FirebaseConnection.shared.getCurrentID() ?? ""
+
     func savePhoto(image: UIImage) {
         
         FirebaseConnection.shared.saveImage(image: image)
         
     }
    
-    func fetchImage(completion: ((UIImage?)->())? = nil) {
-        FirebaseConnection.shared.fetchProfilePhoto { (image) in
-            if let image = image {
-                completion?(image)
+    func fetchImage(completion: ((UIImage)->())? = nil) {
+        FirebaseConnection.shared.fetchProfilePhoto(uid: self.uid) { (image) in
+            completion?(image)
 
-
-            }
         }
         
     }

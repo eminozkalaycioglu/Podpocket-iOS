@@ -69,7 +69,7 @@ struct UserProfilePhotoView: View {
         .onAppear {
             self.viewModel.fetchImage { (originalImage) in
                 
-                self.image = originalImage ?? UIImage()
+                self.image = originalImage
             }
         }
         

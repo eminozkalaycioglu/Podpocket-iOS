@@ -21,6 +21,39 @@ class FirebaseConnection {
 
     
     
+    func observeMessages(completion: ((Bool)->())? = nil) {
+        let messages = self.dbRef.child("sharedMessages")
+        messages.observe(.childAdded) { (_ ) in
+            completion?(true)
+        }
+        
+        messages.observe(.childRemoved) { (_ ) in
+            completion?(true)
+        }
+    }
+    
+    func fetchAllMessages(completion: (([MessageModel])->())? = nil) {
+        var messagesArray = [MessageModel]()
+        messagesArray.removeAll()
+        
+        let messages = self.dbRef.child("sharedMessages")
+        messages.observeSingleEvent(of: .value) { (snapshot) in
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                let value = child.value as? NSDictionary
+                let message = value?["message"] as? String ?? ""
+                let countryCode = value?["countryCode"] as? String ?? ""
+                let date = value?["date"] as? String ?? ""
+                let uid = value?["uid"] as? String ?? ""
+                let messageId = child.key
+                messagesArray.append(MessageModel(id: messageId, countryCode: countryCode, date: date, message: message, uid: uid))
+
+                
+            }
+            
+            completion?(messagesArray)
+        }
+    }
+    
     func shareMessage(message: String, completion: ((Bool)->())? = nil) {
         let newMessage = self.dbRef.child("sharedMessages").childByAutoId()
         var dictionary: [String: Any] = [:]
@@ -28,6 +61,10 @@ class FirebaseConnection {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         let dateString = dateFormatter.string(from: Date())
+        
+        if let countryCode = Locale.current.regionCode {
+            dictionary["countryCode"] = countryCode
+        }
         
         dictionary["message"] = message
         dictionary["uid"] = self.getCurrentID()!
@@ -42,17 +79,13 @@ class FirebaseConnection {
             return
             
         }
-        
-        
-        
-        
     }
     
     func saveImage(image: UIImage) {
         if let uid = self.getCurrentID() {
             let imageRef = self.storageRef.child("UserProfilePhotos").child(uid)
             
-            _ = imageRef.putData(image.jpegData(compressionQuality: 0.1) ?? Data(), metadata: nil) { (metadata, error) in
+            _ = imageRef.putData(image.jpegData(compressionQuality: 0.05) ?? Data(), metadata: nil) { (metadata, error) in
                 guard metadata != nil else {
                 
                 return
@@ -117,12 +150,7 @@ class FirebaseConnection {
     
     
     
-    func fetchProfilePhoto(completion: ((UIImage?)->())? = nil) {
-        
-        
-        guard let uid = self.getCurrentID() else {
-            return
-        }
+    func fetchProfilePhoto(uid: String,completion: ((UIImage)->())? = nil) {
         
         self.dbRef.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
             
@@ -130,12 +158,13 @@ class FirebaseConnection {
             
             let imgRef = Storage.storage().reference(forURL: dataURL ?? "https://firebasestorage.googleapis.com/v0/b/podpocket-ios.appspot.com/o/UserProfilePhotos%2FGXyCLcbTvNSPoXl0ghRoHIuP6sg1?alt=media&token=bed9e1ca-968d-4dc1-a10f-cd0b97b5ec74")
 
+            
             imgRef.getData(maxSize: 100 * 1024 * 1024) { (data, error) -> Void in
 
                 if error == nil, let data = data {
 
                     let profileImage = UIImage(data: data)
-                    completion?(profileImage)
+                    completion?(profileImage ?? UIImage())
                     
                 }
                 
@@ -150,11 +179,8 @@ class FirebaseConnection {
         }
     }
     
-    func fetchUserInfo(completion: ((User?) -> ())? = nil) {
+    func fetchUserInfo(uid: String, completion: ((User) -> ())? = nil) {
         
-        guard let uid = self.getCurrentID() else {
-            return
-        }
         
         self.dbRef.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
             

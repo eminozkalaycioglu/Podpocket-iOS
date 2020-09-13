@@ -14,16 +14,17 @@ struct FeedTabView: View {
     @ObservedObject var viewModel = FeedTabViewModel()
     
     @State var showMore = false
-    
-    
     @State var writing = false
-    @State var test2 = ""
-    var longMessage = "You want to round the corners of your border, you need to use the overlay() modifier instead. For example, this adds a 4-point blue border with 16-point rounded corners: You want to round the corners of your border, you need to use the overlay() modifier instead. For example, this adds a 4-point blue border with 16-point rounded corners: You want to round the corners of your border, you need to use the overlay() modifier instead. For example, this adds a 4-point blue border with 16-point rounded corners: You want to round the corners of your border, you need to use the overlay() modifier instead. For example, this adds a 4-point blue border with 16-point rounded corners:"
-    var shortMessage = "Message"
+    @State var message = ""
+
+    init() {
+        self.viewModel.fetchMessages()
+        self.viewModel.observe()
+    }
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .topTrailing) {
+            ZStack(alignment: .bottomTrailing) {
                 Color.init(hex: Color.podpocketPurpleColor)
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture{
@@ -35,8 +36,8 @@ struct FeedTabView: View {
                 VStack {
                     ScrollView(.vertical) {
                         LazyVGrid(columns: [GridItem(.flexible(minimum: 0, maximum: .infinity))], content: {
-                            ForEach(0..<20) { index in
-                                FeedCell(writing: self.$writing, message: index%2 == 0 ? self.longMessage : self.shortMessage)
+                            ForEach(self.viewModel.messages.reversed(), id: \.id) { message in
+                                FeedCell(message: message, writing: self.$writing)
 
                             }
                         })
@@ -61,7 +62,7 @@ struct FeedTabView: View {
                 } else {
                     
                     VStack {
-                        MultilineTextField("What's going on?", text: self.$test2)
+                        MultilineTextField("What's going on?", text: self.$message)
                             .padding()
                             .background(Color.init(hex: Color.podpocketPurpleColor).opacity(0.8))
 
@@ -74,7 +75,11 @@ struct FeedTabView: View {
                             .padding()
                         
                         Button(action: {
-                            self.viewModel.share(message: self.test2)
+                            self.viewModel.share(message: self.message) { (success) in
+                                if success {
+                                    self.writing = false
+                                }
+                            }
                             
                         }, label: {
                             HStack {
@@ -104,59 +109,9 @@ struct FeedTabView: View {
                 
                 
             }.navigationBarTitle("").navigationBarHidden(true)
-            .onReceive(self.viewModel.$success, perform: { _ in
-                if self.viewModel.success {
-                    self.writing = false
-                }
-            })
+
+            
         }
-    }
-}
-
-
-struct TextView: UIViewRepresentable {
-    @Binding var text: String
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    func makeUIView(context: Context) -> UITextView {
-
-        let myTextView = UITextView()
-        myTextView.delegate = context.coordinator
-        myTextView.font = UIFont(name: "HelveticaNeue", size: 15)
-        myTextView.textColor = UIColor().hexStringToUIColor(hex: Color.podpocketGreenColor).withAlphaComponent(0.8)
-        myTextView.isScrollEnabled = true
-        myTextView.isEditable = true
-        myTextView.isUserInteractionEnabled = true
-        myTextView.backgroundColor = UIColor(white: 0.0, alpha: 0.05)
-
-        return myTextView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-        uiView.text = text
-    }
-
-    class Coordinator : NSObject, UITextViewDelegate {
-
-        var parent: TextView
-
-        init(_ uiTextView: TextView) {
-            self.parent = uiTextView
-        }
-
-        func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-            return true
-        }
-
-        func textViewDidChange(_ textView: UITextView) {
-            print("text now: \(String(describing: textView.text!))")
-            self.parent.text = textView.text
-        }
-        
-        
     }
 }
 

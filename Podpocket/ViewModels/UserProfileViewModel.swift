@@ -21,11 +21,9 @@ class UserProfileViewModel: ObservableObject {
     }
     
     func getUserInfo() {
-        FirebaseConnection.shared.fetchUserInfo() { (user) in
-            if let user = user {
-                self.userInfo = user
-                self.loading = false
-            }
+        FirebaseConnection.shared.fetchUserInfo(uid: self.uid) { (user) in
+            self.userInfo = user
+            self.loading = false
             
         }
     }

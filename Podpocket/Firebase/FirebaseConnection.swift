@@ -20,6 +20,10 @@ class FirebaseConnection {
     private let storageRef = Storage.storage().reference()
 
     
+    func deleteMessage(messageId: String) {
+        self.dbRef.child("sharedMessages").child(messageId).removeValue()
+        
+    }
     
     func observeMessages(completion: ((Bool)->())? = nil) {
         let messages = self.dbRef.child("sharedMessages")

@@ -14,6 +14,9 @@ class FeedCellViewModel: ObservableObject {
     @Published var username = ""
     @Published var profilePhoto = UIImage()
     
+    func getCurrentId() -> String {
+        return FirebaseConnection.shared.getCurrentID() ?? ""
+    }
     
     func fetchUserInfo(uid: String) {
         FirebaseConnection.shared.fetchUserInfo(uid: uid) { (user) in

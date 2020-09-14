@@ -12,18 +12,16 @@ import SwiftUI
 struct FeedCell: View {
     @StateObject var viewModel = FeedCellViewModel()
     @Binding var writing: Bool
+    @Binding var actionSheet: ActionSheetData
     @State var showMore = false
     var message: MessageModel
     
-    init(message: MessageModel, writing: Binding<Bool>) {
-        self.message = message
-        self._writing = writing
-
-    }
+    
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                HStack {
+                HStack(alignment: .center) {
+                    
                     Image(uiImage: self.viewModel.profilePhoto)
                         .resizable().clipShape(Circle()).frame(width: 100, height: 100, alignment: .center)
                     
@@ -31,6 +29,24 @@ struct FeedCell: View {
                         Text(self.viewModel.username).foregroundColor(.white)
                         Text(self.publishedAt(pubDateString: self.message.date)).foregroundColor(.white)
                     }
+                    
+                    Spacer()
+                    
+                    if self.viewModel.getCurrentId() == self.message.uid {
+                        Button(action: {
+                            self.actionSheet.tapped = true
+                            self.actionSheet.messageId = self.message.id
+                        }, label: {
+                            Image("more")
+                                .resizable()
+                                .renderingMode(.template)
+                                .foregroundColor(.white)
+                                .frame(width: 30, height: 30)
+                        })
+                    }
+                    
+                    
+                    
                 }.padding()
                 Text(self.message.message).foregroundColor(.white).lineLimit(self.showMore ? 6 : 2)
                 
@@ -75,6 +91,7 @@ struct FeedCell: View {
             
         }
         
+        
        
         
     }
@@ -107,13 +124,25 @@ struct FeedCell: View {
     }
 }
 
+struct ActionSheetData {
+    var tapped: Bool
+    var messageId: String
+}
+
+//@available(iOS 14.0, *)
 //struct FeedCell_Previews: PreviewProvider {
 //    static var previews: some View {
-//        FeedCell(writing: Binding(get: {
-//            return false
-//        }, set: { (_) in
+//        FeedCell(
+//            writing: Binding(
+//                get: {
+//                    return false
+//                }, set: { (_) in
 //
-//        }),message: MessageModel(countryCode: "TR", date: "13/02/2020", message: "Test", uid: "sdfsfsfsgs"))
+//                }),
+//            actionSheet: .constant(false),
+//            message: MessageModel(countryCode: "TR", date: "13/02/2020", message: "Test", uid: "WCTMLaPIGodm1vESQkRqighC18W2")
+//            )
+//
 //
 //    }
 //}

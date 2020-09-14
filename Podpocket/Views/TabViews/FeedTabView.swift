@@ -16,7 +16,7 @@ struct FeedTabView: View {
     @State var showMore = false
     @State var writing = false
     @State var message = ""
-
+    @State var actionSheet = ActionSheetData(tapped: false, messageId: "")
     init() {
         self.viewModel.fetchMessages()
         self.viewModel.observe()
@@ -37,7 +37,8 @@ struct FeedTabView: View {
                     ScrollView(.vertical) {
                         LazyVGrid(columns: [GridItem(.flexible(minimum: 0, maximum: .infinity))], content: {
                             ForEach(self.viewModel.messages.reversed(), id: \.id) { message in
-                                FeedCell(message: message, writing: self.$writing)
+                                FeedCell(writing: self.$writing, actionSheet: self.$actionSheet, message: message)
+                                
 
                             }
                         })
@@ -60,46 +61,52 @@ struct FeedTabView: View {
                     }).padding()
                     
                 } else {
-                    
-                    VStack {
-                        MultilineTextField("What's going on?", text: self.$message)
-                            .padding()
-                            .background(Color.init(hex: Color.podpocketPurpleColor).opacity(0.8))
+                    ZStack(alignment: .bottom) {
+                        Color.black.opacity(0.4).onTapGesture {
+                            self.writing = false
+                        }
+                        VStack {
+                            MultilineTextField("What's going on?", text: self.$message)
+                                .padding()
+                                .background(Color.init(hex: Color.podpocketPurpleColor).opacity(0.8))
 
-                            .cornerRadius(20)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
-                            )
-                            .shadow(radius: 10)
-                            .padding()
-                        
-                        Button(action: {
-                            self.viewModel.share(message: self.message) { (success) in
-                                if success {
-                                    self.writing = false
-                                }
-                            }
+                                .cornerRadius(20)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
+                                )
+                                .shadow(radius: 10)
+                                .padding()
                             
-                        }, label: {
-                            HStack {
-                                Spacer()
-                                Text("SHARE")
-                                    .font(.title2)
-                                    .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
-                                Spacer()
-                            }
-                            .padding(5)
-                            .background(Color.init(hex: Color.podpocketPurpleColor))
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
-                            )
-                            .shadow(radius: 10)
-                            .padding(.horizontal)
-                            .padding(.bottom, 10)
-                        })
+                            Button(action: {
+                                self.viewModel.share(message: self.message) { (success) in
+                                    if success {
+                                        self.writing = false
+                                    }
+                                }
+                                
+                            }, label: {
+                                HStack {
+                                    Spacer()
+                                    Text("SHARE")
+                                        .font(.title2)
+                                        .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                    Spacer()
+                                }
+                                .padding(5)
+                                .background(Color.init(hex: Color.podpocketPurpleColor))
+                                .cornerRadius(10)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
+                                )
+                                .shadow(radius: 10)
+                                .padding(.horizontal)
+                                .padding(.bottom, 10)
+                            })
+                        }
+
+                        
                     }
                     
                     
@@ -109,6 +116,15 @@ struct FeedTabView: View {
                 
                 
             }.navigationBarTitle("").navigationBarHidden(true)
+            .actionSheet(isPresented: self.$actionSheet.tapped) {
+                ActionSheet(title: Text("Options"), message: Text("What would you like to do?"), buttons: [
+                    .destructive(Text("Delete"),action: {
+                        self.viewModel.deleteMessage(messageId: self.actionSheet.messageId)
+                    }),
+                    
+                    .cancel()
+                ])
+            }
 
             
         }

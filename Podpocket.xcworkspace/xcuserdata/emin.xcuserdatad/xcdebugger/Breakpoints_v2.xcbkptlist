@@ -30,8 +30,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
             landmarkName = "createUser(fullName:email:pass:username:birthday:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -110,8 +110,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "341"
-            endingLineNumber = "341"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "updateEmail(newMail:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -126,8 +126,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "342"
-            endingLineNumber = "342"
+            startingLineNumber = "346"
+            endingLineNumber = "346"
             landmarkName = "updateEmail(newMail:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -222,8 +222,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "161"
+            endingLineNumber = "161"
             landmarkName = "fetchProfilePhoto(uid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -238,8 +238,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "fetchProfilePhoto(uid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -254,8 +254,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "163"
+            endingLineNumber = "163"
             landmarkName = "fetchProfilePhoto(uid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -270,8 +270,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "fetchProfilePhoto(uid:completion:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -398,8 +398,8 @@
             filePath = "Podpocket/Views/TabViews/FeedTabView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -414,8 +414,8 @@
             filePath = "Podpocket/Views/TabViews/FeedTabView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "body"
             landmarkType = "24">
          </BreakpointContent>
@@ -430,8 +430,8 @@
             filePath = "Podpocket/Views/TabViews/FeedTabView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -478,8 +478,8 @@
             filePath = "Podpocket/Views/TabViews/FeedTabView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "54"
+            endingLineNumber = "54"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -526,8 +526,8 @@
             filePath = "Podpocket/Views/TabViews/FeedTabView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "body"
             landmarkType = "24">
             <Locations>
@@ -574,8 +574,8 @@
             filePath = "Podpocket/ViewModels/FeedTabViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "fetchMessages()"
             landmarkType = "7">
             <Locations>
@@ -622,8 +622,8 @@
             filePath = "Podpocket/ViewModels/FeedTabViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "fetchMessages()"
             landmarkType = "7">
          </BreakpointContent>
@@ -638,8 +638,8 @@
             filePath = "Podpocket/ViewModels/FeedTabViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "fetchMessages()"
             landmarkType = "7">
          </BreakpointContent>
@@ -654,8 +654,8 @@
             filePath = "Podpocket/Firebase/FirebaseConnection.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "fetchAllMessages(completion:)"
             landmarkType = "7">
          </BreakpointContent>

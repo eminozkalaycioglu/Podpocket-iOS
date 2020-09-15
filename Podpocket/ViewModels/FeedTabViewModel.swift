@@ -23,16 +23,16 @@ class FeedTabViewModel: ObservableObject {
     func deleteMessage(messageId: String) {
         FirebaseConnection.shared.deleteMessage(messageId: messageId)
     }
-    func observe() {
+    func observe(type: FetchType) {
         FirebaseConnection.shared.observeMessages { (added) in
             if added {
-                self.fetchMessages()
+                self.fetchMessages(type: type)
             }
         }
     }
     
-    func fetchMessages() {
-        FirebaseConnection.shared.fetchAllMessages { (messages) in
+    func fetchMessages(type: FetchType) {
+        FirebaseConnection.shared.fetchAllMessages(type: type) { (messages) in
             self.messages = messages
         }
     }

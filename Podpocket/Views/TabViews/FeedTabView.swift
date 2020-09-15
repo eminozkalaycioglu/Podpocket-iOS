@@ -8,125 +8,57 @@
 
 import SwiftUI
 
+enum FetchType {
+    case Local
+    case Worldwide
+}
+
 @available(iOS 14.0, *)
 struct FeedTabView: View {
-    
-    @ObservedObject var viewModel = FeedTabViewModel()
-    
-    @State var showMore = false
     @State var writing = false
-    @State var message = ""
-    @State var actionSheet = ActionSheetData(tapped: false, messageId: "")
-    init() {
-        self.viewModel.fetchMessages()
-        self.viewModel.observe()
-    }
+    @State var selectedSegment = 1
     
     var body: some View {
         GeometryReader { geometry in
-            ZStack(alignment: .bottomTrailing) {
+            ZStack(alignment: .top) {
                 Color.init(hex: Color.podpocketPurpleColor)
                     .edgesIgnoringSafeArea(.all)
-                    .onTapGesture{
-                        withAnimation {
-                            self.writing = false
-                        }
-                        
-                    }
-                VStack {
-                    ScrollView(.vertical) {
-                        LazyVGrid(columns: [GridItem(.flexible(minimum: 0, maximum: .infinity))], content: {
-                            ForEach(self.viewModel.messages.reversed(), id: \.id) { message in
-                                FeedCell(writing: self.$writing, actionSheet: self.$actionSheet, message: message)
-                                
-
-                            }
-                        })
-                    }
-                }.onTapGesture {
-                    withAnimation {
-                        self.writing = false
-                    }
-                }
-                if !self.writing {
-                    
-                    Button(action: {
-                        withAnimation {
-                            self.writing.toggle()
-                        }
-                    }, label: {
-                        Image("share")
-                            .resizable()
-                            .frame(width: geometry.size.width/7, height: geometry.size.width/7)
-                    }).padding()
-                    
-                } else {
-                    ZStack(alignment: .bottom) {
-                        Color.black.opacity(0.4).onTapGesture {
-                            self.writing = false
-                        }
-                        VStack {
-                            MultilineTextField("What's going on?", text: self.$message)
-                                .padding()
-                                .background(Color.init(hex: Color.podpocketPurpleColor).opacity(0.8))
-
-                                .cornerRadius(20)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
-                                )
-                                .shadow(radius: 10)
-                                .padding()
+                VStack(spacing: 0) {
+                    ZStack {
+                        Picker("", selection: self.$selectedSegment) {
+                            Text("LOCAL")
+                                .tag(0)
+                            Text("WORLWIDE")
+                                .tag(1)
                             
-                            Button(action: {
-                                self.viewModel.share(message: self.message) { (success) in
-                                    if success {
-                                        self.writing = false
-                                    }
-                                }
+                        }.shadow(radius: 10)
+                        .frame(height: 60)
+                        .pickerStyle(SegmentedPickerStyle())
+                        .background(Color.init(hex: "2C2838"))
+                        if self.writing {
+                            Color.black.opacity(0.7)
+                                .edgesIgnoringSafeArea(.all)
+                                .frame(height: 60)
                                 
-                            }, label: {
-                                HStack {
-                                    Spacer()
-                                    Text("SHARE")
-                                        .font(.title2)
-                                        .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
-                                    Spacer()
-                                }
-                                .padding(5)
-                                .background(Color.init(hex: Color.podpocketPurpleColor))
-                                .cornerRadius(10)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
-                                )
-                                .shadow(radius: 10)
-                                .padding(.horizontal)
-                                .padding(.bottom, 10)
-                            })
                         }
-
-                        
                     }
                     
-                    
-
+                   
+                    switch self.selectedSegment {
+                    case 0:
+                        MessagesView(type: .Local, writing: self.$writing)
+                    case 1:
+                        MessagesView(type: .Worldwide, writing: self.$writing)
+                    default:
+                        Text("")
+                    }
                     
                 }
                 
+                
+                 
                 
             }.navigationBarTitle("").navigationBarHidden(true)
-            .actionSheet(isPresented: self.$actionSheet.tapped) {
-                ActionSheet(title: Text("Options"), message: Text("What would you like to do?"), buttons: [
-                    .destructive(Text("Delete"),action: {
-                        self.viewModel.deleteMessage(messageId: self.actionSheet.messageId)
-                    }),
-                    
-                    .cancel()
-                ])
-            }
-
-            
         }
     }
 }

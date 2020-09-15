@@ -1,5 +1,5 @@
 //
-//  BestPodcastsCell.swift
+//  PodcastCell.swift
 //  Podpocket
 //
 //  Created by Emin on 18.08.2020.

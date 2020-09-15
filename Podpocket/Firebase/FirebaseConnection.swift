@@ -36,20 +36,35 @@ class FirebaseConnection {
         }
     }
     
-    func fetchAllMessages(completion: (([MessageModel])->())? = nil) {
+    func fetchAllMessages(type: FetchType, completion: (([MessageModel])->())? = nil) {
         var messagesArray = [MessageModel]()
         messagesArray.removeAll()
         
         let messages = self.dbRef.child("sharedMessages")
+        let currentCountryCode = Locale.current.regionCode ?? "TR"
+
+        
+        
         messages.observeSingleEvent(of: .value) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 let value = child.value as? NSDictionary
                 let message = value?["message"] as? String ?? ""
-                let countryCode = value?["countryCode"] as? String ?? ""
+                let countryCode = value?["countryCode"] as? String ?? "TR"
                 let date = value?["date"] as? String ?? ""
                 let uid = value?["uid"] as? String ?? ""
                 let messageId = child.key
-                messagesArray.append(MessageModel(id: messageId, countryCode: countryCode, date: date, message: message, uid: uid))
+                
+                switch type {
+                case .Local:
+                    if currentCountryCode == countryCode {
+                        messagesArray.append(MessageModel(id: messageId, countryCode: countryCode, date: date, message: message, uid: uid))
+                    }
+                    
+                case .Worldwide:
+                    messagesArray.append(MessageModel(id: messageId, countryCode: countryCode, date: date, message: message, uid: uid))
+                }
+                
+                
 
                 
             }

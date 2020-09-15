@@ -64,11 +64,8 @@ struct PodcastDetailView: View {
                                         .tag(1)
                                     
                                 }.shadow(radius: 10)
-                                
-                                
                                 .frame(height: 60)
                                 .pickerStyle(SegmentedPickerStyle())
-                                
                                 .background(Color.init(hex: "2C2838"))
                                 
                                 if self.selectedSegment == 0 {

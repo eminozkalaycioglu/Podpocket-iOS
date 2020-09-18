@@ -16,16 +16,21 @@ class FirebaseConnection {
     }
     
     static let shared = FirebaseConnection()
-    private var dbRef: DatabaseReference! = Database.database().reference()
-    private let storageRef = Storage.storage().reference()
+    private var dbRef: DatabaseReference!
+    private var storageRef: StorageReference!
 
     
     func deleteMessage(messageId: String) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
         self.dbRef.child("sharedMessages").child(messageId).removeValue()
         
     }
     
     func observeMessages(completion: ((Bool)->())? = nil) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
+
         let messages = self.dbRef.child("sharedMessages")
         messages.observe(.childAdded) { (_ ) in
             completion?(true)
@@ -37,6 +42,9 @@ class FirebaseConnection {
     }
     
     func fetchAllMessages(type: FetchType, completion: (([MessageModel])->())? = nil) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
+
         var messagesArray = [MessageModel]()
         messagesArray.removeAll()
         
@@ -74,6 +82,9 @@ class FirebaseConnection {
     }
     
     func shareMessage(message: String, completion: ((Bool)->())? = nil) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
+
         let newMessage = self.dbRef.child("sharedMessages").childByAutoId()
         var dictionary: [String: Any] = [:]
         
@@ -101,7 +112,11 @@ class FirebaseConnection {
     }
     
     func saveImage(image: UIImage) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
+
         if let uid = self.getCurrentID() {
+            
             let imageRef = self.storageRef.child("UserProfilePhotos").child(uid)
             
             _ = imageRef.putData(image.jpegData(compressionQuality: 0.05) ?? Data(), metadata: nil) { (metadata, error) in
@@ -129,6 +144,20 @@ class FirebaseConnection {
         }
     }
     func createUser(fullName: String, email: String, pass: String, username: String, birthday: String, completion: ((String?) -> ())? = nil) {
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
+
+        if username.count <= 4 {
+            completion?("Username must be at least 5 characters")
+            return
+        }
+        
+        if fullName.count <= 3 {
+            completion?("Full name must be at least 4 characters")
+            return
+        }
+        
+       
         self.dbRef.child("userInfos").queryOrdered(byChild: "username").queryEqual(toValue: username).observeSingleEvent(of: .value) { (snapshot) in
             if snapshot.childrenCount == 0 {
                 Auth.auth().createUser(withEmail: email, password: pass) { (user, error) in
@@ -154,7 +183,9 @@ class FirebaseConnection {
     }
     
     private func saveWithInfos(email: String, fullName: String, uid: String, username: String, birthday: String) {
-        
+
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
         var dictionary: [String:Any] = [:]
         dictionary["fullname"] = fullName
         dictionary["uid"] = uid
@@ -165,41 +196,51 @@ class FirebaseConnection {
         let userInfos = self.dbRef.child("userInfos").child(uid)
         userInfos.setValue(dictionary)
         
+        self.saveImage(image: UIImage(named: "profile")!)
+        
     }
     
     
     
     func fetchProfilePhoto(uid: String,completion: ((UIImage)->())? = nil) {
+
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
         
-        self.dbRef.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
-            
-            let dataURL = snapshot.value as? String
-            
-            let imgRef = Storage.storage().reference(forURL: dataURL ?? "https://firebasestorage.googleapis.com/v0/b/podpocket-ios.appspot.com/o/UserProfilePhotos%2FGXyCLcbTvNSPoXl0ghRoHIuP6sg1?alt=media&token=bed9e1ca-968d-4dc1-a10f-cd0b97b5ec74")
+        if self.signed() && uid.count != 0 {
+            self.dbRef.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
 
-            
-            imgRef.getData(maxSize: 100 * 1024 * 1024) { (data, error) -> Void in
+                let dataURL = snapshot.value as? String
 
-                if error == nil, let data = data {
+                let imgRef = Storage.storage().reference(forURL: dataURL ?? "https://firebasestorage.googleapis.com/v0/b/podpocket-ios.appspot.com/o/UserProfilePhotos%2FGXyCLcbTvNSPoXl0ghRoHIuP6sg1?alt=media&token=bed9e1ca-968d-4dc1-a10f-cd0b97b5ec74")
 
-                    let profileImage = UIImage(data: data)
-                    completion?(profileImage ?? UIImage())
-                    
+
+                imgRef.getData(maxSize: 100 * 1024 * 1024) { (data, error) -> Void in
+
+                    if error == nil, let data = data {
+
+                        let profileImage = UIImage(data: data)
+                        completion?(profileImage ?? UIImage())
+
+                    }
+
+                    else {
+                        print(error.debugDescription)
+                    }
+
+
                 }
-                
-                else {
-                    print(error.debugDescription)
-                }
-                
-                
+
+
             }
-            
-            
         }
+        
     }
     
     func fetchUserInfo(uid: String, completion: ((User) -> ())? = nil) {
-        
+
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
         
         self.dbRef.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
             
@@ -223,6 +264,9 @@ class FirebaseConnection {
     }
     
     func updateUserInfo(oldUserInfo: User, newUsername: String, newEmail:String, newFullName: String, newBirthday: String, completion: ((String?, Bool) -> ())? = nil) {
+
+        self.dbRef = Database.database().reference()
+        self.storageRef = Storage.storage().reference()
         
         if oldUserInfo.birthday == newBirthday && oldUserInfo.fullName == newFullName && oldUserInfo.mail == newEmail && oldUserInfo.username == newUsername {
             completion?("Everything is same.", false)
@@ -344,6 +388,7 @@ class FirebaseConnection {
     
     
     func signIn(withEmail email: String, password: String, _ completion: ((String?) -> ())? = nil){
+        
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error != nil{
                 completion?(error?.localizedDescription)
@@ -355,6 +400,7 @@ class FirebaseConnection {
     }
     
     func updateEmail(newMail: String, completion: ((String?) -> ())? = nil) {
+        
         if self.signed() {
             Auth.auth().currentUser?.updateEmail(to: newMail, completion: { (error) in
                 if error != nil{
@@ -368,16 +414,15 @@ class FirebaseConnection {
     }
     
     func getCurrentID() -> String? {
-        
         return Auth.auth().currentUser?.uid
     }
     
-    func signOut() -> Bool{
+    func signOut() -> Bool {
         do{
             try Auth.auth().signOut()
             
             return true
-        }catch{
+        } catch {
             return false
         }
     }
@@ -385,6 +430,7 @@ class FirebaseConnection {
     
     
     func signed() -> Bool {
+        
         return Auth.auth().currentUser == nil ? false : true
         
     }

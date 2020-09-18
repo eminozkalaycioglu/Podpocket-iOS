@@ -15,7 +15,7 @@ class LoginViewModel: ObservableObject {
     
     func login(email: String, password: String) {
         FirebaseConnection.shared.signIn(withEmail: email, password: password) { (errorStr) in
-            self.presentHomePage = errorStr == nil ? true : false
+            self.presentHomePage = (errorStr == nil)
         }
     }
     

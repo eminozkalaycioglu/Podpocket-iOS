@@ -14,7 +14,7 @@ struct UserProfileView: View {
     @ObservedObject var viewModel = UserProfileViewModel()
     
     @State var show: Bool = false
-    @State var selectedImage: UIImage? = nil
+    @State var selectedImage: UIImage = UIImage(named: "profile")!
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
@@ -43,12 +43,7 @@ struct UserProfileView: View {
                             HStack {
                                 VStack(alignment: .leading) {
                                     
-                                    if #available(iOS 14.0, *) {
-                                        UserProfilePhotoView(showCaptureImageView: self.$show, image: self.$selectedImage)
-                                    } else {
-                                        // Fallback on earlier versions
-                                    }
-    //
+                                    UserProfilePhotoView(showCaptureImageView: self.$show, image: self.$selectedImage)
                                     
                                     Text(self.viewModel.userInfo.username ?? "")
                                         .foregroundColor(.white)
@@ -88,7 +83,7 @@ struct UserProfileView: View {
                 NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
                 
                 
-                if self.viewModel.loading || self.selectedImage == nil  {
+                if self.viewModel.loading {
                     CustomProgressView()
 
                 }

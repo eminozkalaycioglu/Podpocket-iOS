@@ -13,7 +13,7 @@ import SwiftUI
 struct CaptureImageView {
     
     @Binding var isShown: Bool
-    @Binding var image: UIImage?
+    @Binding var image: UIImage
     func makeCoordinator() -> Coordinator {
         return Coordinator(isShown: self.$isShown, image: self.$image)
     }
@@ -37,8 +37,8 @@ extension CaptureImageView: UIViewControllerRepresentable {
 
 class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     @Binding var isCoordinatorShown: Bool
-    @Binding var imageInCoordinator: UIImage?
-    init(isShown: Binding<Bool>, image: Binding<UIImage?>) {
+    @Binding var imageInCoordinator: UIImage
+    init(isShown: Binding<Bool>, image: Binding<UIImage>) {
         _isCoordinatorShown = isShown
         _imageInCoordinator = image
     }

@@ -16,6 +16,7 @@ struct ContentView: View {
         NavigationView {
             if self.viewModel.signed() {
                 HomepageView()
+//                PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/episode/image/1ea160e09e7e40e5970a8651a5835d6b.jpg"), parentPodcastId: "")
             }
             else {
                 LoginView()

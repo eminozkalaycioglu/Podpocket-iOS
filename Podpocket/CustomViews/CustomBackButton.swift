@@ -27,3 +27,17 @@ struct CustomBackButton: View {
         }
     }
 }
+
+struct Custom: View {
+    var body: some View {
+        
+        HStack{
+            Image("Logo")
+                .renderingMode(.template)
+                .resizable().frame(width: 30, height: 30)
+                .foregroundColor(.white)
+            
+            Text("Podpocket")
+        }
+    }
+}

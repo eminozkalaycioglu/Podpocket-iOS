@@ -11,7 +11,8 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct EpisodesListView: View {
     @ObservedObject var viewModel: EpisodesListViewModel = EpisodesListViewModel()
-    
+    @State var presentPlayer = false
+    @State var selectedEpisode = Episode()
     init(podcast: Podcast) {
         self.viewModel.setPodcast(podcast: podcast)
 
@@ -26,6 +27,12 @@ struct EpisodesListView: View {
                     LazyVGrid(columns: [GridItem(.flexible(minimum: 0, maximum: .infinity))], spacing: 10) {
                         ForEach(self.viewModel.getEpisodes(), id: \.self) { episode in
                             EpisodeCell(episode: episode)
+                                .onTapGesture {
+                                    
+                                    self.selectedEpisode = episode
+                                    self.presentPlayer = true
+                                    
+                                }
 
                         }
                         
@@ -50,6 +57,8 @@ struct EpisodesListView: View {
                 Spacer()
             }
             
+            
+            NavigationLink("", destination: PlayerView(episode: self.selectedEpisode, parentPodcastId: ""), isActive: self.$presentPlayer)
         }
         
     }

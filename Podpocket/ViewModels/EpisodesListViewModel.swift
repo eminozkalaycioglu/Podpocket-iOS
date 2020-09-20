@@ -23,6 +23,7 @@ class EpisodesListViewModel: ObservableObject {
     
     func getEpisodes() -> [Episode] {
         return self.episodesResult
+        
        
     
     }

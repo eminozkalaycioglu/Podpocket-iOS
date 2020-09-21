@@ -13,6 +13,8 @@ target 'Podpocket' do
   pod 'Moya'
   pod 'Kingfisher'
   pod 'Kingfisher/SwiftUI'
+  pod 'MarqueeLabel'
+
   
 
   # Pods for Podpocket

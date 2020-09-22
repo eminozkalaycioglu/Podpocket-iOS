@@ -16,12 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let audioSession = AVAudioSession.sharedInstance()
+
+
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay])
-            print("Playback OK")
-            try AVAudioSession.sharedInstance().setActive(true)
-            print("Session is Active")
+//            try audioSession.setCategory(.playback, options: .duckOthers)
+            try audioSession.setCategory(.playback, mode: .default, options: [.mixWithOthers, .allowAirPlay, .duckOthers])
+            try audioSession.setActive(true)
         } catch {
         }
         FirebaseApp.configure()

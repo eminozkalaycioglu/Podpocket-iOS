@@ -11,7 +11,6 @@ import struct Kingfisher.KFImage
 
 @available(iOS 14.0, *)
 struct PodcastDetailView: View {
-//    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = PodcastDetailViewModel()
     @EnvironmentObject var aboutViewModel: AboutPodcastViewModel
     
@@ -23,17 +22,17 @@ struct PodcastDetailView: View {
     
     init(id: String) {
         self.id = id
-        UINavigationBar.appearance().barTintColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
-        UITableView.appearance().backgroundColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
-        UISegmentedControl.appearance().backgroundColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
+        UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
+        UITableView.appearance().backgroundColor = UIColor.podpocketPurpleColor
+        UISegmentedControl.appearance().backgroundColor = UIColor.podpocketPurpleColor
         UISegmentedControl.appearance().selectedSegmentTintColor = .clear
-        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor().hexStringToUIColor(hex: Color.podpocketGreenColor)], for: .selected)
+        UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.podpocketGreenColor], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
     }
     var body: some View {
         
         ZStack {
-            Color.init(hex: Color.podpocketPurpleColor)
+            Color.podpocketPurpleColor
 
             List {
                 
@@ -54,7 +53,7 @@ struct PodcastDetailView: View {
                                         .padding()
                                     
                                     Spacer()
-                                }.background(Color.init(hex: Color.podpocketGreenColor)).listRowInsets(EdgeInsets())
+                                }.background(Color.podpocketGreenColor).listRowInsets(EdgeInsets())
                                 
                                 
                                 Picker("", selection: self.$selectedSegment) {
@@ -72,10 +71,10 @@ struct PodcastDetailView: View {
                                     HStack {
                                         Spacer()
                                         Text("\(self.viewModel.podcast?.totalEpisodes ?? 0) episodes")
-                                            .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                            .foregroundColor(Color.podpocketGreenColor)
                                         Spacer()
                                         
-                                    }.frame(height: 50).background(Color.init(hex: Color.podpocketPurpleColor))
+                                    }.frame(height: 50).background(Color.podpocketPurpleColor)
                                 }
                                 
                             }

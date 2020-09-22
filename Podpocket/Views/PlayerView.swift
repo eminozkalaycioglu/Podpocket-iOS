@@ -13,29 +13,26 @@ import struct Kingfisher.KFImage
 
 @available(iOS 14.0, *)
 struct PlayerView: View {
-
+    
+    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @StateObject var viewModel = PlayerViewModel()
     @State var isPlaying: Bool = true
     @State var isFavorited: Bool = false
-    @State private var seekPos = 0.0
-    @State var totalTime = ""
-    @State var currentTime = ""
-    @State var isSliding = false
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @State var showMoreEpisode: Bool = false
+    @State var selectedEpisode = Episode()
     
-    
-
     var episode: Episode
     var parentPodcastId: String
-    
-    init(episode: Episode, parentPodcastId: String) {
+    var parentPodcastName: String
+    init(episode: Episode, parentPodcastId: String, parentPodcastName: String) {
         
         self.episode = episode
         self.parentPodcastId = parentPodcastId
-        
+        self.parentPodcastName = parentPodcastName
+
         AudioManager.initAudio(audioLinkString: self.episode.audio ?? "")
-        
-            
-        UINavigationBar.appearance().barTintColor = UIColor().hexStringToUIColor(hex: Color.podpocketPurpleColor)
+        UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
     }
     var body: some View {
         
@@ -43,28 +40,108 @@ struct PlayerView: View {
         GeometryReader { geometry in
 
             ZStack {
-                Color.init(hex: Color.podpocketPurpleColor)
+                Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 0) {
 
-                    ZStack(alignment: .top) {
-                        ZStack(alignment: .bottom) {
+                    ZStack(alignment: .bottom) {
 
-                            if let url = String.toEncodedURL(link: self.episode.image ?? "") {
-                                KFImage(url)
-                                    .resizable()
+                        if let url = String.toEncodedURL(link: self.selectedEpisode.image ?? "") {
+                            KFImage(url)
+                                .resizable()
 
-                                    .frame(height: geometry.size.height/2)
+                                .frame(height: geometry.size.height/2)
+                        }
+
+                        if self.showMoreEpisode {
+                            ZStack(alignment: .top) {
+                                
+                                Color.black.opacity(0.5)
+                                VStack {
+                                    HStack {
+                                        Text("ALL EPISODES")
+                                            .font(.system(size: 14))
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(Color.podpocketGreenColor)
+                                            .padding(5)
+                                            .padding(.leading, 20)
+                                            .background(Color.gray).opacity(0.7)
+                                            .cornerRadius(15)
+                                            .offset(x: -15.0, y: 0.0)
+
+                                        Spacer()
+
+                                    }
+                                    .padding(.top) // ALL EPISODES
+                                    ScrollView(.vertical, showsIndicators: false) {
+                                        LazyVGrid(columns: [GridItem(.flexible())], spacing: 10) {
+                                            ForEach(self.viewModel.getEpisodes(), id: \.self) { item in
+                                                
+                                                HStack {
+                                                    Image("playingEpisode")
+                                                        .resizable()
+                                                        .renderingMode(item.title == self.selectedEpisode.title ? nil : .template)
+                                                        .foregroundColor(.gray)
+                                                        
+                                                        .frame(width: 30, height: 30, alignment: .center)
+                                                        
+                                                    Text(item.title ?? "")
+                                                        .foregroundColor(.white)
+                                                    Spacer()
+                                                }.padding(.horizontal)
+                                                .onAppear {
+                                                    if item == self.viewModel.getEpisodes().last {
+                                                        self.viewModel.fetchMoreEpisode(id: self.parentPodcastId)
+                                                    }
+                                                }
+                                                .onTapGesture {
+                                                    if let audio = item.audio {
+                                                        AudioManager.replaceAudio(audioLinkString: audio)
+                                                        self.selectedEpisode = item
+//                                                        AudioManager.player?.play()
+                                                    }
+                                                }
+
+                                                
+                                                
+                                            }
+                                        }
+                                    }
+                                    
+                                    
+                                }
+                                
+                                ZStack(alignment: .bottomTrailing) {
+                                    VStack {
+                                        
+                                        Spacer()
+                                        HStack {
+                                            Spacer()
+                                            Button(action: {
+                                                self.showMoreEpisode.toggle()
+                                            }, label: {
+                                                Image("showEpisodes")
+                                                    .resizable()
+                                                    .frame(width: 40, height: 40, alignment: .center)
+                                            })
+                                        }
+                                    }.padding()
+                                   
+                                } //SHOW MORE EPISODES
+                                
+                                
                             }
-
-
+                            .frame(height: geometry.size.height/2)
+                            .shadow(radius: 10)
+                            
+                        }
+                        else {
                             VStack {
-
                                 HStack {
                                     Text(self.isPlaying ? "NOW PLAYING" : "PAUSED")
                                         .font(.system(size: 12))
                                         .fontWeight(.semibold)
-                                        .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                        .foregroundColor(Color.podpocketGreenColor)
                                         .padding(5)
                                         .padding(.leading, 20)
                                         .background(Color.gray).opacity(0.7)
@@ -73,60 +150,52 @@ struct PlayerView: View {
 
                                     Spacer()
 
-                                }.padding(.vertical)
+                                }.padding(.vertical) // Now Playing-Paused
                                 HStack {
                                     Image("playingEpisode")
                                         .resizable()
                                         .frame(width: 30, height: 30, alignment: .center)
                                         .padding(.leading)
                                     Spacer()
-                                    VStack(alignment: .leading) {
-                                        MarqueeText(text: self.episode.title ?? "")
-                                            .foregroundColor(.white)
-                                    }
-
-
-
-                                    .frame(width: 230, height: 30)
-                                    .clipShape(RoundedRectangle(cornerRadius: 0, style: .continuous))
-
-
-
+                                    
+                                    Text(self.selectedEpisode.title ?? "")
+                                        .lineLimit(2)
+                                        .multilineTextAlignment(.center)
+                                        .foregroundColor(.white)
+                                        .frame(height: 50)
+//
+                                    
 
                                     Spacer()
                                     Button(action: {
-
+                                        if self.viewModel.getEpisodes().count == 0{
+                                            self.viewModel.fetchFirstEpisodesList(id: self.parentPodcastId)
+                                        }
+                                        
+                                        self.showMoreEpisode.toggle()
                                     }, label: {
-                                        Image("showEpisodes").resizable().frame(width: 40, height: 40, alignment: .center)
+                                        Image("showEpisodes")
+                                            .resizable()
+                                            .frame(width: 40, height: 40, alignment: .center)
                                     }).padding(.trailing)
                                 }
-                                HStack {
-                                    Text("Podcast Name").foregroundColor(.gray)
-                                    Spacer()
-                                }
+                                
+                                self.drawPodcastName()
+                                
 
                             }
-                            .background(LinearGradient(gradient: Gradient(colors: [.clear,Color.init(hex: Color.podpocketPurpleColor).opacity(0.7), Color.init(hex: Color.podpocketPurpleColor)]), startPoint: .top, endPoint: .bottom))
-
+                            .background(LinearGradient(gradient: Gradient(colors: [.clear, Color.podpocketPurpleColor.opacity(0.7), Color.podpocketPurpleColor]), startPoint: .top, endPoint: .bottom))
                         }
-
 
                     }
-                    Slider(value: self.$seekPos, in: 0...1) { (_) in
-                        self.isSliding = true
-                        guard let item = AudioManager.player?.currentItem else {
-                          return
-                        }
-                        let targetTime = self.seekPos * item.duration.seconds
-                          AudioManager.player?.seek(to: CMTime(seconds: targetTime, preferredTimescale: 600))
-                        self.isSliding = false
-                    }.padding(.top)
-                    .padding(.horizontal)
-                    HStack {
-                        Text(self.currentTime)
-                        Spacer()
-                        Text(self.totalTime)
-                    }.padding(.horizontal)
+                    
+                    if self.showMoreEpisode {
+                        self.drawPodcastName()
+                            .padding(.top)
+                    }
+                    
+                    SliderView()
+
                     HStack {
                         Button(action: {
 
@@ -137,9 +206,9 @@ struct PlayerView: View {
 
                         Button(action: {
                             withAnimation {
-    
+
                                 self.manageAudio()
-                                
+
                             }
                         }, label: {
                             Image(self.isPlaying ? "pauseButton" : "playButton")
@@ -158,9 +227,11 @@ struct PlayerView: View {
                     }.padding(.top, 30)
                     
                     
-                    
-
                     Spacer()
+                }
+                
+                if self.viewModel.loading {
+                    CustomProgressView()
                 }
             }
 
@@ -176,57 +247,27 @@ struct PlayerView: View {
                         .frame(width: 35, height: 35)
                         .padding(UIScreen.main.bounds.size.width/4+30)
 
-                    
+
                 },
             trailing: self.favButton()
         )
         .onAppear() {
-            AudioManager.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { time in
-                guard let item = AudioManager.player?.currentItem, !(item.duration.seconds.isNaN || item.duration.seconds.isInfinite) else {
-                  return
-                }
-
-                print("\(time.seconds) \n \(item.duration.seconds)")
-                if !self.isSliding {
-                    self.seekPos = time.seconds / item.duration.seconds
-
-                }
-                
-                self.totalTime = self.secondsToHoursMinutesSeconds(seconds: Int(item.duration.seconds))
-
-                self.currentTime = self.secondsToHoursMinutesSeconds(seconds: Int(time.seconds))
-            }
-            
+            self.selectedEpisode = self.episode
             AudioManager.player?.play()
+            
 
         }
         .onDisappear() {
             print("disappear")
 //            self.player?.pause()
-            
+
         }
         
     
     }
     
-    func secondsToHoursMinutesSeconds (seconds : Int) -> String {
-        let hours = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        let seconds = (seconds % 3600) % 60
-        
-        let hoursString = hours < 10 ? "0\(hours)" : hours.description
-        let minutesString = minutes < 10 ? "0\(minutes)" : minutes.description
-        let secondsString = seconds < 10 ? "0\(seconds)" : seconds.description
-        
-        if hours == 0 {
-            return "\(minutesString):\(secondsString)"
-        }
-        else {
-            return "\(hoursString):\(minutesString):\(secondsString)"
-        }
-      
-    }
-    
+
+
     func manageAudio() {
         self.isPlaying.toggle()
         if !self.isPlaying {
@@ -234,6 +275,17 @@ struct PlayerView: View {
         } else {
             AudioManager.player?.play()
         }
+    }
+    
+    func drawPodcastName() -> AnyView {
+        return AnyView(
+            HStack {
+                Text(self.parentPodcastName)
+                    .foregroundColor(.gray)
+                    .lineLimit(1)
+                Spacer()
+            } //Podcast Name
+        )
     }
     func favButton() -> AnyView {
         return AnyView(
@@ -243,14 +295,14 @@ struct PlayerView: View {
                 Image(systemName: self.isFavorited ? "heart.fill" : "heart")
                     .resizable()
                     .renderingMode(.template)
-                    .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
-                    
+                    .foregroundColor(Color.podpocketGreenColor)
+
                     .frame(width: 22, height: 20, alignment: .center)
 
             })
         )
     }
-    
+
     func backButton() -> AnyView {
         return AnyView(
             Button(action: {
@@ -259,7 +311,7 @@ struct PlayerView: View {
                 Image("back")
                     .resizable()
                     .renderingMode(.template)
-                    .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                    .foregroundColor(Color.podpocketGreenColor)
                     .frame(width: 25, height: 25, alignment: .center)
             })
         )
@@ -269,7 +321,7 @@ struct PlayerView: View {
 @available(iOS 14.0, *)
 struct PlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/podcasts/how-i-built-this/how-i-built-resilience-lognAd_7xj2-2BPVCen5Ip-.300x168.jpg", title: "ASDs sdfasda asdasda asdasdas asda da sdfsfs "), parentPodcastId: "")
+        PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/podcasts/how-i-built-this/how-i-built-resilience-lognAd_7xj2-2BPVCen5Ip-.300x168.jpg", title: "ASDs sdfasda asdasda asdasdas asda da sdfsfs "), parentPodcastId: "", parentPodcastName: "Podcast")
     }
     
 }

@@ -11,8 +11,18 @@ import SwiftUI
 
 
 extension Color {
-    static var podpocketGreenColor = "50E3C2"
-    static var podpocketPurpleColor = "2C2838"
+//    static var podpocketGreenColor = "50E3C2"
+//    static var podpocketPurpleColor = "2C2838"
+    
+    
+    static var podpocketGreenColor: Color {
+        return Color.init(hex: "50E3C2")
+    }
+    static var podpocketPurpleColor: Color {
+        return Color.init(hex: "2C2838")
+    }
+    
+    
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0
@@ -40,7 +50,13 @@ extension Color {
 }
 
 extension UIColor {
-    func hexStringToUIColor (hex:String) -> UIColor {
+    static var podpocketPurpleColor: UIColor {
+        return UIColor.hexStringToUIColor(hex: "2C2838")
+    }
+    static var podpocketGreenColor: UIColor {
+        return UIColor.hexStringToUIColor(hex: "50E3C2")
+    }
+    static func hexStringToUIColor (hex:String) -> UIColor {
         var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
         if (cString.hasPrefix("#")) {

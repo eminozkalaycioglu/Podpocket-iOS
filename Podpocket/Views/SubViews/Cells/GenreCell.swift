@@ -20,10 +20,10 @@ struct GenreCell: View {
             HStack {
                 Text(self.genre.name ?? "Noname")
                     .font(.system(size: 12))
-                    .foregroundColor(self.isSelected ? Color.init(hex: Color.podpocketGreenColor) : .gray)
+                    .foregroundColor(self.isSelected ? Color.podpocketGreenColor : .gray)
                     .padding(5)
                     
-                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(self.isSelected ? Color.init(hex: Color.podpocketGreenColor) : Color.gray, lineWidth: 0.5))
+                    .overlay(RoundedRectangle(cornerRadius: 15).stroke(self.isSelected ? Color.podpocketGreenColor : Color.gray, lineWidth: 0.5))
             }
         }
     }

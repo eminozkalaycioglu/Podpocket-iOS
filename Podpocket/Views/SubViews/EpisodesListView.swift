@@ -20,7 +20,8 @@ struct EpisodesListView: View {
     var body: some View {
         
         ZStack {
-            Color.init(hex: Color.podpocketPurpleColor)
+            Color.podpocketPurpleColor
+            
             
             VStack {
                 ScrollView(.vertical) {
@@ -40,9 +41,9 @@ struct EpisodesListView: View {
                             Spacer()
                             Image("show")
                                 .resizable()
-                                .renderingMode(.template).foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                .renderingMode(.template).foregroundColor(Color.podpocketGreenColor)
                                 .frame(width: 30, height: 30)
-                            Text("Show More").foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                            Text("Show More").foregroundColor(Color.podpocketGreenColor)
 
                             Spacer()
                         }
@@ -58,7 +59,7 @@ struct EpisodesListView: View {
             }
             
             
-            NavigationLink("", destination: PlayerView(episode: self.selectedEpisode, parentPodcastId: ""), isActive: self.$presentPlayer)
+            NavigationLink("", destination: PlayerView(episode: self.selectedEpisode, parentPodcastId: self.viewModel.lastPodcastResult.id ?? "", parentPodcastName: self.viewModel.lastPodcastResult.title ?? ""), isActive: self.$presentPlayer)
         }
         
     }

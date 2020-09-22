@@ -21,7 +21,7 @@ struct FeedTabView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .top) {
-                Color.init(hex: Color.podpocketPurpleColor)
+                Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 0) {
                     ZStack {

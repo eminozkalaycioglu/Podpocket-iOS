@@ -31,7 +31,7 @@ struct EpisodeCell: View {
             }.padding()
             Spacer()
 
-        }.background(Color.init(hex: Color.podpocketPurpleColor))
+        }.background(Color.podpocketPurpleColor)
         
     }
 }

@@ -55,7 +55,7 @@ struct MessageCell: View {
                             Image(systemName: self.showMore ? "minus" : "plus")
                             Text(self.showMore ? "Shrink" : "Show More")
                             
-                        }.foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                        }.foregroundColor(Color.podpocketGreenColor)
                     }
                 }
                 
@@ -66,7 +66,7 @@ struct MessageCell: View {
                 self.viewModel.fetchUserInfo(uid: message.uid)
                 
             })
-            .background(Color.init(hex: Color.podpocketPurpleColor))
+            .background(Color.podpocketPurpleColor)
             .overlay(
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color.gray, lineWidth: 0.3)

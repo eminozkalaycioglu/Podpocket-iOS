@@ -27,7 +27,7 @@ struct AboutPodcastView: View {
     var body: some View {
         ZStack {
             
-            Color.init(hex: Color.podpocketPurpleColor)
+            Color.podpocketPurpleColor
             HStack {
                 VStack(alignment: .leading, spacing: 15) {
                     VStack(alignment: .leading, spacing: 15) {

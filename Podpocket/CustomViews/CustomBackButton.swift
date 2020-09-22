@@ -19,10 +19,10 @@ struct CustomBackButton: View {
                 Image("back")
                     .resizable()
                     .renderingMode(.template)
-                    .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                    .foregroundColor(Color.podpocketGreenColor)
                     .frame(width: 25, height: 25, alignment: .center)
                 Text("Go back")
-                    .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                    .foregroundColor(Color.podpocketGreenColor)
             }
         }
     }

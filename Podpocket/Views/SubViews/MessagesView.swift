@@ -26,7 +26,7 @@ struct MessagesView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottomTrailing) {
-                Color.init(hex: Color.podpocketPurpleColor)
+                Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
                     .onTapGesture {
                         withAnimation {
@@ -70,12 +70,12 @@ struct MessagesView: View {
                         VStack {
                             MultilineTextField("What's going on?", text: self.$message)
                                 .padding()
-                                .background(Color.init(hex: Color.podpocketPurpleColor).opacity(0.8))
+                                .background(Color.podpocketPurpleColor.opacity(0.8))
                                 
                                 .cornerRadius(20)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 20)
-                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
+                                        .stroke(Color.podpocketGreenColor, lineWidth: 2)
                                 )
                                 .shadow(radius: 10)
                                 .padding()
@@ -92,15 +92,15 @@ struct MessagesView: View {
                                     Spacer()
                                     Text("SHARE")
                                         .font(.title2)
-                                        .foregroundColor(Color.init(hex: Color.podpocketGreenColor))
+                                        .foregroundColor(Color.podpocketGreenColor)
                                     Spacer()
                                 }
                                 .padding(5)
-                                .background(Color.init(hex: Color.podpocketPurpleColor))
+                                .background(Color.podpocketPurpleColor)
                                 .cornerRadius(10)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 10)
-                                        .stroke(Color.init(hex: Color.podpocketGreenColor), lineWidth: 2)
+                                        .stroke(Color.podpocketGreenColor, lineWidth: 2)
                                 )
                                 .shadow(radius: 10)
                                 .padding(.horizontal)

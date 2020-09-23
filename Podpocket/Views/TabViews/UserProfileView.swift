@@ -18,6 +18,7 @@ struct UserProfileView: View {
     @State var showAlert: Bool = false
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
+    @State var presentFavoritedEpisodesView: Bool = false
     @State var loading = false
     var cellWidth = UIScreen.main.bounds.width - 8
     
@@ -73,6 +74,11 @@ struct UserProfileView: View {
                                 self.editProfileView.viewModel.setUserInfo(user: self.viewModel.userInfo)
                                 self.presentEditProfile = true
                             }
+                        
+                        self.drawCells(image: "Logo", text: "Favorited Episodes")
+                            .onTapGesture {
+                                self.presentFavoritedEpisodesView = true
+                            }
                             
                         
                         Spacer()
@@ -81,6 +87,7 @@ struct UserProfileView: View {
                 
                 
                 NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
+                NavigationLink("", destination: FavoritedEpisodes(), isActive: self.$presentFavoritedEpisodesView)
                 
                 
                 if self.viewModel.loading {

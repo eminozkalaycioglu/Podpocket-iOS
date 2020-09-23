@@ -6,6 +6,7 @@ enum ListenAPI {
     
     case fetchBestPodcastsInSpecificRegion(region: String)
     case fetchPodcastDetail(id: String, nextEpisodePudDate: Int?)
+    case fetchEpisodeDetail(id: String)
     case fetchSimilarPodcasts(id: String)
     case search(query: String, type: SearchType, offset: Int, genres: [String]? = nil)
     case fetchGenres
@@ -58,6 +59,8 @@ extension ListenAPI: TargetType {
             return "/search"
         case .fetchGenres:
             return "/genres"
+        case .fetchEpisodeDetail(let id):
+            return "/episodes/\(id)"
         }
     }
 
@@ -130,6 +133,8 @@ extension ListenAPI: TargetType {
             
             
         case .fetchGenres:
+            return self.withoutParameters
+        case .fetchEpisodeDetail:
             return self.withoutParameters
         }
     }

@@ -15,11 +15,9 @@ struct ContentView: View {
 
         NavigationView {
             if self.viewModel.signed() {
-                
-                
                 HomepageView()
-//                PlayerView(episode: Episode(audio: "http://www.hochmuth.com/mp3/Haydn_Adagio.mp3",image: "https://cdn-images-1.listennotes.com/episode/image/1ea160e09e7e40e5970a8651a5835d6b.jpg", title: "asdASDASdf ADfsDF dsFsdFSDFS sdfSDFSFds FS FSDFSDF sdF SDFSDSFs sdfs dfsds"), parentPodcastId: "")
             }
+            
             else {
                 LoginView()
             }

@@ -31,7 +31,7 @@ struct SliderView: View {
                 AudioManager.player?.seek(to: CMTime(seconds: targetTime, preferredTimescale: 600))
             }.accentColor(Color.podpocketGreenColor)
             .padding(.top)
-            .padding(.horizontal, 5)
+            .padding(.horizontal)
             
             .onAppear {
                 
@@ -47,7 +47,6 @@ struct SliderView: View {
                         self.seekPos = time.seconds / item.duration.seconds
 
                     }
-//
                     self.totalTime = self.secondsToHoursMinutesSeconds(seconds: Int(item.duration.seconds))
 
                     self.currentTime = self.secondsToHoursMinutesSeconds(seconds: Int(time.seconds))

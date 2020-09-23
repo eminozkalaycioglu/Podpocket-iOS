@@ -20,6 +20,67 @@ class FirebaseConnection {
     private var storageRef: StorageReference!
 
     
+    
+    func fetchAllFavoritedEpisodes(completion: (([FavoritedEpisodeModel])->())? = nil) {
+        self.dbRef = Database.database().reference()
+        self.dbRef.child("favoritedEpisodes").observeSingleEvent(of: .value) { (snapshot) in
+            
+            var favoritedEpisodes = [FavoritedEpisodeModel]()
+            favoritedEpisodes.removeAll()
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                let value = child.value as? NSDictionary
+
+                if (value?["\(self.getCurrentID() ?? "")"]) != nil {
+                    let info = value?["episodeInformation"] as? NSDictionary
+                    let title = info?["title"] as? String ?? ""
+                    let pubDateMs = info?["pubDateMs"] as? Int ?? 0
+                    
+                    favoritedEpisodes.append(FavoritedEpisodeModel(episodeId: child.key, title: title, pubDateMs: pubDateMs)
+)
+                }
+                
+            }
+            completion?(favoritedEpisodes)
+        }
+    }
+    
+    
+    func isEpisodeFavorited(episodeId: String, completion: ((Bool)->())? = nil) {
+        self.dbRef = Database.database().reference()
+        
+        guard let uid = self.getCurrentID() else {
+            return
+        }
+        self.dbRef.child("favoritedEpisodes").child(episodeId).observeSingleEvent(of: .value) { (snapshot) in
+            
+            
+            for child in snapshot.children.allObjects as! [DataSnapshot] {
+                if child.key == uid {
+                    completion?(true)
+                    return
+                }
+                
+            }
+            completion?(false)
+            return
+        }
+    }
+    
+    func removeEpisodeFromFavoriteList(episodeId: String) {
+        self.dbRef = Database.database().reference()
+        self.dbRef.child("favoritedEpisodes").child(episodeId).child(self.getCurrentID() ?? "").removeValue()
+    }
+    func addEpisodeToFavoriteList(episodeId: String, title: String, pubDateMs: Int) {
+        self.dbRef = Database.database().reference()
+        
+        self.dbRef.child("favoritedEpisodes").child(episodeId).child("episodeInformation").setValue([
+            "title" : title,
+            "pubDateMs" : pubDateMs
+        ])
+        self.dbRef.child("favoritedEpisodes").child(episodeId).updateChildValues([self.getCurrentID() ?? "" : ""])
+        
+    }
+    
     func deleteMessage(messageId: String) {
         self.dbRef = Database.database().reference()
         self.storageRef = Storage.storage().reference()

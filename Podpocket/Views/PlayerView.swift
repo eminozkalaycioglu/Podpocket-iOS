@@ -18,7 +18,6 @@ struct PlayerView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = PlayerViewModel()
     @State var isPlaying: Bool = true
-    @State var isFavorited: Bool = false
     @State var showMoreEpisode: Bool = false
     @State var selectedEpisode = Episode()
     
@@ -30,6 +29,8 @@ struct PlayerView: View {
         self.episode = episode
         self.parentPodcastId = parentPodcastId
         self.parentPodcastName = parentPodcastName
+        
+        
 
         AudioManager.initAudio(audioLinkString: self.episode.audio ?? "")
         UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
@@ -50,7 +51,7 @@ struct PlayerView: View {
                             KFImage(url)
                                 .resizable()
 
-                                .frame(height: geometry.size.height/2)
+                                .frame(height: geometry.size.height/(1.5))
                         }
 
                         if self.showMoreEpisode {
@@ -120,7 +121,7 @@ struct PlayerView: View {
                                             Button(action: {
                                                 self.showMoreEpisode.toggle()
                                             }, label: {
-                                                Image("showEpisodes")
+                                                Image("hideEpisodes")
                                                     .resizable()
                                                     .frame(width: 40, height: 40, alignment: .center)
                                             })
@@ -131,7 +132,7 @@ struct PlayerView: View {
                                 
                                 
                             }
-                            .frame(height: geometry.size.height/2)
+                            .frame(height: geometry.size.height/(1.5))
                             .shadow(radius: 10)
                             
                         }
@@ -168,9 +169,6 @@ struct PlayerView: View {
 
                                     Spacer()
                                     Button(action: {
-                                        if self.viewModel.getEpisodes().count == 0{
-                                            self.viewModel.fetchFirstEpisodesList(id: self.parentPodcastId)
-                                        }
                                         
                                         self.showMoreEpisode.toggle()
                                     }, label: {
@@ -181,6 +179,7 @@ struct PlayerView: View {
                                 }
                                 
                                 self.drawPodcastName()
+                                    .padding(.leading)
                                 
 
                             }
@@ -198,6 +197,16 @@ struct PlayerView: View {
 
                     HStack {
                         Button(action: {
+                            if let currentIndex = self.viewModel.getEpisodes().firstIndex(of: self.selectedEpisode) {
+                                
+                                if self.selectedEpisode != self.viewModel.getEpisodes().first {
+                                    let previousEpisode = self.viewModel.getEpisodes()[currentIndex - 1]
+                                    AudioManager.replaceAudio(audioLinkString: previousEpisode.audio ?? "")
+                                    self.selectedEpisode = previousEpisode
+                                }
+                                
+
+                            }
 
                         }, label: {
                             Image("previousEpisode")
@@ -206,9 +215,7 @@ struct PlayerView: View {
 
                         Button(action: {
                             withAnimation {
-
                                 self.manageAudio()
-
                             }
                         }, label: {
                             Image(self.isPlaying ? "pauseButton" : "playButton")
@@ -216,8 +223,20 @@ struct PlayerView: View {
                                     .frame(width: 60, height: 60, alignment: .center)
 
                         })
+                        
                         Button(action: {
+                            if let currentIndex = self.viewModel.getEpisodes().firstIndex(of: self.selectedEpisode) {
+                                
+                                if self.selectedEpisode != self.viewModel.getEpisodes().last {
+                                    let nextEpisode = self.viewModel.getEpisodes()[currentIndex + 1]
+                                    AudioManager.replaceAudio(audioLinkString: nextEpisode.audio ?? "")
+                                    self.selectedEpisode = nextEpisode
+                                }
+                                
 
+                            }
+                            
+                            
                         }, label: {
                             Image("nextEpisode")
 
@@ -253,10 +272,20 @@ struct PlayerView: View {
         )
         .onAppear() {
             self.selectedEpisode = self.episode
+            
+            if self.viewModel.getEpisodes().count == 0 {
+                self.viewModel.fetchFirstEpisodesList(id: self.parentPodcastId)
+            }
+            
             AudioManager.player?.play()
+            
+            
             
 
         }
+        .onChange(of: self.selectedEpisode, perform: { value in
+            self.viewModel.isEpisodeFavorited(episodeId: self.selectedEpisode.id ?? "")
+        })
         .onDisappear() {
             print("disappear")
 //            self.player?.pause()
@@ -290,9 +319,17 @@ struct PlayerView: View {
     func favButton() -> AnyView {
         return AnyView(
             Button(action: {
-                self.isFavorited.toggle()
+
+                if self.viewModel.isFavorited {
+                    self.viewModel.remove(episodeId: self.selectedEpisode.id ?? "")
+                }
+                else {
+                    self.viewModel.favorite(episodeId: self.selectedEpisode.id ?? "", title: self.selectedEpisode.title ?? "", pubDateMs: self.selectedEpisode.pubDateMs ?? 0)
+
+                }
+                self.viewModel.isFavorited.toggle()
             }, label: {
-                Image(systemName: self.isFavorited ? "heart.fill" : "heart")
+                Image(systemName: self.viewModel.isFavorited ? "heart.fill" : "heart")
                     .resizable()
                     .renderingMode(.template)
                     .foregroundColor(Color.podpocketGreenColor)

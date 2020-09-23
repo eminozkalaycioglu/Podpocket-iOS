@@ -13,7 +13,26 @@ class PlayerViewModel: ObservableObject {
     var lastPodcastResult = Podcast()
     @Published private var episodes = [Episode]()
     @Published var loading: Bool = false
+    @Published var isFavorited = false
     
+    
+    func isEpisodeFavorited(episodeId: String) {
+        FirebaseConnection.shared.isEpisodeFavorited(episodeId: episodeId) { (favorited) in
+            if favorited {
+                self.isFavorited = true
+            }
+            else {
+                self.isFavorited = false
+            }
+        }
+    }
+    func favorite(episodeId: String, title: String, pubDateMs: Int) {
+        FirebaseConnection.shared.addEpisodeToFavoriteList(episodeId: episodeId, title: title, pubDateMs: pubDateMs)
+    }
+    
+    func remove(episodeId: String) {
+        FirebaseConnection.shared.removeEpisodeFromFavoriteList(episodeId: episodeId)
+    }
     
     func getEpisodes() -> [Episode] {
         return self.episodes

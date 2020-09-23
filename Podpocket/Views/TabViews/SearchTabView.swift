@@ -27,8 +27,6 @@ struct SearchTabView: View {
                             .resizable()
                             .frame(width: geometry.size.height / 22.3, height: geometry.size.height / 22.3)
                             
-                            
-                            
                             .hidden()
                             .overlay(
                                 

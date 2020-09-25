@@ -1,22 +1,17 @@
 //
-//  FavoritedEpisodes.swift
+//  LastListenedView.swift
 //  Podpocket
 //
-//  Created by Emin on 23.09.2020.
+//  Created by Emin on 25.09.2020.
 //  Copyright © 2020 Emin. All rights reserved.
 //
 
 import SwiftUI
 
 @available(iOS 14.0, *)
-struct FavoritedEpisodes: View {
+struct LastListenedView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
-    @ObservedObject var viewModel = FavoritedEpisodesViewModel()
-    
-    @State var presentPlayerView: Bool = false
-    @State var selectedFavoritedEpisodeId = ""
-
+    @ObservedObject var viewModel = LastListenedViewModel()
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -60,54 +55,42 @@ struct FavoritedEpisodes: View {
                             .foregroundColor(.white)
                         Spacer()
                     }.padding(.horizontal)
-
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("YOUR FAVORITED EPISODES")
-                                .font(.title3)
-                                .foregroundColor(.white)
-                                .padding(.bottom, 5)
-                            Text("All your favourited\nepisodes under one roof!")
-                                .font(.system(size: 13))
-                                .fontWeight(.light)
-                                .foregroundColor(.gray)
-                            
-                        }.padding()
-                        Spacer()
-                    }
+                    
+                    
                     
                     ScrollView {
-                        LazyVGrid(columns: [GridItem(.flexible())]) {
-                            ForEach(self.viewModel.favoritedEpisodes, id: \.id) { episode in
+                        HStack {
+                            Text("PODCASTS")
+                                .foregroundColor(.white)
+                                .font(.title)
+                            Spacer()
+                        }.padding()
+                        
+                        ScrollView(.horizontal) {
+                            
+                            LazyHGrid(rows: [GridItem(.flexible())]) {
                                 
-                                EpisodeCell(episode: Episode(id: episode.episodeId,pubDateMs: episode.pubDateMs, title: episode.title))
-                                    .onTapGesture {
-                                        self.selectedFavoritedEpisodeId = episode.episodeId
-                                        self.presentPlayerView = true
-                                    }
+                                ForEach(self.viewModel.lastListenedEpisodes, id: \.self) { episode in
+                                    Text(episode.episodeId ?? "")
+                                }
                             }
+                            
                         }
+                        
                     }
                     
                     Spacer()
+                    
                 }
                 
-                NavigationLink(
-                    destination: PlayerView(selectedEpisodeId: self.selectedFavoritedEpisodeId),
-                    isActive: self.$presentPlayerView,
-                    label: {
-                        Text("")
-                    })
                 
             }.onAppear {
-                self.viewModel.fetchAllFavoritedEpisodes()
+                self.viewModel.fetchLastListened()
             }
-            .navigationBarBackButtonHidden(true)
-            .navigationBarTitle("",displayMode: .inline)
-            .navigationBarHidden(true)
             
-        }
-        
+        }.navigationBarBackButtonHidden(true)
+        .navigationBarTitle("",displayMode: .inline)
+        .navigationBarHidden(true)
     }
     
     func backButton() -> AnyView {
@@ -126,8 +109,8 @@ struct FavoritedEpisodes: View {
 }
 
 @available(iOS 14.0, *)
-struct FavoritedEpisodes_Previews: PreviewProvider {
+struct LastListenedView_Previews: PreviewProvider {
     static var previews: some View {
-        FavoritedEpisodes()
+        LastListenedView()
     }
 }

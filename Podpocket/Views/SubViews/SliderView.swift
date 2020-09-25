@@ -10,6 +10,7 @@ import SwiftUI
 import AVFoundation
 
 
+@available(iOS 14.0, *)
 struct SliderView: View {
     
     @State var seekPos: Double = 0.0
@@ -23,26 +24,26 @@ struct SliderView: View {
             Slider(value: self.$seekPos, in: 0...1) { (editing) in
                 self.isSliding = editing
                
-                guard let item = AudioManager.player?.currentItem else {
+                guard let item = AudioManager.shared.player?.currentItem else {
                     return
                 }
                 let targetTime = self.seekPos * item.duration.seconds
                 
-                AudioManager.player?.seek(to: CMTime(seconds: targetTime, preferredTimescale: 600))
+                AudioManager.shared.player?.seek(to: CMTime(seconds: targetTime, preferredTimescale: 600))
             }.accentColor(Color.podpocketGreenColor)
             .padding(.top)
             .padding(.horizontal)
             
             .onAppear {
                 
-                AudioManager.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { time in
-                    guard let item = AudioManager.player?.currentItem, !(item.duration.seconds.isNaN || item.duration.seconds.isInfinite) else {
+                AudioManager.shared.player?.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { time in
+                    guard let item = AudioManager.shared.player?.currentItem, !(item.duration.seconds.isNaN || item.duration.seconds.isInfinite) else {
                         self.seekPos = 0.0
-                        
+
                       return
                     }
 
-                    
+
                     if !(self.isSliding) {
                         self.seekPos = time.seconds / item.duration.seconds
 
@@ -82,6 +83,7 @@ struct SliderView: View {
     }
 }
 
+@available(iOS 14.0, *)
 struct SliderView_Previews: PreviewProvider {
     static var previews: some View {
         SliderView()

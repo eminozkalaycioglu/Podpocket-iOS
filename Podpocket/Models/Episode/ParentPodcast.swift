@@ -6,30 +6,30 @@
 import Foundation
 
 //MARK: - ParentPodcast
-struct ParentPodcast: Decodable {
+struct ParentPodcast: Decodable, Hashable {
 
-    var country: String!
-    var descriptionField: String!
-    var earliestPubDateMs: Int!
-    var email: String!
-    var explicitContent: Bool!
-    var genreIds: [Int]!
-    var genres: [String]!
-    var id: String!
-    var image: String!
-    var isClaimed: Bool!
-    var itunesId: Int!
-    var language: String!
-    var lastestPubDateMs: Int!
-    var latestPubDateMs: Int!
-    var listennotesUrl: String!
-    var publisher: String!
-    var rss: String!
-    var thumbnail: String!
-    var title: String!
-    var totalEpisodes: Int!
-    var type: String!
-    var website: String!
+    var country: String?
+    var descriptionField: String?
+    var earliestPubDateMs: Int?
+    var email: String?
+    var explicitContent: Bool?
+    var genreIds: [Int]?
+    var genres: [String]?
+    var id: String?
+    var image: String?
+    var isClaimed: Bool?
+    var itunesId: Int?
+    var language: String?
+    var lastestPubDateMs: Int?
+    var latestPubDateMs: Int?
+    var listennotesUrl: String?
+    var publisher: String?
+    var rss: String?
+    var thumbnail: String?
+    var title: String?
+    var totalEpisodes: Int?
+    var type: String?
+    var website: String?
     
     
     enum CodingKeys : String, CodingKey {

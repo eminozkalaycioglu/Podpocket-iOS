@@ -19,8 +19,7 @@ class SearchTabViewModel: ObservableObject {
     @Published var loading = false
     var lastPodcastResult = SearchModel()
     var lastEpisodeResult = SearchModel()
-    
-    
+
     init() {
         self.fetchGenres()
     }
@@ -39,16 +38,23 @@ class SearchTabViewModel: ObservableObject {
     }
     
     func searchNextOffset(query: String, type: SearchType) {
-        self.loading = true
         
         var offset: Int = 0
         switch type {
         case .Episode:
             offset = self.lastEpisodeResult.nextOffset ?? 0
+            if self.lastEpisodeResult.results?.count == 0 {
+                return
+            }
         case .Podcast:
             offset = self.lastPodcastResult.nextOffset ?? 0
+            if self.lastPodcastResult.results?.count == 0 {
+                return
+            }
             
         }
+        self.loading = true
+
         ServiceManager.shared.search(query: query, type: type, offset: offset, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
             switch result {
             case .success(let response):

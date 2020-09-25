@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17505" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="LastListenedEpisodes" representedClassName="LastListenedEpisodes" syncable="YES" codeGenerationType="class">
+        <attribute name="episodeId" optional="YES" attributeType="String"/>
+        <attribute name="episodeImage" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="LastListenedPodcasts" representedClassName="LastListenedPodcasts" syncable="YES" codeGenerationType="class">
+        <attribute name="podcastId" optional="YES" attributeType="String"/>
+        <attribute name="podcastImage" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="LastListenedEpisodes" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="LastListenedPodcasts" positionX="-54" positionY="-9" width="128" height="73"/>
+    </elements>
+</model>

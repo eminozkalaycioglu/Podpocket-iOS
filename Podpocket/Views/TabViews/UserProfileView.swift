@@ -75,7 +75,7 @@ struct UserProfileView: View {
                                 self.presentEditProfile = true
                             }
                         
-                        self.drawCells(image: "Logo", text: "Favorited Episodes")
+                        self.drawCells(image: "Favorites", text: "Favorited Episodes")
                             .onTapGesture {
                                 self.presentFavoritedEpisodesView = true
                             }
@@ -129,10 +129,6 @@ struct UserProfileView: View {
             
             
         }
-        
-        
-        
-        
         
     }
     

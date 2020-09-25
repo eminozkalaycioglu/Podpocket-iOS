@@ -15,7 +15,8 @@ struct ContentView: View {
 
         NavigationView {
             if self.viewModel.signed() {
-                HomepageView()
+//                HomepageView()
+                LastListenedView()
             }
             
             else {

@@ -46,3 +46,14 @@ struct EpisodeDetail: Decodable {
     
         
 }
+
+extension EpisodeDetail {
+    func convertToEpisodeModel() -> Episode {
+        
+        let episode = Episode(audio: self.audio, audioLengthSec: self.audioLength, descriptionField: self.descriptionField, explicitContent: self.explicitContent, id: self.id, image: self.image, link: self.link, listennotesEditUrl: self.listennotesEditUrl, listennotesUrl: self.listennotesUrl, maybeAudioInvalid: self.maybeAudioInvalid, pubDateMs: self.pubDateMs, thumbnail: self.thumbnail, title: self.title)
+        
+        return episode
+        
+    }
+    
+}

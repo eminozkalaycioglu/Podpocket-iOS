@@ -22,6 +22,7 @@ struct PodcastDetailView: View {
     
     init(id: String) {
         self.id = id
+        print("TESTING \(id)")
         UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
         UITableView.appearance().backgroundColor = UIColor.podpocketPurpleColor
         UISegmentedControl.appearance().backgroundColor = UIColor.podpocketPurpleColor

@@ -12,7 +12,7 @@ import SwiftUI
 struct EpisodesListView: View {
     @ObservedObject var viewModel: EpisodesListViewModel = EpisodesListViewModel()
     @State var presentPlayer = false
-    @State var selectedEpisode = Episode()
+    @State var selectedEpisodeId = ""
     init(podcast: Podcast) {
         self.viewModel.setPodcast(podcast: podcast)
 
@@ -30,7 +30,7 @@ struct EpisodesListView: View {
                             EpisodeCell(episode: episode)
                                 .onTapGesture {
                                     
-                                    self.selectedEpisode = episode
+                                    self.selectedEpisodeId = episode.id ?? ""
                                     self.presentPlayer = true
                                     
                                 }
@@ -58,8 +58,8 @@ struct EpisodesListView: View {
                 Spacer()
             }
             
+            NavigationLink("", destination: PlayerView(selectedEpisodeId: self.selectedEpisodeId), isActive: self.$presentPlayer)
             
-            NavigationLink("", destination: PlayerView(episode: self.selectedEpisode, parentPodcastId: self.viewModel.lastPodcastResult.id ?? "", parentPodcastName: self.viewModel.lastPodcastResult.title ?? ""), isActive: self.$presentPlayer)
         }
         
     }

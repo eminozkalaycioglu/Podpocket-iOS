@@ -14,29 +14,20 @@ import struct Kingfisher.KFImage
 @available(iOS 14.0, *)
 struct PlayerView: View {
     
-    
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     @StateObject var viewModel = PlayerViewModel()
     @State var isPlaying: Bool = true
     @State var showMoreEpisode: Bool = false
-    @State var selectedEpisode = Episode()
     
-    var episode: Episode
-    var parentPodcastId: String
-    var parentPodcastName: String
-    init(episode: Episode, parentPodcastId: String, parentPodcastName: String) {
+    var selectedEpisodeId: String
+    init(selectedEpisodeId: String) {
+        self.selectedEpisodeId = selectedEpisodeId
         
-        self.episode = episode
-        self.parentPodcastId = parentPodcastId
-        self.parentPodcastName = parentPodcastName
-        
-        
-
-        AudioManager.initAudio(audioLinkString: self.episode.audio ?? "")
+        AudioManager.shared.initAudio(audioLinkString: "")
         UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
     }
+    
     var body: some View {
-        
         
         GeometryReader { geometry in
 
@@ -44,13 +35,10 @@ struct PlayerView: View {
                 Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
                 VStack(spacing: 0) {
-
                     ZStack(alignment: .bottom) {
-
-                        if let url = String.toEncodedURL(link: self.selectedEpisode.image ?? "") {
+                        if let url = String.toEncodedURL(link: self.viewModel.selectedEpisode.image ?? "") {
                             KFImage(url)
                                 .resizable()
-
                                 .frame(height: geometry.size.height/(1.5))
                         }
 
@@ -81,7 +69,7 @@ struct PlayerView: View {
                                                 HStack {
                                                     Image("playingEpisode")
                                                         .resizable()
-                                                        .renderingMode(item.title == self.selectedEpisode.title ? nil : .template)
+                                                        .renderingMode(item.title == self.viewModel.selectedEpisode.title ? nil : .template)
                                                         .foregroundColor(.gray)
                                                         
                                                         .frame(width: 30, height: 30, alignment: .center)
@@ -92,19 +80,16 @@ struct PlayerView: View {
                                                 }.padding(.horizontal)
                                                 .onAppear {
                                                     if item == self.viewModel.getEpisodes().last {
-                                                        self.viewModel.fetchMoreEpisode(id: self.parentPodcastId)
+                                                        self.viewModel.fetchMoreEpisode(id: self.viewModel.parentPodcast.id ?? "")
                                                     }
                                                 }
                                                 .onTapGesture {
                                                     if let audio = item.audio {
-                                                        AudioManager.replaceAudio(audioLinkString: audio)
-                                                        self.selectedEpisode = item
-//                                                        AudioManager.player?.play()
+                                                        AudioManager.shared.replaceAudio(audioLinkString: audio)
+                                                        self.viewModel.selectedEpisode = item
                                                     }
                                                 }
-
-                                                
-                                                
+ 
                                             }
                                         }
                                     }
@@ -159,7 +144,7 @@ struct PlayerView: View {
                                         .padding(.leading)
                                     Spacer()
                                     
-                                    Text(self.selectedEpisode.title ?? "")
+                                    Text(self.viewModel.selectedEpisode.title ?? "")
                                         .lineLimit(2)
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
@@ -197,15 +182,15 @@ struct PlayerView: View {
 
                     HStack {
                         Button(action: {
-                            if let currentIndex = self.viewModel.getEpisodes().firstIndex(of: self.selectedEpisode) {
-                                
-                                if self.selectedEpisode != self.viewModel.getEpisodes().first {
+                            for episode in self.viewModel.getEpisodes() {
+                                if episode.id == self.viewModel.selectedEpisode.id && episode != self.viewModel.getEpisodes().first {
+                                    
+                                    let currentIndex = self.viewModel.getEpisodes().firstIndex(of: episode)!
                                     let previousEpisode = self.viewModel.getEpisodes()[currentIndex - 1]
-                                    AudioManager.replaceAudio(audioLinkString: previousEpisode.audio ?? "")
-                                    self.selectedEpisode = previousEpisode
+                                    AudioManager.shared.replaceAudio(audioLinkString: previousEpisode.audio ?? "")
+                                    self.viewModel.selectedEpisode = previousEpisode
+                                    break
                                 }
-                                
-
                             }
 
                         }, label: {
@@ -225,15 +210,19 @@ struct PlayerView: View {
                         })
                         
                         Button(action: {
-                            if let currentIndex = self.viewModel.getEpisodes().firstIndex(of: self.selectedEpisode) {
-                                
-                                if self.selectedEpisode != self.viewModel.getEpisodes().last {
-                                    let nextEpisode = self.viewModel.getEpisodes()[currentIndex + 1]
-                                    AudioManager.replaceAudio(audioLinkString: nextEpisode.audio ?? "")
-                                    self.selectedEpisode = nextEpisode
+                            
+                            for episode in self.viewModel.getEpisodes() {
+                                if episode.id == self.viewModel.selectedEpisode.id {
+                                    
+                                    if episode != self.viewModel.getEpisodes().last {
+                                        let currentIndex = self.viewModel.getEpisodes().firstIndex(of: episode)!
+                                        let nextEpisode = self.viewModel.getEpisodes()[currentIndex + 1]
+                                        AudioManager.shared.replaceAudio(audioLinkString: nextEpisode.audio ?? "")
+                                        self.viewModel.selectedEpisode = nextEpisode
+                                        break
+                                    }
+                                    
                                 }
-                                
-
                             }
                             
                             
@@ -271,28 +260,25 @@ struct PlayerView: View {
             trailing: self.favButton()
         )
         .onAppear() {
-            self.selectedEpisode = self.episode
+
+            self.viewModel.selectedEpisodeId = self.selectedEpisodeId
             
+        }
+        .onReceive(self.viewModel.$parentPodcast, perform: { podcast in
             if self.viewModel.getEpisodes().count == 0 {
-                self.viewModel.fetchFirstEpisodesList(id: self.parentPodcastId)
+                self.viewModel.fetchFirstEpisodesList(id: podcast.id ?? "")
             }
             
-            AudioManager.player?.play()
+            self.viewModel.savePodcastToDb(podcastId: podcast.id ?? "", podcastImage: podcast.image ?? "")
             
-            
-            
-
-        }
-        .onChange(of: self.selectedEpisode, perform: { value in
-            self.viewModel.isEpisodeFavorited(episodeId: self.selectedEpisode.id ?? "")
         })
-        .onDisappear() {
-            print("disappear")
-//            self.player?.pause()
-
-        }
+        .onChange(of: self.viewModel.selectedEpisode, perform: { value in
+            self.viewModel.isEpisodeFavorited(episodeId: self.viewModel.selectedEpisode.id ?? "")
+            
+            self.viewModel.saveEpisodeToDb(episodeId: self.viewModel.selectedEpisode.id ?? "", episodeImage: self.viewModel.selectedEpisode.image ?? "")
+        })
+       
         
-    
     }
     
 
@@ -300,16 +286,16 @@ struct PlayerView: View {
     func manageAudio() {
         self.isPlaying.toggle()
         if !self.isPlaying {
-            AudioManager.player?.pause()
+            AudioManager.shared.player?.pause()
         } else {
-            AudioManager.player?.play()
+            AudioManager.shared.player?.play()
         }
     }
     
     func drawPodcastName() -> AnyView {
         return AnyView(
             HStack {
-                Text(self.parentPodcastName)
+                Text(self.viewModel.parentPodcast.title ?? "")
                     .foregroundColor(.gray)
                     .lineLimit(1)
                 Spacer()
@@ -321,10 +307,10 @@ struct PlayerView: View {
             Button(action: {
 
                 if self.viewModel.isFavorited {
-                    self.viewModel.remove(episodeId: self.selectedEpisode.id ?? "")
+                    self.viewModel.remove(episodeId: self.viewModel.selectedEpisode.id ?? "")
                 }
                 else {
-                    self.viewModel.favorite(episodeId: self.selectedEpisode.id ?? "", title: self.selectedEpisode.title ?? "", pubDateMs: self.selectedEpisode.pubDateMs ?? 0)
+                    self.viewModel.favorite(episodeId: self.viewModel.selectedEpisode.id ?? "", title: self.viewModel.selectedEpisode.title ?? "", pubDateMs: self.viewModel.selectedEpisode.pubDateMs ?? 0)
 
                 }
                 self.viewModel.isFavorited.toggle()
@@ -354,11 +340,11 @@ struct PlayerView: View {
         )
     }
 }
-
-@available(iOS 14.0, *)
-struct PlayerView_Previews: PreviewProvider {
-    static var previews: some View {
-        PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/podcasts/how-i-built-this/how-i-built-resilience-lognAd_7xj2-2BPVCen5Ip-.300x168.jpg", title: "ASDs sdfasda asdasda asdasdas asda da sdfsfs "), parentPodcastId: "", parentPodcastName: "Podcast")
-    }
-    
-}
+//
+//@available(iOS 14.0, *)
+//struct PlayerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/podcasts/how-i-built-this/how-i-built-resilience-lognAd_7xj2-2BPVCen5Ip-.300x168.jpg", title: "ASDs sdfasda asdasda asdasdas asda da sdfsfs "), parentPodcastId: "", parentPodcastName: "Podcast")
+//    }
+//
+//}

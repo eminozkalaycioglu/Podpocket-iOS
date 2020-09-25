@@ -9,16 +9,20 @@
 import SwiftUI
 @available(iOS 14.0, *)
 struct SearchTabView: View {
-    @State var query = ""
-    @State var boole = false
+    @State var query: String = ""
+    @State var presentPodcastDetailView: Bool = false
+    @State var presentPlayerView: Bool = false
     @StateObject var viewModel = SearchTabViewModel()
+    
+    
+    @State var selectedPodcastId: String = ""
+    @State var selectedEpisodeId: String = ""
     
     var body: some View {
         
         GeometryReader { geometry in
             ZStack {
-                Image("LoginBG")
-                    .resizable()
+                Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack {
@@ -66,8 +70,6 @@ struct SearchTabView: View {
                     .padding(.trailing, 27)
                     .padding(.top, 30)
                     
-                    
-                    
                     ScrollView(.horizontal, showsIndicators: false) {
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10) {
                             if let data = self.viewModel.genres.genres {
@@ -86,78 +88,93 @@ struct SearchTabView: View {
                                 
                             }
                         }.padding()
-                    }.frame(height: 60, alignment: .center)
+                    }.frame(height: 60, alignment: .center) //Genres
                     
                     
-                    HStack {
-                        Text("PODCASTS")
-                            .foregroundColor(.white)
-                            .font(.title)
-                        Spacer()
-                    }.padding()
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: [GridItem(.flexible())], spacing: 20) {
+                    ScrollView {
+                        LazyVStack {
                             
-                            
-                            ForEach(self.viewModel.podcastResults, id: \.self) { result in
-                                
-                                SearchResultPodcastCell(podcast: result)
+                            HStack {
+                                Text("PODCASTS")
                                     .foregroundColor(.white)
-                                    .onAppear {
-                                        if result == self.viewModel.podcastResults.last {
+                                    .font(.title)
+                                Spacer()
+                            }.padding() //Podcasts Label
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHGrid(rows: [GridItem(.flexible())], spacing: 20) {
+                                    
+                                    
+                                    ForEach(self.viewModel.podcastResults, id: \.self) { result in
+                                        
+                                        SearchResultPodcastCell(podcast: result)
+                                            .foregroundColor(.white)
+                                            .onAppear {
+                                                
+                                                if result == self.viewModel.podcastResults.last {
+                                                    self.viewModel.searchNextOffset(query: self.query, type: .Podcast)
+                                                }
+                                            }
+                                            .onTapGesture {
+                                                self.selectedPodcastId = result.id ?? ""
+                                                self.presentPodcastDetailView = true
                                             
-                                            self.viewModel.searchNextOffset(query: self.query, type: .Podcast)
-                                        }
+                                            }
+                                        
                                     }
-                                    .onTapGesture {
-                                        print(result.id)
-                                    }
-                                
-                                
-                                
-                                
-                                
-                            }
+                                }.padding()
+                                .frame(height: self.viewModel.podcastResults.count != 0 ? 180 : 0)
+                            } // Podcast Results
                             
-                            
-                        }.padding()
-                        .frame(height: self.viewModel.podcastResults.count != 0 ? 180 : 0)
-                    }
-                    
-                    
-                    HStack {
-                        Text("EPISODES")
-                            .foregroundColor(.white)
-                            .font(.title)
-                        Spacer()
-                    }.padding()
-                    
-                    ScrollView(.vertical, showsIndicators: false) {
-                        LazyVGrid(columns: [GridItem(.flexible())], spacing: 50) {
-                            
-                            
-                            ForEach(self.viewModel.episodeResult, id: \.self) { result in
-                                
-                                Text(result.titleOriginal!)
+                            HStack {
+                                Text("EPISODES")
                                     .foregroundColor(.white)
-                                    
-                                    .onAppear {
-                                        if result == self.viewModel.episodeResult.last {
-                                            
-                                            self.viewModel.searchNextOffset(query: self.query, type: .Episode)
-                                        }
+                                    .font(.title)
+                                Spacer()
+                            }.padding() //Episodes Label
+                            
+                            ScrollView(.vertical, showsIndicators: false) {
+                                LazyVGrid(columns: [GridItem(.flexible())], spacing: 50) {
+                                    ForEach(self.viewModel.episodeResult, id: \.self) { episode in
+                                        
+                                        EpisodeCell(episode: Episode(pubDateMs: episode.pubDateMs, title: episode.titleOriginal))
+                                            .onTapGesture {
+                                                
+                                                self.selectedEpisodeId = episode.id ?? ""
+                                                self.presentPlayerView = true
+                                            }
                                     }
-                                    
+                                }.padding()
+                            } // Episodes Results
+                            
+                            Text("").onAppear {
+                                if self.viewModel.episodeResult.count != 0 {
+                                    print("last")
+                                    self.viewModel.searchNextOffset(query: self.query, type: .Episode)
+                                }
                             }
-                            
-                            
-                        }.padding()
+                        }
                     }
                 }
                 
                 Spacer()
             }
+            
+            
+            NavigationLink(
+                destination: PlayerView(selectedEpisodeId: self.selectedEpisodeId),
+                isActive: self.$presentPlayerView,
+                label: {
+                    Text("")
+                })
+            
+            NavigationLink(
+                destination: PodcastDetailView(id: self.selectedPodcastId),
+                isActive: self.$presentPodcastDetailView,
+                label: {
+                    Text("")
+                })
             
             if self.viewModel.loading {
                 CustomProgressView()

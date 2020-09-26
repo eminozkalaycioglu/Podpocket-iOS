@@ -57,15 +57,7 @@ struct HomepageView: View {
                     }.tag(3)
 
 
-            }.accentColor(Color.init(hex: "#50E3C2"))
-
-// TESTING
-//            NavigationLink(
-//                destination: PodcastDetailView(id: "9392aab5fe0c4998ac9dcf35316ee760"),
-//                isActive: .constant(true),
-//                label: {
-//                    Text("")
-//                })
+            }.accentColor(.podpocketGreenColor)
 
         }
         .navigationBarTitle("").navigationBarHidden(true)

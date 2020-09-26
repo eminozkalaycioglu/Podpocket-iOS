@@ -15,10 +15,10 @@ struct SaveButtonView: View {
             ZStack {
                 Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
                 
-                Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(Color.init(hex: "#50E3C2"))
+                Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(.podpocketGreenColor)
             }
             if let text = text {
-                Text(text).foregroundColor(Color.init(hex: "50E3C2")).font(.subheadline)
+                Text(text).foregroundColor(.podpocketGreenColor).font(.subheadline)
             }
             
             

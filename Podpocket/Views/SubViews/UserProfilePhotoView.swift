@@ -47,7 +47,7 @@ struct UserProfilePhotoView: View {
                 
                 
             }.clipShape(Circle())
-            .overlay(Circle().stroke(Color.init(hex: "50E3C2"), lineWidth: 3.0))
+            .overlay(Circle().stroke(Color.podpocketGreenColor, lineWidth: 3.0))
             .shadow(radius: 6)
         
             

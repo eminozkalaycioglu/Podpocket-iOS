@@ -14,9 +14,16 @@ class PlayerViewModel: ObservableObject {
     @Published private var episodes = [Episode]()
     @Published var loading: Bool = false
     @Published var isFavorited = false
+    @Published var numberOfFavorites = 0
     
     
-    @Published var selectedEpisode: Episode = Episode()
+    @Published var selectedEpisode: Episode = Episode() {
+        didSet {
+            self.fetchNumberOfFavorites()
+            self.observeFavorite()
+
+        }
+    }
     @Published var parentPodcast: ParentPodcast = ParentPodcast()
     var selectedEpisodeId: String = "" {
         didSet {
@@ -34,6 +41,7 @@ class PlayerViewModel: ObservableObject {
                 
                 self.selectedEpisode = response.convertToEpisodeModel()
                 self.parentPodcast = response.podcast
+
                 AudioManager.shared.replaceAudio(audioLinkString: response.audio)
                 AudioManager.shared.player?.play()
 
@@ -44,8 +52,23 @@ class PlayerViewModel: ObservableObject {
         }
     }
     
-    func isEpisodeFavorited(episodeId: String) {
-        FirebaseConnection.shared.isEpisodeFavorited(episodeId: episodeId) { (favorited) in
+    func observeFavorite() {
+        FirebaseConnection.shared.observeFavorites(episodeId: self.selectedEpisode.id ?? "") { (changed) in
+            if changed {
+                self.fetchNumberOfFavorites()
+            }
+        }
+    }
+    
+    func fetchNumberOfFavorites() {
+        FirebaseConnection.shared.fetchNumberOfFavorites(episodeId: self.selectedEpisode.id ?? "") { (numberOfFavorites) in
+            self.numberOfFavorites = numberOfFavorites
+            
+        }
+    }
+    
+    func isEpisodeFavorited() {
+        FirebaseConnection.shared.isEpisodeFavorited(episodeId: self.selectedEpisode.id ?? "") { (favorited) in
             if favorited {
                 self.isFavorited = true
             }
@@ -54,12 +77,13 @@ class PlayerViewModel: ObservableObject {
             }
         }
     }
-    func favorite(episodeId: String, title: String, pubDateMs: Int) {
-        FirebaseConnection.shared.addEpisodeToFavoriteList(episodeId: episodeId, title: title, pubDateMs: pubDateMs)
+    func favorite() {
+        let episode = self.selectedEpisode
+        FirebaseConnection.shared.addEpisodeToFavoriteList(episodeId: episode.id ?? "", title: episode.title ?? "", pubDateMs: episode.pubDateMs ?? 0)
     }
     
-    func remove(episodeId: String) {
-        FirebaseConnection.shared.removeEpisodeFromFavoriteList(episodeId: episodeId)
+    func removeFromFavoritedList() {
+        FirebaseConnection.shared.removeEpisodeFromFavoriteList(episodeId: self.selectedEpisode.id ?? "")
     }
     
     func getEpisodes() -> [Episode] {
@@ -67,28 +91,28 @@ class PlayerViewModel: ObservableObject {
         
     }
     
-    func fetchFirstEpisodesList(id: String) {
-        self.fetchEpisodes(id: id)
+    func fetchFirstEpisodesList(podcastId: String) {
+        self.fetchOtherEpisodes(podcastId: podcastId)
     } // episodes are fetching when player view is loading
     
     
-    func fetchMoreEpisode(id: String) {
+    func fetchMoreEpisode(podcastId: String) {
         
         guard self.lastPodcastResult.nextEpisodePubDate != nil else {
             return
         }
-        self.fetchEpisodes(id: id, pubDate: self.lastPodcastResult.nextEpisodePubDate)
+        self.fetchOtherEpisodes(podcastId: podcastId, pubDate: self.lastPodcastResult.nextEpisodePubDate)
         
     } // episodes are fetching when episdes list scrolled
     
     
-    func savePodcastToDb(podcastId: String, podcastImage: String) {
-        CoreDataManager.shared.savePodcast(podcastId: podcastId, podcastImage: podcastImage)
+    func savePodcastToDb(podcastId: String, podcastImage: String, podcastTitle: String) {
+        CoreDataManager.shared.savePodcast(podcastId: podcastId, podcastImage: podcastImage, podcastTitle: podcastTitle)
         
     }
     
-    func saveEpisodeToDb(episodeId: String, episodeImage: String) {
-        CoreDataManager.shared.saveEpisode(episodeId: episodeId, episodeImage: episodeImage)
+    func saveEpisodeToDb(episodeId: String, episodeImage: String, episodeTitle: String) {
+        CoreDataManager.shared.saveEpisode(episodeId: episodeId, episodeImage: episodeImage, episodeTitle: episodeTitle)
         
     }
     
@@ -96,10 +120,10 @@ class PlayerViewModel: ObservableObject {
 }
 
 extension PlayerViewModel {
-    private func fetchEpisodes(id: String, pubDate: Int? = nil) {
+    private func fetchOtherEpisodes(podcastId: String, pubDate: Int? = nil) {
         
         self.loading = true
-        ServiceManager.shared.fetchPodcastDetail(id: id, pubDate: pubDate) { (result) in
+        ServiceManager.shared.fetchPodcastDetail(id: podcastId, pubDate: pubDate) { (result) in
             switch result {
             case .success(let response):
                 

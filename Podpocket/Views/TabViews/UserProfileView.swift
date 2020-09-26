@@ -19,6 +19,7 @@ struct UserProfileView: View {
     @State var presentContent: Bool = false
     @State var presentEditProfile: Bool = false
     @State var presentFavoritedEpisodesView: Bool = false
+    @State var presentLastListenedView = false
     @State var loading = false
     var cellWidth = UIScreen.main.bounds.width - 8
     
@@ -79,6 +80,11 @@ struct UserProfileView: View {
                             .onTapGesture {
                                 self.presentFavoritedEpisodesView = true
                             }
+                        
+                        self.drawCells(image: "Logo", text: "Last Listened")
+                            .onTapGesture {
+                                self.presentLastListenedView = true
+                            }
                             
                         
                         Spacer()
@@ -88,7 +94,8 @@ struct UserProfileView: View {
                 
                 NavigationLink("", destination: ContentView(), isActive: self.$presentContent)
                 NavigationLink("", destination: FavoritedEpisodes(), isActive: self.$presentFavoritedEpisodesView)
-                
+                NavigationLink("", destination: LastListenedView(), isActive: self.$presentLastListenedView)
+
                 
                 if self.viewModel.loading {
                     CustomProgressView()

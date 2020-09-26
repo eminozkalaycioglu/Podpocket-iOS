@@ -22,7 +22,6 @@ struct PlayerView: View {
     var selectedEpisodeId: String
     init(selectedEpisodeId: String) {
         self.selectedEpisodeId = selectedEpisodeId
-        
         AudioManager.shared.initAudio(audioLinkString: "")
         UINavigationBar.appearance().barTintColor = UIColor.podpocketPurpleColor
     }
@@ -30,7 +29,6 @@ struct PlayerView: View {
     var body: some View {
         
         GeometryReader { geometry in
-
             ZStack {
                 Color.podpocketPurpleColor
                     .edgesIgnoringSafeArea(.all)
@@ -44,7 +42,6 @@ struct PlayerView: View {
 
                         if self.showMoreEpisode {
                             ZStack(alignment: .top) {
-                                
                                 Color.black.opacity(0.5)
                                 VStack {
                                     HStack {
@@ -80,7 +77,7 @@ struct PlayerView: View {
                                                 }.padding(.horizontal)
                                                 .onAppear {
                                                     if item == self.viewModel.getEpisodes().last {
-                                                        self.viewModel.fetchMoreEpisode(id: self.viewModel.parentPodcast.id ?? "")
+                                                        self.viewModel.fetchMoreEpisode(podcastId: self.viewModel.parentPodcast.id ?? "")
                                                     }
                                                 }
                                                 .onTapGesture {
@@ -93,7 +90,6 @@ struct PlayerView: View {
                                             }
                                         }
                                     }
-                                    
                                     
                                 }
                                 
@@ -115,7 +111,6 @@ struct PlayerView: View {
                                    
                                 } //SHOW MORE EPISODES
                                 
-                                
                             }
                             .frame(height: geometry.size.height/(1.5))
                             .shadow(radius: 10)
@@ -135,6 +130,23 @@ struct PlayerView: View {
                                         .offset(x: -15.0, y: 0.0)
 
                                     Spacer()
+                                    
+                                    HStack(spacing: 0) {
+                                        Image(systemName: "heart.fill")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color.podpocketGreenColor)
+                                            .padding(.leading, 5)
+                                        Text(": \(self.viewModel.numberOfFavorites)")
+                                            .font(.system(size: 12))
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(Color.podpocketGreenColor)
+                                            
+                                    }.padding(.trailing, 20)
+                                    .padding(.vertical, 5)
+                                    .background(Color.gray).opacity(0.7)
+                                    .cornerRadius(15)
+                                    .offset(x: 15.0, y: 0.0)
+                                    
 
                                 }.padding(.vertical) // Now Playing-Paused
                                 HStack {
@@ -149,9 +161,7 @@ struct PlayerView: View {
                                         .multilineTextAlignment(.center)
                                         .foregroundColor(.white)
                                         .frame(height: 50)
-//
-                                    
-
+                              
                                     Spacer()
                                     Button(action: {
                                         
@@ -166,7 +176,6 @@ struct PlayerView: View {
                                 self.drawPodcastName()
                                     .padding(.leading)
                                 
-
                             }
                             .background(LinearGradient(gradient: Gradient(colors: [.clear, Color.podpocketPurpleColor.opacity(0.7), Color.podpocketPurpleColor]), startPoint: .top, endPoint: .bottom))
                         }
@@ -255,34 +264,28 @@ struct PlayerView: View {
                         .frame(width: 35, height: 35)
                         .padding(UIScreen.main.bounds.size.width/4+30)
 
-
                 },
             trailing: self.favButton()
         )
         .onAppear() {
-
             self.viewModel.selectedEpisodeId = self.selectedEpisodeId
-            
         }
         .onReceive(self.viewModel.$parentPodcast, perform: { podcast in
             if self.viewModel.getEpisodes().count == 0 {
-                self.viewModel.fetchFirstEpisodesList(id: podcast.id ?? "")
+                self.viewModel.fetchFirstEpisodesList(podcastId: podcast.id ?? "")
             }
             
-            self.viewModel.savePodcastToDb(podcastId: podcast.id ?? "", podcastImage: podcast.image ?? "")
+            self.viewModel.savePodcastToDb(podcastId: podcast.id ?? "", podcastImage: podcast.image ?? "", podcastTitle: podcast.title ?? "")
             
         })
         .onChange(of: self.viewModel.selectedEpisode, perform: { value in
-            self.viewModel.isEpisodeFavorited(episodeId: self.viewModel.selectedEpisode.id ?? "")
+            self.viewModel.isEpisodeFavorited()
             
-            self.viewModel.saveEpisodeToDb(episodeId: self.viewModel.selectedEpisode.id ?? "", episodeImage: self.viewModel.selectedEpisode.image ?? "")
+            self.viewModel.saveEpisodeToDb(episodeId: self.viewModel.selectedEpisode.id ?? "", episodeImage: self.viewModel.selectedEpisode.image ?? "", episodeTitle: self.viewModel.selectedEpisode.title ?? "")
         })
        
-        
     }
     
-
-
     func manageAudio() {
         self.isPlaying.toggle()
         if !self.isPlaying {
@@ -307,13 +310,14 @@ struct PlayerView: View {
             Button(action: {
 
                 if self.viewModel.isFavorited {
-                    self.viewModel.remove(episodeId: self.viewModel.selectedEpisode.id ?? "")
+                    self.viewModel.removeFromFavoritedList()
                 }
                 else {
-                    self.viewModel.favorite(episodeId: self.viewModel.selectedEpisode.id ?? "", title: self.viewModel.selectedEpisode.title ?? "", pubDateMs: self.viewModel.selectedEpisode.pubDateMs ?? 0)
+                    self.viewModel.favorite()
 
                 }
                 self.viewModel.isFavorited.toggle()
+                self.viewModel.fetchNumberOfFavorites()
             }, label: {
                 Image(systemName: self.viewModel.isFavorited ? "heart.fill" : "heart")
                     .resizable()
@@ -340,11 +344,11 @@ struct PlayerView: View {
         )
     }
 }
-//
-//@available(iOS 14.0, *)
-//struct PlayerView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PlayerView(episode: Episode(image: "https://cdn-images-1.listennotes.com/podcasts/how-i-built-this/how-i-built-resilience-lognAd_7xj2-2BPVCen5Ip-.300x168.jpg", title: "ASDs sdfasda asdasda asdasdas asda da sdfsfs "), parentPodcastId: "", parentPodcastName: "Podcast")
-//    }
-//
-//}
+
+@available(iOS 14.0, *)
+struct PlayerView_Previews: PreviewProvider {
+    static var previews: some View {
+        PlayerView(selectedEpisodeId: "bc51a3b5aefe43a08f4b78d55e629164")
+    }
+
+}

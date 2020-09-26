@@ -11,9 +11,10 @@ import SwiftUI
 struct EpisodeCell: View {
     var episode: Episode
     var body: some View {
+        
         HStack {
             Button(action: {
-                
+
             }, label: {
                 Image("play")
             }).padding(.leading)
@@ -23,7 +24,7 @@ struct EpisodeCell: View {
                     .font(.system(size: 16))
                     .lineLimit(3)
                     .padding(.bottom, 1)
-                    
+
                 Text(episode.pubDateMs?.msToDate() ?? "")
                     .foregroundColor(.gray)
                     .font(.system(size: 10))

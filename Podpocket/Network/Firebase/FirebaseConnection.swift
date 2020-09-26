@@ -16,13 +16,11 @@ class FirebaseConnection {
     }
     
     static let shared = FirebaseConnection()
-    private var dbRef: DatabaseReference!
-    private var storageRef: StorageReference!
+    private var dbRef: DatabaseReference! = Database.database().reference()
+    private var storageRef: StorageReference! = Storage.storage().reference()
 
-    
-    
     func fetchAllFavoritedEpisodes(completion: (([FavoritedEpisodeModel])->())? = nil) {
-        self.dbRef = Database.database().reference()
+
         self.dbRef.child("favoritedEpisodes").observeSingleEvent(of: .value) { (snapshot) in
             
             var favoritedEpisodes = [FavoritedEpisodeModel]()
@@ -44,22 +42,39 @@ class FirebaseConnection {
         }
     }
     
-    
-    func isEpisodeFavorited(episodeId: String, completion: ((Bool)->())? = nil) {
-        self.dbRef = Database.database().reference()
+    private func fetchFavoritedEpisode(episodeId: String, completion: ((DataSnapshot)->())? = nil) {
         
-        guard let uid = self.getCurrentID() else {
-            return
-        }
         self.dbRef.child("favoritedEpisodes").child(episodeId).observeSingleEvent(of: .value) { (snapshot) in
             
-            
+            completion?(snapshot)
+            return
+        }
+    }
+    
+    func fetchNumberOfFavorites(episodeId: String, completion: ((Int)->())? = nil) {
+
+        if self.signed() {
+            self.fetchFavoritedEpisode(episodeId: episodeId) { (snapshot) in
+                
+                let count = Int(snapshot.childrenCount)
+                completion?(count == 0 ? 0 : count - 1)
+            }
+        }
+        
+        
+        
+    }
+    
+    func isEpisodeFavorited(episodeId: String, completion: ((Bool)->())? = nil) {
+        
+        guard let uid = self.getCurrentID() else { return }
+        
+        self.fetchFavoritedEpisode(episodeId: episodeId) { (snapshot) in
             for child in snapshot.children.allObjects as! [DataSnapshot] {
                 if child.key == uid {
                     completion?(true)
                     return
                 }
-                
             }
             completion?(false)
             return
@@ -67,11 +82,9 @@ class FirebaseConnection {
     }
     
     func removeEpisodeFromFavoriteList(episodeId: String) {
-        self.dbRef = Database.database().reference()
         self.dbRef.child("favoritedEpisodes").child(episodeId).child(self.getCurrentID() ?? "").removeValue()
     }
     func addEpisodeToFavoriteList(episodeId: String, title: String, pubDateMs: Int) {
-        self.dbRef = Database.database().reference()
         
         self.dbRef.child("favoritedEpisodes").child(episodeId).child("episodeInformation").setValue([
             "title" : title,
@@ -82,15 +95,23 @@ class FirebaseConnection {
     }
     
     func deleteMessage(messageId: String) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
         self.dbRef.child("sharedMessages").child(messageId).removeValue()
         
     }
     
+    func observeFavorites(episodeId: String, completion: ((Bool)->())? = nil) {
+        
+        self.dbRef.child("favoritedEpisodes").child(episodeId).observe(.childAdded) { (_) in
+            completion?(true)
+        }
+        
+        self.dbRef.child("favoritedEpisodes").child(episodeId).observe(.childRemoved) { (_) in
+            completion?(true)
+        }
+        
+    }
+    
     func observeMessages(completion: ((Bool)->())? = nil) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
 
         let messages = self.dbRef.child("sharedMessages")
         messages.observe(.childAdded) { (_ ) in
@@ -103,8 +124,6 @@ class FirebaseConnection {
     }
     
     func fetchAllMessages(type: FetchType, completion: (([MessageModel])->())? = nil) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
 
         var messagesArray = [MessageModel]()
         messagesArray.removeAll()
@@ -143,9 +162,7 @@ class FirebaseConnection {
     }
     
     func shareMessage(message: String, completion: ((Bool)->())? = nil) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
-
+       
         let newMessage = self.dbRef.child("sharedMessages").childByAutoId()
         var dictionary: [String: Any] = [:]
         
@@ -173,8 +190,7 @@ class FirebaseConnection {
     }
     
     func saveImage(image: UIImage) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
+       
 
         if let uid = self.getCurrentID() {
             
@@ -205,8 +221,7 @@ class FirebaseConnection {
         }
     }
     func createUser(fullName: String, email: String, pass: String, username: String, birthday: String, completion: ((String?) -> ())? = nil) {
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
+        
 
         if username.count <= 4 {
             completion?("Username must be at least 5 characters")
@@ -245,8 +260,6 @@ class FirebaseConnection {
     
     private func saveWithInfos(email: String, fullName: String, uid: String, username: String, birthday: String) {
 
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
         var dictionary: [String:Any] = [:]
         dictionary["fullname"] = fullName
         dictionary["uid"] = uid
@@ -265,9 +278,6 @@ class FirebaseConnection {
     
     func fetchProfilePhoto(uid: String,completion: ((UIImage)->())? = nil) {
 
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
-        
         if self.signed() && uid.count != 0 {
             self.dbRef.child("userInfos").child(uid).child("imageDataURL").observeSingleEvent(of: .value) { (snapshot) in
 
@@ -300,9 +310,6 @@ class FirebaseConnection {
     
     func fetchUserInfo(uid: String, completion: ((User) -> ())? = nil) {
 
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
-        
         self.dbRef.child("userInfos").child(uid).observeSingleEvent(of: .value) { (snapshot) in
             
             let value = snapshot.value as? NSDictionary
@@ -326,8 +333,6 @@ class FirebaseConnection {
     
     func updateUserInfo(oldUserInfo: User, newUsername: String, newEmail:String, newFullName: String, newBirthday: String, completion: ((String?, Bool) -> ())? = nil) {
 
-        self.dbRef = Database.database().reference()
-        self.storageRef = Storage.storage().reference()
         
         if oldUserInfo.birthday == newBirthday && oldUserInfo.fullName == newFullName && oldUserInfo.mail == newEmail && oldUserInfo.username == newUsername {
             completion?("Everything is same.", false)

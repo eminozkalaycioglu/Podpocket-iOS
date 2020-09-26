@@ -21,7 +21,7 @@ class CoreDataManager {
     
     
     
-    func getLastListenedPodcasts() -> [LastListenedPodcasts] {
+    func getLastListenedPodcasts(completion: (([LastListenedPodcasts])->())) {
         
         var podcasts = [LastListenedPodcasts]()
         
@@ -32,8 +32,7 @@ class CoreDataManager {
         } catch let error as NSError {
             print(error)
         }
-        return podcasts
-        
+        completion(podcasts.reversed())
     }
     
     func getLastListenedEpisodes(completion: (([LastListenedEpisodes])->())) {
@@ -47,15 +46,26 @@ class CoreDataManager {
         } catch let error as NSError {
             print(error)
         }
-        completion(episodes)
+        completion(episodes.reversed())
         
     }
     
-    func savePodcast(podcastId: String, podcastImage: String) {
+    func savePodcast(podcastId: String, podcastImage: String, podcastTitle: String) {
+        
+        self.getLastListenedPodcasts { (podcasts) in
+            for pod in podcasts {
+                if podcastId == pod.podcastId {
+                    self.moc.delete(pod)
+                }
+            }
+        }
         
         let podcast = LastListenedPodcasts(context: self.moc)
         podcast.podcastId = podcastId
         podcast.podcastImage = podcastImage
+        podcast.podcastTitle = podcastTitle
+        
+        
         
         do {
             try self.moc.save()
@@ -65,18 +75,44 @@ class CoreDataManager {
         
     }
     
-    func saveEpisode(episodeId: String, episodeImage: String) {
+    func saveEpisode(episodeId: String, episodeImage: String, episodeTitle: String) {
         
+        self.getLastListenedEpisodes { (episodes) in
+            for episode in episodes {
+                if episode.episodeId == episodeId {
+                    self.moc.delete(episode)
+                }
+            }
+        }
         let episode = LastListenedEpisodes(context: self.moc)
         episode.episodeId = episodeId
         episode.episodeImage = episodeImage
-        
+        episode.episodeTitle = episodeTitle
         do {
             try self.moc.save()
         } catch let error as NSError {
             print(error)
         }
         
+    }
+    
+    func deleteAllRecords() {
+        
+
+        let deletePodcastFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "LastListenedPodcasts")
+        let deletePodcastRequest = NSBatchDeleteRequest(fetchRequest: deletePodcastFetch)
+        
+        let deleteEpisodeFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "LastListenedEpisodes")
+        let deleteEpisodeRequest = NSBatchDeleteRequest(fetchRequest: deleteEpisodeFetch)
+
+        do {
+            try self.moc.execute(deletePodcastRequest)
+            try self.moc.execute(deleteEpisodeRequest)
+
+            try self.moc.save()
+        } catch {
+            print ("There was an error (Delete)")
+        }
     }
     
 }

@@ -16,7 +16,6 @@ struct ExploreTabView: View {
     @State var selectedId = ""
     @Binding var tabSelection: Int
     
-    var aboutVm = AboutPodcastViewModel()
     let rows = [
         GridItem(.fixed(180)),
         GridItem(.fixed(180)),
@@ -36,13 +35,19 @@ struct ExploreTabView: View {
                         Spacer()
                         Image("search2")
                             .resizable()
-                            .frame(width: geometry.size.height / 20.3, height: geometry.size.height / 20.3)
+                            .frame(width: UIScreen.main.bounds.height / 16, height: UIScreen.main.bounds.height / 16)
+                            
                             .hidden()
-                            .overlay(Image("dmm")
-                                        .resizable()
-                                        .frame(width: geometry.size.height / 2.5, height: geometry.size.height / 2.5))
-                            .padding(.trailing, 30)
-                            .padding(.top, 30)
+                            .overlay(
+                                
+                                Image("dmm")
+                                    .resizable()
+                                    .frame(width: UIScreen.main.bounds.height / 2.1, height:  UIScreen.main.bounds.height / 2.1)
+                                
+                            )
+                            .padding(.trailing, 28)
+                            .padding(.top, 28)
+                        
                     }
                     Spacer()
                 }
@@ -58,9 +63,9 @@ struct ExploreTabView: View {
                         }.padding()
                         
                         Spacer()
-                        Image("search2").resizable().frame(width: geometry.size.height / 20.3, height: geometry.size.height / 20.3)
-                            .padding(.trailing, 30)
-                            .padding(.top, 30)
+                        Image("search2").resizable().frame(width: UIScreen.main.bounds.height / 16, height: UIScreen.main.bounds.height / 16)
+                            .padding(.trailing, 28)
+                            .padding(.top, 28)
                             .onTapGesture {
                                 self.tabSelection = 1
                             }
@@ -118,7 +123,7 @@ struct ExploreTabView: View {
                 }
                 
                 if self.viewModel.loading {
-                    CustomProgressView()
+//                    CustomProgressView()
                     
                 }
 

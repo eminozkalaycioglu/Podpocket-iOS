@@ -15,14 +15,14 @@ struct ContentView: View {
 
         NavigationView {
             if self.viewModel.signed() {
-//                HomepageView()
-                LastListenedView()
+                HomepageView()
             }
             
             else {
                 LoginView()
             }
         }.navigationBarTitle("").navigationBarHidden(true)
+        
        
 
     }

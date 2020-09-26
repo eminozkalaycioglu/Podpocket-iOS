@@ -34,7 +34,7 @@ struct FeedTabView: View {
                         }.shadow(radius: 10)
                         .frame(height: 60)
                         .pickerStyle(SegmentedPickerStyle())
-                        .background(Color.init(hex: "2C2838"))
+                        .background(Color.podpocketPurpleColor)
                         if self.writing {
                             Color.black.opacity(0.7)
                                 .edgesIgnoringSafeArea(.all)

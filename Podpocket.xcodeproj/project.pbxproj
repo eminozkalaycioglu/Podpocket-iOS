@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		23000B0B24F6625500E9A492 /* CustomBackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23000B0A24F6625400E9A492 /* CustomBackButton.swift */; };
 		23000B0D24F666C900E9A492 /* PodpocketLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23000B0C24F666C900E9A492 /* PodpocketLogo.swift */; };
 		23000B1B24F66CA700E9A492 /* Recommendation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23000B1924F66CA600E9A492 /* Recommendation.swift */; };
 		23000B1C24F66CA700E9A492 /* SimilarPodcasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23000B1A24F66CA700E9A492 /* SimilarPodcasts.swift */; };
@@ -112,7 +111,6 @@
 
 /* Begin PBXFileReference section */
 		1F2EB7B9C8BC918DEDFFFDA8 /* Pods-Podpocket-PodpocketUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Podpocket-PodpocketUITests.debug.xcconfig"; path = "Target Support Files/Pods-Podpocket-PodpocketUITests/Pods-Podpocket-PodpocketUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		23000B0A24F6625400E9A492 /* CustomBackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBackButton.swift; sourceTree = "<group>"; };
 		23000B0C24F666C900E9A492 /* PodpocketLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodpocketLogo.swift; sourceTree = "<group>"; };
 		23000B1924F66CA600E9A492 /* Recommendation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recommendation.swift; sourceTree = "<group>"; };
 		23000B1A24F66CA700E9A492 /* SimilarPodcasts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimilarPodcasts.swift; sourceTree = "<group>"; };
@@ -277,7 +275,7 @@
 				23CCCE7624DACEE800FD6D55 /* ViewModels */,
 				23CCCE7324DACE6C00FD6D55 /* Views */,
 				231FE92924D07FBD006B175C /* Extensions */,
-				231FE92B24D07FE1006B175C /* CustomViews */,
+				2385F6192518EC31000318B7 /* AudioManager.swift */,
 				231FE8F224D0373C006B175C /* AppDelegate.swift */,
 				231FE8F424D0373C006B175C /* SceneDelegate.swift */,
 				231FE8F824D0373D006B175C /* Assets.xcassets */,
@@ -285,7 +283,6 @@
 				231FE90024D0373D006B175C /* Info.plist */,
 				23CCCE6E24DAC99E00FD6D55 /* GoogleService-Info.plist */,
 				231FE8FA24D0373D006B175C /* Preview Content */,
-				2385F6192518EC31000318B7 /* AudioManager.swift */,
 			);
 			path = Podpocket;
 			sourceTree = "<group>";
@@ -341,7 +338,6 @@
 		231FE92B24D07FE1006B175C /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				23000B0A24F6625400E9A492 /* CustomBackButton.swift */,
 				23A40B1F24EC35AA0091F36A /* CustomProgressView.swift */,
 				231FE92524D074B5006B175C /* CustomTextField.swift */,
 			);
@@ -360,8 +356,6 @@
 				234EF42F2501930800EA6FE6 /* EpisodesListView.swift */,
 				239EDE1E2510E4FB005BD475 /* MessagesView.swift */,
 				2385F61B251A2686000318B7 /* SliderView.swift */,
-				23A6D11F251BA9D200036DEF /* FavoritedEpisodes.swift */,
-				23623B12251E253D0063C0DC /* LastListenedView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -456,11 +450,14 @@
 		23CCCE7324DACE6C00FD6D55 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				231FE92B24D07FE1006B175C /* CustomViews */,
 				234A9AD224E6AC2F003637D4 /* SubViews */,
 				231FE92224D065E2006B175C /* UserActionViews */,
 				239598A224DD609B00D0FEE5 /* TabViews */,
 				23CCCE7424DACE8500FD6D55 /* HomepageView.swift */,
 				233C263324EE9F0B0043532E /* PodcastDetailView.swift */,
+				23A6D11F251BA9D200036DEF /* FavoritedEpisodes.swift */,
+				23623B12251E253D0063C0DC /* LastListenedView.swift */,
 				23A8D10A251629920017F13C /* PlayerView.swift */,
 				231FE8F624D0373C006B175C /* ContentView.swift */,
 			);
@@ -819,7 +816,6 @@
 				23CB62F0250CE92300053DB4 /* MessageCell.swift in Sources */,
 				2354191524F950B60059E957 /* Genres.swift in Sources */,
 				234EF4302501930800EA6FE6 /* EpisodesListView.swift in Sources */,
-				23000B0B24F6625500E9A492 /* CustomBackButton.swift in Sources */,
 				239EDE1D250E5B25005BD475 /* FeedCellViewModel.swift in Sources */,
 				23B2A3AC251D235D00FC16B7 /* CoreDataManager.swift in Sources */,
 				23D27AB2251A45BD00F5269D /* PlayerViewModel.swift in Sources */,

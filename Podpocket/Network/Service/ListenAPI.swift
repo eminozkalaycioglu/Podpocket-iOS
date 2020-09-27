@@ -8,6 +8,8 @@ enum ListenAPI {
     case fetchPodcastDetail(id: String, nextEpisodePudDate: Int?)
     case fetchEpisodeDetail(id: String)
     case fetchSimilarPodcasts(id: String)
+    case fetchSimilarEpisodes(id: String)
+
     case search(query: String, type: SearchType, offset: Int, genres: [String]? = nil)
     case fetchGenres
 }
@@ -24,9 +26,8 @@ extension ListenAPI: TargetType {
     }
 
     var apiKey: String {
-//        return "ca536f2026d140c0bd8b322a58f63d5b" //e
-        return "82e6628b74404fb9a26a934b7d1adfa0" //f
-//        return "5ea579388b68424986c218c9b1e10872" //gh
+
+        return "7472e676513a470382a63d40800f27c9" //z
 
     }
     
@@ -41,7 +42,6 @@ extension ListenAPI: TargetType {
         
         return URL(string: "https://listen-api.listennotes.com/api/v2")!
 
-        
     }
 
     public var path: String {
@@ -61,6 +61,8 @@ extension ListenAPI: TargetType {
             return "/genres"
         case .fetchEpisodeDetail(let id):
             return "/episodes/\(id)"
+        case .fetchSimilarEpisodes(let id):
+            return "/episodes/\(id)/recommendations"
         }
     }
 
@@ -98,7 +100,9 @@ extension ListenAPI: TargetType {
                 return self.withoutParameters
             }
             
-        case .fetchSimilarPodcasts(_):
+        case .fetchSimilarPodcasts:
+            return self.withoutParameters
+        case .fetchSimilarEpisodes:
             return self.withoutParameters
             
         case .search(query: let query, type: let type, offset: let offset, genres: let genres):
@@ -136,6 +140,7 @@ extension ListenAPI: TargetType {
             return self.withoutParameters
         case .fetchEpisodeDetail:
             return self.withoutParameters
+        
         }
     }
 }

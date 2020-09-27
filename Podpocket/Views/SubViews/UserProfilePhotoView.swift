@@ -23,8 +23,7 @@ struct UserProfilePhotoView: View {
                 Image(uiImage: self.image)
                     .resizable().frame(width: 100, height: 100)
                     .onChange(of: self.image, perform: { newImage in
-                        print("image changed")
-                        self.viewModel.savePhoto(image: newImage)
+                        self.viewModel.saveProfilePhoto(image: newImage)
 
                     })
                 

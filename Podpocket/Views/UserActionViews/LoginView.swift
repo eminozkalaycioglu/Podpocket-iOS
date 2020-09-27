@@ -30,18 +30,14 @@ struct LoginView: View {
                 
                 VStack {
                     
-                    
                     HStack {
                         Text("LOGIN")
                             .foregroundColor(.white)
                         Spacer()
                     }.padding(.horizontal, 30)
                     
-                    
-                    
                     CustomTextField(placeholder: Text("E-mail:").foregroundColor(.gray), text: self.$mail)
                         .foregroundColor(.white)
-
                         .padding()
                         .background(Color.init(.darkGray).opacity(0.2))
                         .cornerRadius(30)
@@ -68,7 +64,6 @@ struct LoginView: View {
                         SaveButtonView()
                         
                     }.padding(.vertical, 30)
-                    
                     
                     Button(action: {
                         self.presentSignup = true

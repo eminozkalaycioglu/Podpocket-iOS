@@ -10,13 +10,13 @@ import Foundation
 import Combine
 
 class EpisodesListViewModel: ObservableObject {
-    var lastPodcastResult: Podcast = Podcast()
     @Published var episodesResult = [Episode]()
     @Published var loading = false
+    
+    var lastPodcastResult: Podcast = Podcast()
 
     
     func setPodcast(podcast: Podcast) {
-        
         self.lastPodcastResult = podcast
         self.episodesResult += podcast.episodes ?? [Episode]()
     }
@@ -24,8 +24,6 @@ class EpisodesListViewModel: ObservableObject {
     func getEpisodes() -> [Episode] {
         return self.episodesResult
         
-       
-    
     }
     
     func fetchNextEpisodes() {

@@ -45,32 +45,12 @@ struct AboutPodcastView: View {
                             .font(.title)
                             .foregroundColor(.white)
                         
-                        if let country = self.viewModel.rootPodcast?.country {
-                            Text("Country: \(country)")
-                                .foregroundColor(.white)
-                        }
                         
-                        if let language = self.viewModel.rootPodcast?.language {
-                            Text("Language: \(language)")
-                                .foregroundColor(.white)
-                            
-                        }
-                        
-                        if let publisher = self.viewModel.rootPodcast?.publisher {
-                            Text("Publisher: \(publisher)")
-                                .foregroundColor(.white)
-                        }
-                        
-                        
-                        
-                        if let firstReleaseDate = self.viewModel.rootPodcast?.earliestPubDateMs {
-                            Text("First Release Date: \((firstReleaseDate).msToDate())")
-                                .foregroundColor(.white)
-                        }
-                        
-                        
-                        
-                        
+                        self.drawInfo(title: "Country", content: self.viewModel.rootPodcast?.country)
+                        self.drawInfo(title: "Language", content: self.viewModel.rootPodcast?.language)
+                        self.drawInfo(title: "Publisher", content: self.viewModel.rootPodcast?.publisher)
+                        self.drawInfo(title: "First Release Date", content: self.viewModel.rootPodcast?.earliestPubDateMs?.msToDate())
+
                     }
                     
                     if let data = self.viewModel.similarPodcasts.recommendations {
@@ -108,6 +88,18 @@ struct AboutPodcastView: View {
             self.viewModel.setRootPodcast(podcast: self.rootPodcast)
         }
         
+    }
+    
+    func drawInfo(title: String, content: String?) -> AnyView? {
+        if let content = content {
+            return AnyView(
+                Text("\(title): \(content)")
+                    .foregroundColor(.white)
+            )
+        }
+        else {
+            return nil
+        }
     }
     
     

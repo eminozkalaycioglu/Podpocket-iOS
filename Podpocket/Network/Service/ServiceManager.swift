@@ -69,6 +69,11 @@ public final class ServiceManager {
         
     }
     
+    func fetchSimilarEpisodes(id: String, completion: @escaping (_ result: APIResult<SimilarEpisodes>) -> Void) {
+        fetch(target: .fetchSimilarEpisodes(id: id), completion: completion)
+        
+    }
+    
     func search(query: String, type: SearchType, offset: Int, genres: [String]? = nil, completion: @escaping (_ result: APIResult<SearchModel>) -> Void) {
 
         fetch(target: .search(query: query, type: type, offset: offset, genres: genres), completion: completion)

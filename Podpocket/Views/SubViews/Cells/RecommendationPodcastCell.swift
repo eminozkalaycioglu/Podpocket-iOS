@@ -14,7 +14,6 @@ struct RecommendationPodcastCell: View {
     var body: some View {
         VStack {
 
-            
             if let url = String.toEncodedURL(link: self.similarPodcasts?.image) {
                 KFImage(url)
                     .cancelOnDisappear(true)

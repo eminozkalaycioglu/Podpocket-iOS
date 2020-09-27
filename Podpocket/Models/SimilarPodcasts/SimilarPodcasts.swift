@@ -15,3 +15,13 @@ struct SimilarPodcasts: Decodable, Hashable {
     }
     
 }
+
+struct SimilarEpisodes: Decodable, Hashable {
+    
+    var recommendations : [Recommendation]?
+    
+    enum CodingKeys : String, CodingKey {
+        case recommendations = "recommendations"
+    }
+    
+}

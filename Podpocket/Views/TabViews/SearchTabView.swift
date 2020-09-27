@@ -10,12 +10,11 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct SearchTabView: View {
 
+    @StateObject var viewModel = SearchTabViewModel()
+
     @State var query: String = ""
     @State var presentPodcastDetailView: Bool = false
     @State var presentPlayerView: Bool = false
-    @StateObject var viewModel = SearchTabViewModel()
-    
-    
     @State var selectedPodcastId: String = ""
     @State var selectedEpisodeId: String = ""
     
@@ -77,13 +76,13 @@ struct SearchTabView: View {
                         if let data = self.viewModel.genres.genres {
                             
                             ForEach(data, id: \.self) { genre in
-                                GenreCell(genre: genre, isSelected: self.viewModel.selections.contains(genre.id?.description ?? "")) {
-                                    if self.viewModel.selections.contains(genre.id?.description ?? "") {
-                                        self.viewModel.selections.removeAll(where: { $0 == genre.id?.description })
+                                GenreCell(genre: genre, isSelected: self.viewModel.genreSelections.contains(genre.id?.description ?? "")) {
+                                    if self.viewModel.genreSelections.contains(genre.id?.description ?? "") {
+                                        self.viewModel.genreSelections.removeAll(where: { $0 == genre.id?.description })
                                         
                                     }
                                     else {
-                                        self.viewModel.selections.append(genre.id?.description ?? "")
+                                        self.viewModel.genreSelections.append(genre.id?.description ?? "")
                                     }
                                 }
                             }
@@ -91,8 +90,6 @@ struct SearchTabView: View {
                         }
                     }.padding()
                 }.frame(height: 60, alignment: .center) //Genres
-                
-                
                 
                 ScrollView {
                     LazyVStack(pinnedViews: [.sectionHeaders]) {
@@ -154,10 +151,8 @@ struct SearchTabView: View {
                         }
                         
                         
-                        
-                        
-                        
-                        Text("").onAppear {
+                        Text("")
+                            .onAppear {
                             if self.viewModel.episodeResult.count != 0 {
                                 print("last")
                                 self.viewModel.searchNextOffset(query: self.query, type: .Episode)
@@ -186,7 +181,6 @@ struct SearchTabView: View {
                     CustomProgressView()
             }
         }
-        
         
         .navigationBarTitle("").navigationBarHidden(true)
         

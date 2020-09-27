@@ -77,7 +77,6 @@ struct MessageCell: View {
             .shadow(radius: 10)
             .onAppear {
                 self.viewModel.fetchUserInfo(uid: message.uid)
-                print("fetch")
                 
             }
             
@@ -95,9 +94,7 @@ struct MessageCell: View {
                 })
             }
         }
-        
-        
-        
+         
         
     }
     

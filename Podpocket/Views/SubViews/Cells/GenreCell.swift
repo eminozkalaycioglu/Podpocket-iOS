@@ -22,7 +22,6 @@ struct GenreCell: View {
                     .font(.system(size: 12))
                     .foregroundColor(self.isSelected ? Color.podpocketGreenColor : .gray)
                     .padding(5)
-                    
                     .overlay(RoundedRectangle(cornerRadius: 15).stroke(self.isSelected ? Color.podpocketGreenColor : Color.gray, lineWidth: 0.5))
             }
         }

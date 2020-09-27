@@ -36,11 +36,6 @@ struct PodcastCell: View {
                 .fontWeight(.light)
                 .foregroundColor(Color.podpocketGreenColor)
         }
-        
-        
-        
-        
-        
     }
 }
 

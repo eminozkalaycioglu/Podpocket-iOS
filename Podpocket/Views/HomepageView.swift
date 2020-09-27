@@ -10,7 +10,7 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 struct HomepageView: View {
-    @State var selectedTab: Int = 3
+    @State var selectedTab: Int = 0
     
     init() {
         UITabBar.appearance().backgroundImage = UIImage(named: "LoginBG")
@@ -48,7 +48,7 @@ struct HomepageView: View {
                         
                     }.tag(2)
 
-                UserProfileView()
+                UserProfileTabView()
                     .tabItem {
                         Image("UserTab")
                             .renderingMode(.template)

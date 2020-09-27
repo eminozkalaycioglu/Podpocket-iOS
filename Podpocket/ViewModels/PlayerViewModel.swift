@@ -10,12 +10,13 @@ import Foundation
 import Combine
 
 class PlayerViewModel: ObservableObject {
-    var lastPodcastResult = Podcast()
+    
     @Published private var episodes = [Episode]()
     @Published var loading: Bool = false
     @Published var isFavorited = false
     @Published var numberOfFavorites = 0
-    
+    @Published var parentPodcast: ParentPodcast = ParentPodcast()
+
     
     @Published var selectedEpisode: Episode = Episode() {
         didSet {
@@ -24,7 +25,8 @@ class PlayerViewModel: ObservableObject {
 
         }
     }
-    @Published var parentPodcast: ParentPodcast = ParentPodcast()
+    
+    var lastPodcastResult = Podcast()
     var selectedEpisodeId: String = "" {
         didSet {
             self.fetchSelectedEpisode(episodeId: self.selectedEpisodeId)

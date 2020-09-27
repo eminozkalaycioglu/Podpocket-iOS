@@ -19,7 +19,6 @@ class AboutPodcastViewModel: ObservableObject {
             if self.rootPodcast?.id != nil {
                 self.fetchSimilarPodcasts()
 
-
             }
         }
     }

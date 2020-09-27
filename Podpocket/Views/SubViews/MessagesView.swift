@@ -19,10 +19,10 @@ struct MessagesView: View {
     
     init(type: FetchType, writing: Binding<Bool>) {
         self._writing = writing
-
         self.viewModel.fetchMessages(type: type)
-        self.viewModel.observe(type: type)
+        self.viewModel.observeMessages(type: type)
     }
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .bottomTrailing) {
@@ -33,7 +33,6 @@ struct MessagesView: View {
                             self.writing = false
                         }
                     }
-                
                 
                 VStack {
                     ScrollView(.vertical) {
@@ -81,7 +80,7 @@ struct MessagesView: View {
                                 .padding()
                             
                             Button(action: {
-                                self.viewModel.share(message: self.message) { (success) in
+                                self.viewModel.shareMessage(message: self.message) { (success) in
                                     if success {
                                         self.writing = false
                                     }

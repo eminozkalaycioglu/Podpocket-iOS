@@ -11,12 +11,10 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct FavoritedEpisodes: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
     @ObservedObject var viewModel = FavoritedEpisodesViewModel()
-    
     @State var presentPlayerView: Bool = false
     @State var selectedFavoritedEpisodeId = ""
-
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -60,7 +58,7 @@ struct FavoritedEpisodes: View {
                             .foregroundColor(.white)
                         Spacer()
                     }.padding(.horizontal)
-
+                    
                     HStack {
                         VStack(alignment: .leading) {
                             Text("YOUR FAVORITED EPISODES")

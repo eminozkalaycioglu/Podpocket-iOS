@@ -11,10 +11,7 @@ import SwiftUI
 
 
 extension Color {
-//    static var podpocketGreenColor = "50E3C2"
-//    static var podpocketPurpleColor = "2C2838"
-    
-    
+
     static var podpocketGreenColor: Color {
         return Color.init(hex: "50E3C2")
     }

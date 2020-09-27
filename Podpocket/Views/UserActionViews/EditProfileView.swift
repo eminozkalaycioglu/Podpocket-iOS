@@ -10,12 +10,11 @@ import SwiftUI
 
 struct EditProfileView: View {
     @Environment(\.presentationMode) private var presentationMode
-    
     @ObservedObject var viewModel = EditProfileViewModel()
-    
     @State var birthday: Date = Date()
     @State var errorMessage: String = ""
     @State var showErrorAlert: Bool = false
+    
     let rangeDate = Calendar.current.date(byAdding: .year, value: -18, to: Date())
     
     var body: some View {

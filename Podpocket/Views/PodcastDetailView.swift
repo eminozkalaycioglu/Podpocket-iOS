@@ -12,10 +12,8 @@ import struct Kingfisher.KFImage
 @available(iOS 14.0, *)
 struct PodcastDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
     @StateObject var viewModel = PodcastDetailViewModel()
     @EnvironmentObject var aboutViewModel: AboutPodcastViewModel
-    
     
     @State private var selectedSegment = 0
     @State var loading = false

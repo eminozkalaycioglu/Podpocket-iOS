@@ -13,15 +13,14 @@ struct EpisodesListView: View {
     @ObservedObject var viewModel: EpisodesListViewModel = EpisodesListViewModel()
     @State var presentPlayer = false
     @State var selectedEpisodeId = ""
+    
     init(podcast: Podcast) {
         self.viewModel.setPodcast(podcast: podcast)
-
     }
     var body: some View {
         
         ZStack {
             Color.podpocketPurpleColor
-            
             
             VStack {
                 ScrollView(.vertical) {
@@ -29,7 +28,6 @@ struct EpisodesListView: View {
                         ForEach(self.viewModel.getEpisodes(), id: \.self) { episode in
                             EpisodeCell(episode: episode)
                                 .onTapGesture {
-                                    
                                     self.selectedEpisodeId = episode.id ?? ""
                                     self.presentPlayer = true
                                     
@@ -64,21 +62,12 @@ struct EpisodesListView: View {
         
     }
     
-    static func dummyEpisodes() -> [Episode] {
-        var episodes = [Episode]()
-        episodes.removeAll()
-        for item in 1...6 {
-            let episode = Episode(pubDateMs: 123354363235, title: "Episode Title \(item)")
-            episodes.append(episode)
-        }
-        return episodes
-        
-    }
+    
 }
 
-@available(iOS 14.0, *)
-struct EpisodesListView_Previews: PreviewProvider {
-    static var previews: some View {
-        EpisodesListView(podcast: Podcast(episodes: EpisodesListView.dummyEpisodes()))
-    }
-}
+//@available(iOS 14.0, *)
+//struct EpisodesListView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        
+//    }
+//}

@@ -47,7 +47,7 @@
 		2385F61A2518EC31000318B7 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385F6192518EC31000318B7 /* AudioManager.swift */; };
 		2385F61C251A2686000318B7 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2385F61B251A2686000318B7 /* SliderView.swift */; };
 		2387ADBF250B76530011FA9F /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2387ADBE250B76530011FA9F /* StringExtension.swift */; };
-		239598A124DD608C00D0FEE5 /* UserProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239598A024DD608C00D0FEE5 /* UserProfileView.swift */; };
+		239598A124DD608C00D0FEE5 /* UserProfileTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239598A024DD608C00D0FEE5 /* UserProfileTabView.swift */; };
 		239EDE1B250E5190005BD475 /* MessageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239EDE1A250E5190005BD475 /* MessageModel.swift */; };
 		239EDE1D250E5B25005BD475 /* FeedCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239EDE1C250E5B24005BD475 /* FeedCellViewModel.swift */; };
 		239EDE1F2510E4FB005BD475 /* MessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 239EDE1E2510E4FB005BD475 /* MessagesView.swift */; };
@@ -66,6 +66,7 @@
 		23A6D12C251BBC3100036DEF /* ParentPodcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A6D128251BBC3100036DEF /* ParentPodcast.swift */; };
 		23A6D12D251BBC3100036DEF /* EpisodeDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A6D129251BBC3100036DEF /* EpisodeDetail.swift */; };
 		23A8D10B251629920017F13C /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A8D10A251629920017F13C /* PlayerView.swift */; };
+		23A9202D2520894C00A6DACC /* SplashScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A9202C2520894C00A6DACC /* SplashScreenView.swift */; };
 		23B2A363251D1D2800FC16B7 /* PodpocketDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 23B2A361251D1D2800FC16B7 /* PodpocketDataModel.xcdatamodeld */; };
 		23B2A3A7251D232B00FC16B7 /* NSManagedObjectContextExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B2A3A6251D232B00FC16B7 /* NSManagedObjectContextExtension.swift */; };
 		23B2A3AC251D235D00FC16B7 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23B2A3AB251D235D00FC16B7 /* CoreDataManager.swift */; };
@@ -157,7 +158,7 @@
 		2385F6192518EC31000318B7 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		2385F61B251A2686000318B7 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
 		2387ADBE250B76530011FA9F /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
-		239598A024DD608C00D0FEE5 /* UserProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileView.swift; sourceTree = "<group>"; };
+		239598A024DD608C00D0FEE5 /* UserProfileTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileTabView.swift; sourceTree = "<group>"; };
 		239EDE1A250E5190005BD475 /* MessageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageModel.swift; sourceTree = "<group>"; };
 		239EDE1C250E5B24005BD475 /* FeedCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCellViewModel.swift; sourceTree = "<group>"; };
 		239EDE1E2510E4FB005BD475 /* MessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesView.swift; sourceTree = "<group>"; };
@@ -177,6 +178,7 @@
 		23A6D129251BBC3100036DEF /* EpisodeDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EpisodeDetail.swift; sourceTree = "<group>"; };
 		23A8D10A251629920017F13C /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		23A8D10F25164DA40017F13C /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		23A9202C2520894C00A6DACC /* SplashScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenView.swift; sourceTree = "<group>"; };
 		23B2A362251D1D2800FC16B7 /* PodpocketDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PodpocketDataModel.xcdatamodel; sourceTree = "<group>"; };
 		23B2A3A6251D232B00FC16B7 /* NSManagedObjectContextExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSManagedObjectContextExtension.swift; sourceTree = "<group>"; };
 		23B2A3AB251D235D00FC16B7 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 				234EF42F2501930800EA6FE6 /* EpisodesListView.swift */,
 				239EDE1E2510E4FB005BD475 /* MessagesView.swift */,
 				2385F61B251A2686000318B7 /* SliderView.swift */,
+				23A9202C2520894C00A6DACC /* SplashScreenView.swift */,
 			);
 			path = SubViews;
 			sourceTree = "<group>";
@@ -372,7 +375,7 @@
 		239598A224DD609B00D0FEE5 /* TabViews */ = {
 			isa = PBXGroup;
 			children = (
-				239598A024DD608C00D0FEE5 /* UserProfileView.swift */,
+				239598A024DD608C00D0FEE5 /* UserProfileTabView.swift */,
 				23D3D2F024E1947F00BE8D4C /* ExploreTabView.swift */,
 				23D3D2F224E194F300BE8D4C /* SearchTabView.swift */,
 				23D3D2F424E1963300BE8D4C /* FeedTabView.swift */,
@@ -814,6 +817,7 @@
 				23A40B1A24EBFA650091F36A /* LookingFor.swift in Sources */,
 				2318B63824FE6D5300D21306 /* UserProfilePhotoView.swift in Sources */,
 				23CB62F0250CE92300053DB4 /* MessageCell.swift in Sources */,
+				23A9202D2520894C00A6DACC /* SplashScreenView.swift in Sources */,
 				2354191524F950B60059E957 /* Genres.swift in Sources */,
 				234EF4302501930800EA6FE6 /* EpisodesListView.swift in Sources */,
 				239EDE1D250E5B25005BD475 /* FeedCellViewModel.swift in Sources */,
@@ -821,7 +825,7 @@
 				23D27AB2251A45BD00F5269D /* PlayerViewModel.swift in Sources */,
 				23000B0D24F666C900E9A492 /* PodpocketLogo.swift in Sources */,
 				231FE8F524D0373C006B175C /* SceneDelegate.swift in Sources */,
-				239598A124DD608C00D0FEE5 /* UserProfileView.swift in Sources */,
+				239598A124DD608C00D0FEE5 /* UserProfileTabView.swift in Sources */,
 				239EDE1B250E5190005BD475 /* MessageModel.swift in Sources */,
 				23623B18251E26E50063C0DC /* LastListenedViewModel.swift in Sources */,
 				234EF4322501934800EA6FE6 /* EpisodeCell.swift in Sources */,

@@ -15,7 +15,6 @@ class PodcastDetailViewModel: ObservableObject {
     
     private var id: String! {
         didSet {
-
             self.fetch()
         }
     }

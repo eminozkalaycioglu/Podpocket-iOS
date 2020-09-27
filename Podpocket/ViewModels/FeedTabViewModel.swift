@@ -13,7 +13,7 @@ class FeedTabViewModel: ObservableObject {
     
     @Published var messages = [MessageModel]()
     
-    func share(message: String, completion: ((Bool)->())? = nil) {
+    func shareMessage(message: String, completion: ((Bool)->())? = nil) {
         
         FirebaseConnection.shared.shareMessage(message: message) { (success) in
             completion?(success)
@@ -23,7 +23,7 @@ class FeedTabViewModel: ObservableObject {
     func deleteMessage(messageId: String) {
         FirebaseConnection.shared.deleteMessage(messageId: messageId)
     }
-    func observe(type: FetchType) {
+    func observeMessages(type: FetchType) {
         FirebaseConnection.shared.observeMessages { (added) in
             if added {
                 self.fetchMessages(type: type)

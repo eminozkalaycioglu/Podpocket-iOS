@@ -13,12 +13,19 @@ struct SaveButtonView: View {
     var body: some View {
         VStack(alignment: .center) {
             ZStack {
-                Circle().stroke(Color.white.opacity(0.3), lineWidth: 1).frame(width: 50, height: 50, alignment: .center)
+                Circle()
+                    .stroke(Color.white.opacity(0.3), lineWidth: 1)
+                    .frame(width: 50, height: 50, alignment: .center)
                 
-                Image("chevron-right").resizable().frame(width: 10, height: 20, alignment: .center).foregroundColor(.podpocketGreenColor)
+                Image("chevron-right")
+                    .resizable()
+                    .frame(width: 10, height: 20, alignment: .center)
+                    .foregroundColor(.podpocketGreenColor)
             }
             if let text = text {
-                Text(text).foregroundColor(.podpocketGreenColor).font(.subheadline)
+                Text(text)
+                    .foregroundColor(.podpocketGreenColor)
+                    .font(.subheadline)
             }
             
             

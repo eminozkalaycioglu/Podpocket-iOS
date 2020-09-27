@@ -10,13 +10,12 @@ import Foundation
 import Combine
 
 class SearchTabViewModel: ObservableObject {
-    @Published var selections: [String] = []
-    
-    @Published var genres: Genres = Genres()
     @Published var podcastResults = [SearchResult]()
     @Published var episodeResult = [SearchResult]()
-    
+    @Published var genreSelections: [String] = []
+    @Published var genres: Genres = Genres()
     @Published var loading = false
+    
     var lastPodcastResult = SearchModel()
     var lastEpisodeResult = SearchModel()
 
@@ -55,7 +54,7 @@ class SearchTabViewModel: ObservableObject {
         }
         self.loading = true
 
-        ServiceManager.shared.search(query: query, type: type, offset: offset, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
+        ServiceManager.shared.search(query: query, type: type, offset: offset, genres: self.genreSelections.count == 0 ? nil : self.genreSelections) { (result) in
             switch result {
             case .success(let response):
                 switch type {
@@ -67,11 +66,11 @@ class SearchTabViewModel: ObservableObject {
                     self.podcastResults += response.results ?? [SearchResult]()
                 }
                 
-                self.loading = false
-            case .failure(_):
-
-                self.loading = false
+            case .failure(let error):
+                print(error.errorDescription ?? "error")
             }
+            self.loading = false
+
         }
     }
     
@@ -79,8 +78,7 @@ class SearchTabViewModel: ObservableObject {
         
         self.loading = true
         
-        
-        ServiceManager.shared.search(query: query, type: type, offset: 0, genres: self.selections.count == 0 ? nil : self.selections) { (result) in
+        ServiceManager.shared.search(query: query, type: type, offset: 0, genres: self.genreSelections.count == 0 ? nil : self.genreSelections) { (result) in
             switch result {
             case .success(let response):
                 switch type {
@@ -92,19 +90,14 @@ class SearchTabViewModel: ObservableObject {
                     self.podcastResults = response.results ?? [SearchResult]()
                 }
                 
-                self.loading = false
-            case .failure(_):
-                self.loading = false
+            case .failure(let error):
+                print(error.errorDescription ?? "error")
             }
+            self.loading = false
+
         }
         
-        
-        
-        
     }
-
-    
-    
 }
 
 

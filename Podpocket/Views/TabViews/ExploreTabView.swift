@@ -13,6 +13,7 @@ struct ExploreTabView: View {
     
     @StateObject var viewModel = ExploreTabViewModel()
     @State var presentDetail = false
+    @State var presentPlayerView = false
     @State var selectedId = ""
     @Binding var tabSelection: Int
     
@@ -72,14 +73,14 @@ struct ExploreTabView: View {
                     }
                     
                     
-                    ScrollView {
+                    ScrollView(showsIndicators: false) {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text("EXPLORE")
                                     .font(.largeTitle)
                                     .foregroundColor(.white)
                                     .padding(.bottom, 5)
-                                Text("All your favourite\npodcasts under one roof!")
+                                Text("All your podcasts\n under one roof!")
                                     .font(.system(size: 15))
                                     .fontWeight(.light)
                                     .foregroundColor(.gray)
@@ -96,7 +97,7 @@ struct ExploreTabView: View {
                                 Spacer()
                             }.padding()
                             
-                            ScrollView(.horizontal) {
+                            ScrollView(.horizontal, showsIndicators: false) {
                                 LazyHGrid(rows: rows, spacing: 20) {
                                     if let data = self.viewModel.bestPodcasts?.podcasts {
                                         ForEach(data, id: \.self) { item in
@@ -117,20 +118,84 @@ struct ExploreTabView: View {
                             }
                             
                         }.padding(.top, 30)
+                        
+                        VStack {
+                            HStack {
+                                Text("RECOMMENDED PODCASTS FOR YOU")
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                Spacer()
+                            }.padding()
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHGrid(rows: rows, spacing: 20) {
+                                    if let data = self.viewModel.similarPodcasts?.recommendations {
+                                        ForEach(data, id: \.self) { podcast in
+                                            
+                                            PodcastCell(podcast: Podcast(id: podcast.id ?? "", image: podcast.image ?? "", title: podcast.title ?? "", totalEpisodes: podcast.totalEpisodes ?? 0))
+                                                .id(UUID())
+
+                                                .onTapGesture {
+                                                    self.selectedId = podcast.id ?? ""
+                                                    self.presentDetail = true
+                                                }
+                                            
+                                        }
+                                    }
+                                    
+                                }
+                                .padding(.horizontal)
+                            }
+                            
+                        }.padding(.top, 30)
+                        
+                        VStack {
+                            HStack {
+                                Text("RECOMMENDED EPISODES FOR YOU")
+                                    .foregroundColor(.white)
+                                    .font(.headline)
+                                Spacer()
+                            }.padding()
+                            
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                LazyHGrid(rows: rows, spacing: 20) {
+                                    if let data = self.viewModel.similarEpisodes?.recommendations {
+                                        ForEach(data, id: \.self) { episode in
+                                            
+                                            RecommendationPodcastCell(similarPodcasts: episode)
+                                                .id(UUID())
+
+                                                .onTapGesture {
+                                                    self.selectedId = episode.id ?? ""
+                                                    self.presentPlayerView = true
+                                                }
+                                            
+                                        }
+                                    }
+                                    
+                                }
+                                .padding(.horizontal)
+                            }
+                            
+                        }.padding(.top, 30)
+                        
                     }
                     
                     Spacer()
                 }
                 
                 if self.viewModel.loading {
-//                    CustomProgressView()
+                    CustomProgressView()
                     
                 }
 
-                
                 NavigationLink("", destination: PodcastDetailView(id: self.selectedId), isActive: self.$presentDetail)
+                NavigationLink("", destination: PlayerView(selectedEpisodeId: self.selectedId), isActive: self.$presentPlayerView)
                 
             }.navigationBarTitle("").navigationBarHidden(true)
+            .onAppear() {
+                self.viewModel.fetchBestPodcasts()
+            }
             
         }
         

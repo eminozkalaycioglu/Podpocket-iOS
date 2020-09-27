@@ -17,8 +17,6 @@ struct CustomProgressView: View {
             Color.init(.black)
                 .opacity(0.7)
                 
-            
-            
             VStack {
                 
                 Image("Logo")
@@ -26,7 +24,6 @@ struct CustomProgressView: View {
                     .animation(self.isAnimating ? self.foreverAnimation(duration: 0.3) : .default)
                     .onAppear { self.isAnimating = true }
                     .onDisappear { self.isAnimating = false }
-                
                 
                 Text("Podpocket")
                     .foregroundColor(.white)
